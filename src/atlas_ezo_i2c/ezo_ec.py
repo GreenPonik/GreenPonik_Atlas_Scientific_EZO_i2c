@@ -1,4 +1,5 @@
 # !/usr/bin/python
+from src/ezo_commons import *
 
 # Getters EC methods
 
