@@ -23,7 +23,7 @@ def long_description():
 setup(
     name="atlas-ezo-i2c",
     description="Atlas Scientific EZO I2C",
-    url="https://github.com/GreenPonik/atlas_ezo_i2c",
+    url="https://github.com/GreenPonik/GreenPonik_atlas_scientific_i2c",
     author="GreenPonik SAS",
     author_email="contact@greenponik.com",
     package_dir={"": "src"},

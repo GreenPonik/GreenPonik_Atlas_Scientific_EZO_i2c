@@ -2,12 +2,12 @@
 ####################################################################
 ####################################################################
 ####################################################################
-########################## Atlas EZO i2c ###########################
-########################## by GreenPonik ###########################
+##################### Atlas Scientific i2c #########################
+######################### by GreenPonik ############################
 ####################################################################
 ####################################################################
 ####################################################################
-Class to communicate with Atlas Scientific EZO sensors in I2C mode.
+Class to communicate with Atlas Scientific sensors in I2C mode.
 Source code is based on examples from Atlas Scientific:
 https://github.com/AtlasScientific/Raspberry-Pi-sample-code/blob/master/AtlasI2C.py
 """
@@ -20,7 +20,7 @@ import time
 import copy
 
 
-class AtlasEzoI2c:
+class AtlasI2c:
     AS_SENSORS_ADDS_DECIMAL = {
         97,
         98,

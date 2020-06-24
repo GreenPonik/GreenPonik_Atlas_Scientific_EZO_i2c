@@ -1,6 +1,6 @@
 # !/usr/bin/python
 
-from atlas_ezo_i2c import AtlasEzoI2c
+from GreenPonik_Atlas_Scientific_i2c import AtlasI2c
 
 # Getters commons methods
 
