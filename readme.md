@@ -1,4 +1,17 @@
-# Python lib to use Atlas Scientific circuit on smbus/i2c
+# GreenPonik_Atlas_Scientific_i2c.py Library for Raspberry pi
+---------------------------------------------------------
+this is a python lib to use Atlas Scientific circuits on smbus/i2c bus.
+
+## Table of Contents
+
+- [GreenPonik_Atlas_Scientific_i2c.py Library for Raspberry pi](#h2-id%2222greenponikatlasscientifici2cpy-library-for-raspberry-pi-4%22greenponikatlasscientifici2cpy-library-for-raspberry-pih2)
+- [Table of Contents](#table-of-contents)
+- [Installation](#installation)
+- [Examples](#examples)
+- [Credits](#credits)
+<snippet>
+<content>
+
 
 ## Installation
 >git clone https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_i2c.git
@@ -8,10 +21,14 @@ from GreenPonik_Altas_Scientific_i2c import GreenPonik_Altas_Scientific_i2c
 
 ## ! Only tested on Raspberry Pi 3 A+ !<br>
 
-## works with EC https://www.atlas-scientific.com/circuits/conductivity-oem-circuit/
-### Dependencies:
+## Examples
+
+### Read EC
+works with EC https://www.atlas-scientific.com/circuits/conductivity-oem-circuit/<br>
+#### Dependencies:
 >https://github.com/GreenPonik/GreenPonik_Altas_Scientific_i2c<br>
->https://github.com/GreenPonik/GreenPonik_thermistor_10k
+>https://github.com/GreenPonik/GreenPonik_thermistor_10k<br>
+
 ```python
 from GreenPonik_Altas_Scientific_i2c.GreenPonik_Altas_Scientific_i2c import AtlasI2c
 from GreenPonik_Atlas_Scientific_i2c.ec_i2c import *
@@ -27,8 +44,10 @@ if __name__ == "__main__":
     print(set_temperature(ec_i2c, t))
     print(get_read(ec_i2c))
 ```
-## works with pH https://www.atlas-scientific.com/circuits/ph-oem-circuit/
-### Dependencies:
+
+### Read pH
+works with pH https://www.atlas-scientific.com/circuits/ph-oem-circuit/<br>
+#### Dependencies:
 >https://github.com/GreenPonik/GreenPonik_Altas_Scientific_i2c<br>
 
 ```python
@@ -43,8 +62,10 @@ if __name__ == "__main__":
 ```
 
 
-
-### todo list
+## todo list
 - add calibration workflow in examples
 - package it on pypi
 - add compatibility with all circuits (OD / ORP / CO2 / PRESSURE / FLOW)
+
+## Credits
+Write by Mickael Lehoux, from [GreenPonik](https://www.greenponik.com), 2020
