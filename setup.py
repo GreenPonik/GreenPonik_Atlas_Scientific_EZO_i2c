@@ -8,7 +8,7 @@ def here(filename):
 
 def load_version():
     version_file = os.path.join(os.path.dirname(
-        __file__), "src/atlas_ezo_i2c", "version.py")
+        __file__), "src/GreenPonik_Atlas_Scientific_i2c", "version.py")
     version = {}
     with open(version_file) as fd:
         exec(fd.read(), version)
@@ -21,9 +21,9 @@ def long_description():
 
 
 setup(
-    name="atlas-ezo-i2c",
-    description="Atlas Scientific EZO I2C",
-    url="https://github.com/GreenPonik/GreenPonik_atlas_scientific_i2c",
+    name="GreenPonik-Atlas-Scientific-i2c",
+    description="Use Atlas Scientific on smbus/I2C",
+    url="https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_i2c",
     author="GreenPonik SAS",
     author_email="contact@greenponik.com",
     package_dir={"": "src"},
