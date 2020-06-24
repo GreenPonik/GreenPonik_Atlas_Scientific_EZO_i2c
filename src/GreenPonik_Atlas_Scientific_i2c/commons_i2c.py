@@ -16,7 +16,7 @@ def get_device_info(device):
 def get_read(device):
     """
     Read sensor value
-    @return string (depending of O parameter for EZO EC)
+    @return string (depending of O parameter)
     """
     return device.query("R")
 
@@ -47,7 +47,7 @@ def get_find(device):
 def get_status(device):
     """
     Get EZO status
-    @return status of device decode them by using AtlasEzoI2c.AS_RESTART_CODES
+    @return status of device decode them by using Atlas_I2c.AS_RESTART_CODES
     """
     return device.query("Status")
 
@@ -105,10 +105,10 @@ def set_i2c_addr(device, add):
     @param int add
     """
     if not isinstance(add, int):
-        return "only decimal address expected, convert hexa by using AtlasEzoI2c.AS_SENSORS_ADDS_HEXA_TO_DECIMAL"
+        return "only decimal address expected, convert hexa by using AtlasI2c.AS_SENSORS_ADDS_HEXA_TO_DECIMAL"
     else:
-        if add not in AtlasEzoI2c.AS_SENSORS_ADDS_DECIMAL:
-            return "cannot use this i2c address %d check AtlasEzoI2c.AS_SENSORS_ADDS_DECIMAL" % add
+        if add not in AtlasI2c.AS_SENSORS_ADDS_DECIMAL:
+            return "cannot use this i2c address %d check AtlasI2c.AS_SENSORS_ADDS_DECIMAL" % add
         else:
             return device.query("I2C,%d" % add)
 
@@ -144,9 +144,9 @@ def set_plock(device, state):
 
 
 if __name__ == "__main__":
-    ezo_ec = AtlasEzoI2c(
-        address=AtlasEzoI2c.AS_SENSORS_ADDS_TXT_TO_DECIMAL['EC'],
+    ec = AtlasI2c(
+        address=AtlasI2c.AS_SENSORS_ADDS_TXT_TO_DECIMAL['EC'],
         moduletype="EC",
         name="EC")
-    print(">>>get ezo ec information")
-    print(get_device_info(ezo_ec))
+    print(">>>get ec information")
+    print(get_device_info(ec))

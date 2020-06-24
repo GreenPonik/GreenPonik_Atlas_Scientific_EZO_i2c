@@ -8,6 +8,6 @@ if __name__ == "__main__":
     print(get_device_info(ec_i2c))
     print("get current temperature compensated")
     print(get_temperature(ec_i2c))
-    temp = GreenPonik_thermistor_10k.read_temp()
-    print(set_temperature(ec_i2c, temp))
+    t = GreenPonik_thermistor_10k.read_temp()
+    print(set_temperature(ec_i2c, t))
     get_read(ec_i2c)
