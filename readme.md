@@ -1,6 +1,11 @@
-# lib python for use EZO circuit with EC and pH probes on Raspberry pi on i2c bus
+# Python lib to use Atlas Scientific circuit on smbus/i2c
 
-### todo add whole circuits (OD / ORP / CO2 / PRESSURE / FLOW) on the libs
-### todo add better readme
-### add examples
-### add wiring diagram
+## only tested on Raspberry Pi 3 A+
+## works with EC https://www.atlas-scientific.com/circuits/conductivity-oem-circuit/
+## works with pH https://www.atlas-scientific.com/circuits/ph-oem-circuit/
+
+### todo list
+- add compatibility with all circuits (OD / ORP / CO2 / PRESSURE / FLOW)
+- add better readme
+- add examples
+- add wiring diagram
