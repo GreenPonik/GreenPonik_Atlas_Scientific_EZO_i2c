@@ -1,5 +1,5 @@
 # !/usr/bin/python
-from src/ezo_commons import *
+from commons_i2c import *
 
 # Getters pH methods
 

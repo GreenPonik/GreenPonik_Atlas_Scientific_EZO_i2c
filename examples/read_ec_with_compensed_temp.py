@@ -1,13 +1,13 @@
-from src/atlas_zero_i2c import AtlasEzoI2c
-from src/ezo_ec import *
+from GreenPonik_Atlas_Scientific_i2c.GreenPonik_Atlas_Scientific_i2c import AtlasI2c
+from GreenPonik_Atlas_Scientific_i2c.ec_i2c import *
 from GreenPonik_thermistor_10k import GreenPonik_thermistor_10k
 
 if __name__ == "__main__":
     print("get device infos")
-    ezo_ec = AtlasI2C(address=AtlasEzoI2c.AS_SENSORS_ADDS_TXT_TO_DECIMAL['EC'], moduletype="EC", name="EC")
-    print(get_device_info(ezo_ec))
+    ec_i2c = AtlasI2C(address=AtlasI2c.AS_SENSORS_ADDS_TXT_TO_DECIMAL['EC'], moduletype="EC", name="EC")
+    print(get_device_info(ec_i2c))
     print("get current temperature compensated")
-    print(get_temperature(ezo_ec))
+    print(get_temperature(ec_i2c))
     temp = GreenPonik_thermistor_10k.read_temp()
-    print(set_temperature(ezo_ec, temp))
-    get_read(ezo_ec)
+    print(set_temperature(ec_i2c, temp))
+    get_read(ec_i2c)
