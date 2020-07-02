@@ -1,5 +1,5 @@
 # !/usr/bin/python
-from commons_i2c import *
+import commons_i2c
 
 # Getters pH methods
 

@@ -1,5 +1,6 @@
-from GreenPonik_Altas_Scientific_i2c.GreenPonik_Altas_Scientific_i2c import AtlasI2c
-from GreenPonik_Atlas_Scientific_i2c.ph_i2c import *
+from GreenPonik_Altas_Scientific_i2c import AtlasI2c
+from ph_i2c
+from commons_i2c import get_device_info, get_read
 
 if __name__ == "__main__":
     print("get device infos")
