@@ -1,4 +1,17 @@
-__pycache__
+# general things to ignore
+build/
+dist/
+*.egg-info/
+*.egg
+*.py[cod]
+__pycache__/
 *.pyc
-.vscode
+*.so
+*~
 venv/
+.vscode/
+.pytest_cache
+
+# due to using tox and pytest
+.tox
+.cache

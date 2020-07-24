@@ -1,2 +1,7 @@
-https://github.com/GreenPonik/GreenPonik_Altas_Scientific_i2c
-https://github.com/GreenPonik/GreenPonik_thermistor_10k
+-e git+https://github.com/GreenPonik/GreenPonik_Altas_Scientific_i2c.git
+-e git+https://github.com/GreenPonik/GreenPonik_thermistor_10k.git
+tox==3.18.0
+twine==3.2.0
+pytest==5.4.3
+flake8==3.8.3
+check-manifest==0.42

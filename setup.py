@@ -1,9 +1,13 @@
-import os
 from setuptools import setup, find_packages
+import os
+import pathlib
+import sys
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.realpath(__file__)), "src"))
 
+here = pathlib.Path(__file__).parent.resolve()
 
-def here(filename):
-    return os.path.join(os.path.dirname(__file__), filename)
+# Get the long description from the README file
+long_description = (here / 'README.md').read_text(encoding='utf-8')
 
 
 def load_version():
@@ -14,22 +18,27 @@ def load_version():
         exec(fd.read(), version)
     return version["__version__"]
 
-
-def long_description():
-    with open("readme.md", "r") as fd:
-        return fd.read()
-
-
 setup(
-    name="GreenPonik-Atlas-Scientific-i2c",
-    description="Use Atlas Scientific on smbus/I2C",
-    url="https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_i2c",
+    name="greenponik-atlas-scientific-i2c",
+    version=load_version(),
     author="GreenPonik SAS",
     author_email="contact@greenponik.com",
-    package_dir={"": "src"},
-    packages=find_packages(where="src"),
-    python_requires=">=3.6",
-    version=load_version(),
-    long_description=long_description(),
+    description="GreenPonik wrapper to use Atlas Scientific on SMBus/I2C",
+    long_description=long_description,
     long_description_content_type="text/markdown",
+    url="https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_i2c",
+    license="MIT",
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+    ],
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
+    python_requires=">=3.6",
+    project_urls={  # Optional
+        'Source': 'https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_i2c/',
+        'Bug Reports': 'https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_i2c/issues',
+    },
+    keywords="GreenPonik hydroponics SMBus/i2c EC Electro Conductivity and pH reader Atlas Scientific python hardware diy iot raspberry pi",
 )
