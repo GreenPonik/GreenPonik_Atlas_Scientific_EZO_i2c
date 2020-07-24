@@ -35,8 +35,8 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    packages=find_packages(where="src"),
-    package_dir={"": "src"},
+    packages=find_packages(where="src/GreenPonik_Atlas_Scientific_i2c"),
+    package_dir={"": "src/GreenPonik_Atlas_Scientific_i2c"},
     python_requires=">=3.6",
     project_urls={  # Optional
         'Source': 'https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_i2c/',
