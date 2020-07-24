@@ -4,7 +4,8 @@ from GreenPonik_thermistor_10k import read_temp
 
 if __name__ == "__main__":
     print("get device infos")
-    ec_i2c = AtlasI2c(address=AtlasI2c.AS_SENSORS_ADDS_TXT_TO_DECIMAL['EC'], moduletype="EC", name="EC")
+    ec_i2c = AtlasI2c(
+        address=AtlasI2c.AS_SENSORS_ADDS_TXT_TO_DECIMAL['EC'], moduletype="EC", name="EC")
     print(commons_i2c.get_device_info(ec_i2c))
     print("get current temperature compensated")
     print(commons_i2c.get_temperature(ec_i2c))

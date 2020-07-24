@@ -5,3 +5,9 @@ twine==3.2.0
 pytest==5.4.3
 flake8==3.8.3
 check-manifest==0.42
+
+# install from github
+# pip3 install -e git+https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_i2c.git#egg=greenponik-altas-scientific-i2c
+
+# upgrade from github
+# pip3 install -e git+https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_i2c.git#egg=greenponik-altas-scientific-i2c --upgrade
