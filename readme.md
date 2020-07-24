@@ -9,7 +9,7 @@
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=GreenPonik_GreenPonik_Atlas_Scientific_i2c&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=GreenPonik_GreenPonik_Atlas_Scientific_i2c)
 
 
-![Upload Python Package](https://github.com/GreenPonik/GreenPonik_OneWire_DS18B20/workflows/Upload%20Python%20Package/badge.svg?event=release)
+![Upload Python Package](https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_i2c/workflows/Upload%20Python%20Package/badge.svg?event=release)
 
 
 # GreenPonik_Atlas_Scientific_i2c.py Library for Raspberry pi
