@@ -12,9 +12,12 @@
 ![Upload Python Package](https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_i2c/workflows/Upload%20Python%20Package/badge.svg?event=release)
 
 
-# GreenPonik_Atlas_Scientific_i2c.py Library for Raspberry pi
+## GreenPonik_Atlas_Scientific_i2c.py Library for Raspberry pi
 ---------------------------------------------------------
 this is a python lib to use Atlas Scientific circuits on smbus/i2c bus.
+
+## ! Only tested on Raspberry Pi 3 A+ !<br>
+
 
 ## Table of Contents
 
@@ -30,8 +33,6 @@ this is a python lib to use Atlas Scientific circuits on smbus/i2c bus.
 ```python
 from GreenPonik_Altas_Scientific_i2c import AtlasI2c
 ```
-
-## ! Only tested on Raspberry Pi 3 A+ !<br>
 
 ## Examples
 
