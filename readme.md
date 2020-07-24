@@ -1,12 +1,12 @@
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=GreenPonik_Atlas_Scientific_i2c&metric=alert_status)](https://sonarcloud.io/dashboard?id=GreenPonik_Atlas_Scientific_i2c)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=GreenPonik_Atlas_Scientific_i2c&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=GreenPonik_Atlas_Scientific_i2c)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=GreenPonik_GreenPonik_Atlas_Scientific_i2c&metric=alert_status)](https://sonarcloud.io/dashboard?id=GreenPonik_GreenPonik_Atlas_Scientific_i2c)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=GreenPonik_GreenPonik_Atlas_Scientific_i2c&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=GreenPonik_GreenPonik_Atlas_Scientific_i2c)
 
-[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=GreenPonik_Atlas_Scientific_i2c&metric=ncloc)](https://sonarcloud.io/dashboard?id=GreenPonik_Atlas_Scientific_i2c)
-[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=GreenPonik_Atlas_Scientific_i2c&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=GreenPonik_Atlas_Scientific_i2c)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=GreenPonik_GreenPonik_Atlas_Scientific_i2c&metric=ncloc)](https://sonarcloud.io/dashboard?id=GreenPonik_GreenPonik_Atlas_Scientific_i2c)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=GreenPonik_GreenPonik_Atlas_Scientific_i2c&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=GreenPonik_GreenPonik_Atlas_Scientific_i2c)
 
-[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=GreenPonik_Atlas_Scientific_i2c&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=GreenPonik_Atlas_Scientific_i2c)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=GreenPonik_Atlas_Scientific_i2c&metric=security_rating)](https://sonarcloud.io/dashboard?id=GreenPonik_Atlas_Scientific_i2c)
-[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=GreenPonik_Atlas_Scientific_i2c&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=GreenPonik_Atlas_Scientific_i2c)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=GreenPonik_GreenPonik_Atlas_Scientific_i2c&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=GreenPonik_GreenPonik_Atlas_Scientific_i2c)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=GreenPonik_GreenPonik_Atlas_Scientific_i2c&metric=security_rating)](https://sonarcloud.io/dashboard?id=GreenPonik_GreenPonik_Atlas_Scientific_i2c)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=GreenPonik_GreenPonik_Atlas_Scientific_i2c&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=GreenPonik_GreenPonik_Atlas_Scientific_i2c)
 
 
 ![Upload Python Package](https://github.com/GreenPonik/GreenPonik_OneWire_DS18B20/workflows/Upload%20Python%20Package/badge.svg?event=release)
@@ -42,8 +42,7 @@ works with EC https://www.atlas-scientific.com/circuits/conductivity-oem-circuit
 >https://github.com/GreenPonik/GreenPonik_thermistor_10k<br>
 
 ```python
-from GreenPonik_Altas_Scientific_i2c import AtlasI2c
-from GreenPonik_Atlas_Scientific_i2c import ec_i2c
+from GreenPonik_Altas_Scientific_i2c import AtlasI2c, ec_i2c
 from GreenPonik_thermistor_10k import GreenPonik_thermistor_10k
 
 if __name__ == "__main__":
