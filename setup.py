@@ -2,7 +2,8 @@ from setuptools import setup, find_packages
 import os
 import pathlib
 import sys
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.realpath(__file__)), "src"))
+sys.path.insert(0, os.path.join(
+    os.path.dirname(os.path.realpath(__file__)), "src"))
 
 here = pathlib.Path(__file__).parent.resolve()
 
@@ -17,6 +18,7 @@ def load_version():
     with open(version_file) as fd:
         exec(fd.read(), version)
     return version["__version__"]
+
 
 setup(
     name="greenponik-atlas-scientific-i2c",
@@ -41,4 +43,5 @@ setup(
         'Bug Reports': 'https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_i2c/issues',
     },
     keywords="GreenPonik hydroponics SMBus/i2c EC Electro Conductivity and pH reader Atlas Scientific python hardware diy iot raspberry pi",
+    py_modules=["GreenPonik_Atlas_Scientific_i2c"],
 )
