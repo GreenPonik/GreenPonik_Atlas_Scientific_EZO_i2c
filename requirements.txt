@@ -1,5 +1,5 @@
--e git+https://github.com/GreenPonik/GreenPonik_Altas_Scientific_i2c.git
--e git+https://github.com/GreenPonik/GreenPonik_thermistor_10k.git
+-e git+https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_i2c.git#egg=greenponik-altas-scientific_i2c
+-e git+https://github.com/GreenPonik/GreenPonik_thermistor_10k.git#egg=greenponik-thermistor-10k
 tox==3.18.0
 twine==3.2.0
 pytest==5.4.3
