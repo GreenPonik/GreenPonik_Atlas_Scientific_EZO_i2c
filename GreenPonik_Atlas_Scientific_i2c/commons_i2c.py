@@ -7,7 +7,7 @@ from GreenPonik_Atlas_Scientific_i2c import AtlasI2c
 
 def get_device_info(device):
     """
-    Get device information
+    @biref Get device information
     @param device = AltasI2c instance
     @return device name, firmware version
     """
@@ -16,7 +16,7 @@ def get_device_info(device):
 
 def get_read(device):
     """
-    Read sensor value
+    @brief Read sensor value
     @param device = AltasI2c instance
     @return string (depending of O parameter)
     """
@@ -25,7 +25,7 @@ def get_read(device):
 
 def get_temperature(device):
     """
-    Get current compensation temperature
+    @brief Get current compensation temperature
     @param device = AltasI2c instance
     @return string ?T,<temperature value>
     """
@@ -34,16 +34,16 @@ def get_temperature(device):
 
 def get_calibration(device):
     """
-    Get current calibrations data
+    @brief Get current calibrations data
     @param device = AltasI2c instance
-    @return ??? 
+    @return ?
     """
     return device.query("Cal,?")
 
 
 def get_find(device):
     """
-    Fin devices
+    @brief Fin devices
     @param device = AltasI2c instance
     @return OK
     """
@@ -52,7 +52,7 @@ def get_find(device):
 
 def get_status(device):
     """
-    Get status
+    @brief Get status
     @param device = AltasI2c instance
     @return status of device decode them by using AtlasI2c.AS_RESTART_CODES
     """
@@ -61,7 +61,7 @@ def get_status(device):
 
 def get_led(device):
     """
-    Get led state
+    @brief Get led state
     @param device = AltasI2c instance
     @return string ?L,1 for On / ?L,0 for Off
     """
@@ -70,7 +70,7 @@ def get_led(device):
 
 def get_plock(device):
     """
-    Get Plock status
+    @brief Get Plock status
     @param device = AltasI2c instance
     @return string ?Plock,1 for Locked / ?L,0 for Unlocked
     """
@@ -82,7 +82,7 @@ def get_plock(device):
 
 def set_temperature(device, t=25.0):
     """
-    Set the compensation temperature
+    @brief Set the compensation temperature
     @param device = AltasI2c instance
     @param t = float temperature value
     """
@@ -91,7 +91,7 @@ def set_temperature(device, t=25.0):
 
 def set_calibration_low(device, solution=0.0):
     """
-    calibration 2 points low point 
+    @brief calibration 2 points low point
     @param device = AltasI2c instance
     @param float = low solution calibration
     """
@@ -100,7 +100,7 @@ def set_calibration_low(device, solution=0.0):
 
 def set_calibration_high(device, solution=0.0):
     """
-    calibration 2 points high point
+    @brief calibration 2 points high point
     @param device = AltasI2c instance
     @param float = high solution calibration
     """
@@ -109,7 +109,7 @@ def set_calibration_high(device, solution=0.0):
 
 def set_calibration_clear(device):
     """
-    Clear calibration data
+    @brief Clear calibration data
     @param device = AltasI2c instance
     """
     return device.query("Cal,clear")
@@ -117,31 +117,33 @@ def set_calibration_clear(device):
 
 def set_i2c_addr(device, add):
     """
-    Change the device i2c address
+    @brief Change the device i2c address
     @param device = AltasI2c instance
     @param int = new i2c add
     """
     if not isinstance(add, int):
-        return "only decimal address expected, convert hexa by using AtlasI2c.AS_SENSORS_ADDS_HEXA_TO_DECIMAL"
+        return "only decimal address expected, convert hexa by using \
+             AtlasI2c.AS_SENSORS_ADDS_HEXA_TO_DECIMAL"
     else:
         if add not in AtlasI2c.AS_SENSORS_ADDS_DECIMAL:
-            return "cannot use this i2c address %d check AtlasI2c.AS_SENSORS_ADDS_DECIMAL" % add
+            return "cannot use this i2c address %d check \
+                AtlasI2c.AS_SENSORS_ADDS_DECIMAL" % add
         else:
             return device.query("I2C,%d" % add)
 
 
 def set_led(device, state=1):
     """
-    Change Led state
+    @brief Change Led state
     @param device = AltasI2c instance
-    @param int or bool state = 1 = On / state = 0 = Off 
+    @param int or bool state = 1 = On / state = 0 = Off
     """
     return device.query("L,%d" % state)
 
 
 def set_sleep_mode(device):
     """
-    Enter sleep mode / low power
+    @brief Enter sleep mode / low power
     @param device = AltasI2c instance
     """
     return device.query("Sleep")
@@ -149,7 +151,7 @@ def set_sleep_mode(device):
 
 def set_facory(device):
     """
-    Factory reset, clears calibration, LED on, Response codes enabled
+    @brief Factory reset, clears calibration, LED on, Response codes enabled
     @param device = AltasI2c instance
     """
     return device.query("Factory")
@@ -157,9 +159,8 @@ def set_facory(device):
 
 def set_plock(device, state):
     """
-    Plock is used to lock the changes between I2C and UART
+    @brief Plock is used to lock the changes between I2C and UART
     @param device = AltasI2c instance
     @param int or bool state = 1 = Locked / state = 0 = Unlocked
     """
     return device.query("Plock, %d" % state)
-
