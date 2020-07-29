@@ -13,7 +13,7 @@ long_description = (here / 'README.md').read_text(encoding='utf-8')
 
 def load_version():
     version_file = os.path.join(os.path.dirname(
-        __file__), "src/GreenPonik_Atlas_Scientific_i2c", "version.py")
+        __file__), "GreenPonik_Atlas_Scientific_i2c", "version.py")
     version = {}
     with open(version_file) as fd:
         exec(fd.read(), version)
@@ -35,13 +35,12 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    packages=find_packages(where="src/GreenPonik_Atlas_Scientific_i2c"),
-    package_dir={"": "src/GreenPonik_Atlas_Scientific_i2c"},
-    python_requires=">=3.6",
+    packages=find_packages(),
+    python_requires=">=3.7",
     project_urls={  # Optional
         'Source': 'https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_i2c/',
         'Bug Reports': 'https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_i2c/issues',
     },
     keywords="GreenPonik hydroponics SMBus/i2c EC Electro Conductivity and pH reader Atlas Scientific python hardware diy iot raspberry pi",
-    py_modules=["GreenPonik_Atlas_Scientific_i2c"],
+    # py_modules=["GreenPonik_Atlas_Scientific_i2c"],
 )

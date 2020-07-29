@@ -1,0 +1,69 @@
+\href{https://sonarcloud.io/dashboard?id=GreenPonik_GreenPonik_Atlas_Scientific_i2c}{\texttt{ }} \href{https://sonarcloud.io/dashboard?id=GreenPonik_GreenPonik_Atlas_Scientific_i2c}{\texttt{ }}
+
+\href{https://sonarcloud.io/dashboard?id=GreenPonik_GreenPonik_Atlas_Scientific_i2c}{\texttt{ }} \href{https://sonarcloud.io/dashboard?id=GreenPonik_GreenPonik_Atlas_Scientific_i2c}{\texttt{ }}
+
+\href{https://sonarcloud.io/dashboard?id=GreenPonik_GreenPonik_Atlas_Scientific_i2c}{\texttt{ }} \href{https://sonarcloud.io/dashboard?id=GreenPonik_GreenPonik_Atlas_Scientific_i2c}{\texttt{ }} \href{https://sonarcloud.io/dashboard?id=GreenPonik_GreenPonik_Atlas_Scientific_i2c}{\texttt{ }}
+
+\hypertarget{md__r_e_a_d_m_e_autotoc_md0}{}\doxysubsection{\#\# Green\+Ponik\+\_\+\+Atlas\+\_\+\+Scientific\+\_\+i2c.\+py Library for Raspberry pi}\label{md__r_e_a_d_m_e_autotoc_md0}
+this is a python lib to use Atlas Scientific circuits on smbus/i2c bus.\hypertarget{md__r_e_a_d_m_e_autotoc_md1}{}\doxysubsection{! Only tested on Raspberry Pi 3 A+ !$<$br$>$}\label{md__r_e_a_d_m_e_autotoc_md1}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md2}{}\doxysubsection{Table of Contents}\label{md__r_e_a_d_m_e_autotoc_md2}
+
+\begin{DoxyItemize}
+\item \href{\#h2-id\%2222greenponikatlasscientifici2cpy-library-for-raspberry-pi-4\%22greenponikatlasscientifici2cpy-library-for-raspberry-pih2}{\texttt{ Green\+Ponik\+\_\+\+Atlas\+\_\+\+Scientific\+\_\+i2c.\+py Library for Raspberry pi}}
+\item \href{\#table-of-contents}{\texttt{ Table of Contents}}
+\item \href{\#installation}{\texttt{ Installation}}
+\item \href{\#examples}{\texttt{ Examples}}
+\item \href{\#credits}{\texttt{ Credits}}
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md3}{}\doxysubsection{Installation}\label{md__r_e_a_d_m_e_autotoc_md3}
+$>$git clone \href{https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_i2c.git}{\texttt{ https\+://github.\+com/\+Green\+Ponik/\+Green\+Ponik\+\_\+\+Atlas\+\_\+\+Scientific\+\_\+i2c.\+git}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{from GreenPonik\_Altas\_Scientific\_i2c import AtlasI2c}
+\end{DoxyCode}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md4}{}\doxysubsection{Examples}\label{md__r_e_a_d_m_e_autotoc_md4}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md5}{}\doxysubsubsection{Read EC}\label{md__r_e_a_d_m_e_autotoc_md5}
+works with EC \href{https://www.atlas-scientific.com/circuits/conductivity-oem-circuit/}{\texttt{ https\+://www.\+atlas-\/scientific.\+com/circuits/conductivity-\/oem-\/circuit/}}~\newline
+ \hypertarget{md__r_e_a_d_m_e_autotoc_md6}{}\doxyparagraph{Dependencies\+:}\label{md__r_e_a_d_m_e_autotoc_md6}
+$>$\href{https://github.com/GreenPonik/GreenPonik_Altas_Scientific_i2c}{\texttt{ https\+://github.\+com/\+Green\+Ponik/\+Green\+Ponik\+\_\+\+Altas\+\_\+\+Scientific\+\_\+i2c}}~\newline
+ $>$\href{https://github.com/GreenPonik/GreenPonik_thermistor_10k}{\texttt{ https\+://github.\+com/\+Green\+Ponik/\+Green\+Ponik\+\_\+thermistor\+\_\+10k}}~\newline
+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{from GreenPonik\_Altas\_Scientific\_i2c import AtlasI2c, ec\_i2c}
+\DoxyCodeLine{from GreenPonik\_thermistor\_10k import GreenPonik\_thermistor\_10k}
+\DoxyCodeLine{}
+\DoxyCodeLine{if \_\_name\_\_ == "\_\_main\_\_":}
+\DoxyCodeLine{    print("get device infos")}
+\DoxyCodeLine{    ec\_i2c = AtlasI2c(address=AtlasI2c.AS\_SENSORS\_ADDS\_TXT\_TO\_DECIMAL['EC'], moduletype="EC", name="EC")}
+\DoxyCodeLine{    print(get\_device\_info(ec\_i2c))}
+\DoxyCodeLine{    print("get current temperature compensated")}
+\DoxyCodeLine{    print(get\_temperature(ec\_i2c))}
+\DoxyCodeLine{    t = GreenPonik\_thermistor\_10k.read\_temp()}
+\DoxyCodeLine{    print(set\_temperature(ec\_i2c, t))}
+\DoxyCodeLine{    print(get\_read(ec\_i2c))}
+\end{DoxyCode}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md7}{}\doxysubsubsection{Read pH}\label{md__r_e_a_d_m_e_autotoc_md7}
+works with pH \href{https://www.atlas-scientific.com/circuits/ph-oem-circuit/}{\texttt{ https\+://www.\+atlas-\/scientific.\+com/circuits/ph-\/oem-\/circuit/}}~\newline
+ \hypertarget{md__r_e_a_d_m_e_autotoc_md8}{}\doxyparagraph{Dependencies\+:}\label{md__r_e_a_d_m_e_autotoc_md8}
+$>$\href{https://github.com/GreenPonik/GreenPonik_Altas_Scientific_i2c}{\texttt{ https\+://github.\+com/\+Green\+Ponik/\+Green\+Ponik\+\_\+\+Altas\+\_\+\+Scientific\+\_\+i2c}}~\newline
+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{from GreenPonik\_Altas\_Scientific\_i2c.GreenPonik\_Altas\_Scientific\_i2c import AtlasI2c}
+\DoxyCodeLine{from GreenPonik\_Atlas\_Scientific\_i2c.ph\_i2c import *}
+\DoxyCodeLine{}
+\DoxyCodeLine{if \_\_name\_\_ == "\_\_main\_\_":}
+\DoxyCodeLine{    print("get device infos")}
+\DoxyCodeLine{    ph\_i2c = AtlasI2c(address=AtlasI2c.AS\_SENSORS\_ADDS\_TXT\_TO\_DECIMAL['PH'], moduletype="PH", name="PH")}
+\DoxyCodeLine{    print(get\_device\_info(ph\_i2c))}
+\DoxyCodeLine{    print(get\_read(ph\_i2c))}
+\end{DoxyCode}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md9}{}\doxysubsection{todo list}\label{md__r_e_a_d_m_e_autotoc_md9}
+
+\begin{DoxyItemize}
+\item add calibration workflow in examples
+\item package it on pypi
+\item add compatibility with all circuits (OD / O\+RP / C\+O2 / P\+R\+E\+S\+S\+U\+RE / F\+L\+OW)
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md10}{}\doxysubsection{Credits}\label{md__r_e_a_d_m_e_autotoc_md10}
+Write by Mickael Lehoux, from \href{https://www.greenponik.com}{\texttt{ Green\+Ponik}}, 2020 
