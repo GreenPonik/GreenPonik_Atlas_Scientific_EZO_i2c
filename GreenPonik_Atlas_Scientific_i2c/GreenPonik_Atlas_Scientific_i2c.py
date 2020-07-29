@@ -1,3 +1,5 @@
+#! /usr/bin/python
+
 """
 ####################################################################
 ####################################################################
@@ -11,7 +13,6 @@ Class to communicate with Atlas Scientific sensors in I2C mode.
 Source code is based on examples from Atlas Scientific:
 https://github.com/AtlasScientific/Raspberry-Pi-sample-code/blob/master/AtlasI2C.py
 """
-# !/usr/bin/python
 
 import io
 import sys
@@ -277,7 +278,7 @@ class CommonsI2c:
         """
         @brief Get current calibrations data
         @param device = AltasI2c instance
-        @return ?
+        @return ?CAL,<current calibration>
         """
         return device.query("Cal,?")
 
@@ -379,7 +380,8 @@ class CommonsI2c:
 
     def set_facory(device):
         """
-        @brief Factory reset, clears calibration, LED on, Response codes enabled
+        @brief Factory reset, clears calibration, LED on,
+        Response codes enabled
         @param device = AltasI2c instance
         """
         return device.query("Factory")

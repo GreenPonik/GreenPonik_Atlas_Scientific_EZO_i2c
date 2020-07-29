@@ -11,19 +11,20 @@ from GreenPonik_Atlas_Scientific_i2c.GreenPonik_Atlas_Scientific_i2c import (
 class TestGreenPonik_altals_Scientifics_I2C(unittest.TestCase):
 
     def test_get_device_info(self):
-        device = AtlasI2c(
-            address=AtlasI2c.AS_SENSORS_ADDS_TXT_TO_DECIMAL['EC'],
-            moduletype="EC",
-            name="EC"
-        )
+        device = AtlasI2c()
+        CommonsI2c.set_i2c_addr(device,
+                                AtlasI2c.AS_SENSORS_ADDS_TXT_TO_DECIMAL['EC']
+                                )
+        #     "EC",
+        #     "EC"
         infos = CommonsI2c.get_device_info(device)
         self.assertEqual(infos, "bob")
 
     def test_get_read(self):
         device = AtlasI2c(
-            address=AtlasI2c.AS_SENSORS_ADDS_TXT_TO_DECIMAL['EC'],
-            moduletype="EC",
-            name="EC"
+            AtlasI2c.AS_SENSORS_ADDS_TXT_TO_DECIMAL['EC'],
+            "EC",
+            "EC"
         )
         value = CommonsI2c.get_read(device)
         self.assertEqual(value, "tutu")
