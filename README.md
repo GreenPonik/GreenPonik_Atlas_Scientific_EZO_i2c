@@ -21,17 +21,36 @@ this is a python lib to use Atlas Scientific circuits on smbus/i2c bus.
 
 ## Table of Contents
 
-- [GreenPonik_Atlas_Scientific_i2c.py Library for Raspberry pi](#h2-id%2222greenponikatlasscientifici2cpy-library-for-raspberry-pi-4%22greenponikatlasscientifici2cpy-library-for-raspberry-pih2)
+- [GreenPonik_Atlas_Scientific_i2c.py Library for Raspberry pi](#GreenPonikAtlasScientifici2cpy-library-for-raspberry-pi)
 - [Table of Contents](#table-of-contents)
 - [Installation](#installation)
+- [Methods](#methods)
 - [Examples](#examples)
 - [Credits](#credits)
 
 
 ## Installation
->git clone https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_i2c.git
+```shell
+> git clone https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_i2c.git
+cd GreenPonik_Atlas_Scientific_i2c
+pip3 install -r requirements.txt
+
+or
+
+> pip3 install greenponik-atlas-scientific-i2c
+```
 ```python
-from GreenPonik_Altas_Scientific_i2c import AtlasI2c
+
+import GreenPonik_Altas_Scientific_i2c
+
+```
+
+## Methods
+
+```python
+"""
+python methods here soon....
+"""
 ```
 
 ## Examples
