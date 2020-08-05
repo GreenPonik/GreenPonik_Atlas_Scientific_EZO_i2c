@@ -187,7 +187,8 @@ class AtlasI2c:
 
     def read(self, num_of_bytes=31):
         """
-        reads a specified number of bytes from I2C, then parses and displays the result
+        reads a specified number of bytes from I2C,
+        then parses and displays the result
         """
         raw_data = self.file_read.read(num_of_bytes)
         response = self.get_response(raw_data=raw_data)
@@ -196,7 +197,9 @@ class AtlasI2c:
 
         if is_valid:
             char_list = self.handle_raspi_glitch(response[1:])
-            result = "Success " + self.get_device_info() + ": " + str(''.join(char_list))
+            result = "Success "
+            + self.get_device_info() + ": "
+            + str(''.join(char_list))
             # result = "Success: " +  str(''.join(char_list))
         else:
             result = "Error " + self.get_device_info() + ": " + error_code
@@ -407,7 +410,8 @@ class ECI2c:
 
     def get_ouput_parameters(self, device):
         """
-        @brief Get the current list of parameters a returned when call read method
+        @brief Get the current list of parameters has returned
+        when call read method
         EC = electro conductivity µS/cm
         TDS = total dissolved solids ppm
         S = salinity PSU (ppt)

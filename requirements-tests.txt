@@ -1,1 +1,0 @@
-greenponik-thermistor-10k>=0.0.2
