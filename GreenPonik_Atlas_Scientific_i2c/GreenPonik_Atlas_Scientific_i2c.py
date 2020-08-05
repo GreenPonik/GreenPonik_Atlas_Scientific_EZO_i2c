@@ -197,8 +197,8 @@ class AtlasI2c:
 
         if is_valid:
             char_list = self.handle_raspi_glitch(response[1:])
-            result = "Success "
-            + self.get_device_info() + ": "
+            result = "Success " + self.get_device_info()
+            + ": "
             + str(''.join(char_list))
             # result = "Success: " +  str(''.join(char_list))
         else:
