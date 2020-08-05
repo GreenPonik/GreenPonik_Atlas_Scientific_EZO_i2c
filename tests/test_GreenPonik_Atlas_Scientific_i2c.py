@@ -20,14 +20,14 @@ class TestGreenPonik_altals_Scientifics_I2C(unittest.TestCase):
         infos = CommonsI2c.get_device_info(device)
         self.assertEqual(infos, "bob")
 
-    def test_get_read(self):
-        device = AtlasI2c(
-            AtlasI2c.AS_SENSORS_ADDS_TXT_TO_DECIMAL['EC'],
-            "EC",
-            "EC"
-        )
-        value = CommonsI2c.get_read(device)
-        self.assertEqual(value, "tutu")
+    # def test_get_read(self):
+    #     device = AtlasI2c(
+    #         AtlasI2c.AS_SENSORS_ADDS_TXT_TO_DECIMAL['EC'],
+    #         "EC",
+    #         "EC"
+    #     )
+    #     value = CommonsI2c.get_read(device)
+    #     self.assertEqual(value, "tutu")
 
 
 if __name__ == '__main__':

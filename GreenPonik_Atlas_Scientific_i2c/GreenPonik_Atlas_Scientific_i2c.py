@@ -250,7 +250,7 @@ class AtlasI2c:
 
 class CommonsI2c:
     # Getters commons methods
-    def get_device_info(device):
+    def get_device_info(self, device):
         """
         @biref Get device information
         @param device = AltasI2c instance
@@ -258,7 +258,7 @@ class CommonsI2c:
         """
         return device.query("i")
 
-    def get_read(device):
+    def get_read(self, device):
         """
         @brief Read sensor value
         @param device = AltasI2c instance
@@ -266,7 +266,7 @@ class CommonsI2c:
         """
         return device.query("R")
 
-    def get_temperature(device):
+    def get_temperature(self, device):
         """
         @brief Get current compensation temperature
         @param device = AltasI2c instance
@@ -274,7 +274,7 @@ class CommonsI2c:
         """
         return device.query("T,?")
 
-    def get_calibration(device):
+    def get_calibration(self, device):
         """
         @brief Get current calibrations data
         @param device = AltasI2c instance
@@ -282,7 +282,7 @@ class CommonsI2c:
         """
         return device.query("Cal,?")
 
-    def get_find(device):
+    def get_find(self, device):
         """
         @brief Fin devices
         @param device = AltasI2c instance
@@ -290,7 +290,7 @@ class CommonsI2c:
         """
         return device.query("Find")
 
-    def get_status(device):
+    def get_status(self, device):
         """
         @brief Get status
         @param device = AltasI2c instance
@@ -298,7 +298,7 @@ class CommonsI2c:
         """
         return device.query("Status")
 
-    def get_led(device):
+    def get_led(self, device):
         """
         @brief Get led state
         @param device = AltasI2c instance
@@ -306,7 +306,7 @@ class CommonsI2c:
         """
         return device.query("L,?")
 
-    def get_plock(device):
+    def get_plock(self, device):
         """
         @brief Get Plock status
         @param device = AltasI2c instance
@@ -316,7 +316,7 @@ class CommonsI2c:
 
     # Setters commons methods
 
-    def set_temperature(device, t=25.0):
+    def set_temperature(self, device, t=25.0):
         """
         @brief Set the compensation temperature
         @param device = AltasI2c instance
@@ -324,7 +324,7 @@ class CommonsI2c:
         """
         return device.query("T,%.2f" % t)
 
-    def set_calibration_low(device, solution=0.0):
+    def set_calibration_low(self, device, solution=0.0):
         """
         @brief calibration 2 points low point
         @param device = AltasI2c instance
@@ -332,7 +332,7 @@ class CommonsI2c:
         """
         return device.query("Cal,low,%.2f" % solution)
 
-    def set_calibration_high(device, solution=0.0):
+    def set_calibration_high(self, device, solution=0.0):
         """
         @brief calibration 2 points high point
         @param device = AltasI2c instance
@@ -340,14 +340,14 @@ class CommonsI2c:
         """
         return device.query("Cal,high,%.2f" % solution)
 
-    def set_calibration_clear(device):
+    def set_calibration_clear(self, device):
         """
         @brief Clear calibration data
         @param device = AltasI2c instance
         """
         return device.query("Cal,clear")
 
-    def set_i2c_addr(device, add):
+    def set_i2c_addr(self, device, add):
         """
         @brief Change the device i2c address
         @param device = AltasI2c instance
@@ -363,7 +363,7 @@ class CommonsI2c:
             else:
                 return device.query("I2C,%d" % add)
 
-    def set_led(device, state=1):
+    def set_led(self, device, state=1):
         """
         @brief Change Led state
         @param device = AltasI2c instance
@@ -371,14 +371,14 @@ class CommonsI2c:
         """
         return device.query("L,%d" % state)
 
-    def set_sleep_mode(device):
+    def set_sleep_mode(self, device):
         """
         @brief Enter sleep mode / low power
         @param device = AltasI2c instance
         """
         return device.query("Sleep")
 
-    def set_facory(device):
+    def set_facory(self, device):
         """
         @brief Factory reset, clears calibration, LED on,
         Response codes enabled
@@ -386,7 +386,7 @@ class CommonsI2c:
         """
         return device.query("Factory")
 
-    def set_plock(device, state):
+    def set_plock(self, device, state):
         """
         @brief Plock is used to lock the changes between I2C and UART
         @param device = AltasI2c instance
@@ -397,7 +397,7 @@ class CommonsI2c:
 
 class ECI2c:
     # Getters EC methods
-    def get_k_probe(device):
+    def get_k_probe(self, device):
         """
         @brief Get current ec probe k
         @param AtlasI2c instance
@@ -405,7 +405,7 @@ class ECI2c:
         """
         return device.query("K,?")
 
-    def get_ouput_parameters(device):
+    def get_ouput_parameters(self, device):
         """
         @brief Get the current list of parameters a returned when call read method
         EC = electro conductivity µS/cm
@@ -420,7 +420,7 @@ class ECI2c:
 
     # Setters EC methods
 
-    def set_k_probe(device, k):
+    def set_k_probe(self, device, k):
         """
         @brief Set the ec probe k
         @param AtlasI2c instance
@@ -428,14 +428,14 @@ class ECI2c:
         """
         return device.query("K,%.2f" % k)
 
-    def set_calibration_dry(device):
+    def set_calibration_dry(self, device):
         """
         @biref Set the calibration of probe in the air
         @param AtlasI2c instance
         """
         return device.query("Cal,dry")
 
-    def set_calibration_one_point(device, point):
+    def set_calibration_one_point(self, device, point):
         """
         @brief One point calibration
         @param AtlasI2c instance
@@ -443,7 +443,7 @@ class ECI2c:
         """
         return device.query("Cal,%d" % point)
 
-    def set_output_parameter(device, param, state):
+    def set_output_parameter(self, device, param, state):
         """
         @brief define the output string of read method
         @param string EC/TDS/S/SG
@@ -455,7 +455,7 @@ class ECI2c:
 class PHI2c:
     # Getters pH methods
 
-    def get_slope_probe(device):
+    def get_slope_probe(self, device):
         """
         @brief Get the pH probe slope
         @param AtlasI2c instance
@@ -467,7 +467,7 @@ class PHI2c:
 
     # Setters pH methods
 
-    def set_calibration_mid(device, solution=7.00):
+    def set_calibration_mid(self, device, solution=7.00):
         """
         @brief Calibration the middle point
         @param AtlasI2c instance
