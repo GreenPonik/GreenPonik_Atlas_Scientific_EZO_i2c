@@ -5,7 +5,7 @@ import sys
 
 class FCNTLMock:
     def __init__(self):
-        return True
+        pass
 
 
 class BoardMock:
@@ -29,6 +29,7 @@ sys.modules["fcntl"] = FCNTLMock
 sys.modules["board"] = BoardMock()
 sys.modules["busio"] = BusioMock()
 
+
 from GreenPonik_Atlas_Scientific_i2c.GreenPonik_Atlas_Scientific_i2c import (
     AtlasI2c,
     CommonsI2c
@@ -37,7 +38,10 @@ from GreenPonik_Atlas_Scientific_i2c.GreenPonik_Atlas_Scientific_i2c import (
 
 class TestGreenPonik_altals_Scientifics_I2C(unittest.TestCase):
 
-    @patch("GreenPonik_Atlas_Scientific_i2c.GreenPonik_Atlas_Scientific_i2c.CommonsI2c")
+    @patch(
+        "GreenPonik_Atlas_Scientific_i2c.\
+        GreenPonik_Atlas_Scientific_i2c.CommonsI2c"
+    )
     def test_get_device_info(self, MockCommonsI2c):
         device = AtlasI2c()
         common = MockCommonsI2c()
@@ -49,7 +53,10 @@ class TestGreenPonik_altals_Scientifics_I2C(unittest.TestCase):
         self.assertIsNotNone(addr)
         self.assertEqual(addr, expected)
 
-    @patch("GreenPonik_Atlas_Scientific_i2c.GreenPonik_Atlas_Scientific_i2c.CommonsI2c")
+    @patch(
+        "GreenPonik_Atlas_Scientific_i2c.\
+        GreenPonik_Atlas_Scientific_i2c.CommonsI2c"
+    )
     def test_get_read(self, MockCommonsI2c):
         device = AtlasI2c()
         common = MockCommonsI2c()
