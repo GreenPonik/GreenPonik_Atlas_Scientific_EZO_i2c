@@ -77,22 +77,35 @@ $(function() {
 <h2><a class="anchor" id="autotoc_md2"></a>
 Table of Contents</h2>
 <ul>
-<li><a href="#h2-id%2222greenponikatlasscientifici2cpy-library-for-raspberry-pi-4%22greenponikatlasscientifici2cpy-library-for-raspberry-pih2">GreenPonik_Atlas_Scientific_i2c.py Library for Raspberry pi</a></li>
+<li><a href="#GreenPonikAtlasScientifici2cpy-library-for-raspberry-pi">GreenPonik_Atlas_Scientific_i2c.py Library for Raspberry pi</a></li>
 <li><a href="#table-of-contents">Table of Contents</a></li>
 <li><a href="#installation">Installation</a></li>
+<li><a href="#methods">Methods</a></li>
 <li><a href="#examples">Examples</a></li>
 <li><a href="#credits">Credits</a></li>
 </ul>
 <h2><a class="anchor" id="autotoc_md3"></a>
 Installation</h2>
-<p>&gt;git clone <a href="https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_i2c.git">https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_i2c.git</a> </p><div class="fragment"><div class="line">from GreenPonik_Altas_Scientific_i2c import AtlasI2c</div>
+<div class="fragment"><div class="line">&gt; git clone https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_i2c.git</div>
+<div class="line">cd GreenPonik_Atlas_Scientific_i2c</div>
+<div class="line">pip3 install -r requirements.txt</div>
+<div class="line"> </div>
+<div class="line">or</div>
+<div class="line"> </div>
+<div class="line">&gt; pip3 install greenponik-atlas-scientific-i2c</div>
+</div><!-- fragment --><div class="fragment"><div class="line">import GreenPonik_Altas_Scientific_i2c</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md4"></a>
+Methods</h2>
+<div class="fragment"><div class="line">&quot;&quot;&quot;</div>
+<div class="line">python methods here soon....</div>
+<div class="line">&quot;&quot;&quot;</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md5"></a>
 Examples</h2>
-<h3><a class="anchor" id="autotoc_md5"></a>
+<h3><a class="anchor" id="autotoc_md6"></a>
 Read EC</h3>
 <p>works with EC <a href="https://www.atlas-scientific.com/circuits/conductivity-oem-circuit/">https://www.atlas-scientific.com/circuits/conductivity-oem-circuit/</a><br  />
  </p>
-<h4><a class="anchor" id="autotoc_md6"></a>
+<h4><a class="anchor" id="autotoc_md7"></a>
 Dependencies:</h4>
 <p>&gt;<a href="https://github.com/GreenPonik/GreenPonik_Altas_Scientific_i2c">https://github.com/GreenPonik/GreenPonik_Altas_Scientific_i2c</a><br  />
  &gt;<a href="https://github.com/GreenPonik/GreenPonik_thermistor_10k">https://github.com/GreenPonik/GreenPonik_thermistor_10k</a><br  />
@@ -109,11 +122,11 @@ Dependencies:</h4>
 <div class="line">    t = GreenPonik_thermistor_10k.read_temp()</div>
 <div class="line">    print(set_temperature(ec_i2c, t))</div>
 <div class="line">    print(get_read(ec_i2c))</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md7"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md8"></a>
 Read pH</h3>
 <p>works with pH <a href="https://www.atlas-scientific.com/circuits/ph-oem-circuit/">https://www.atlas-scientific.com/circuits/ph-oem-circuit/</a><br  />
  </p>
-<h4><a class="anchor" id="autotoc_md8"></a>
+<h4><a class="anchor" id="autotoc_md9"></a>
 Dependencies:</h4>
 <p>&gt;<a href="https://github.com/GreenPonik/GreenPonik_Altas_Scientific_i2c">https://github.com/GreenPonik/GreenPonik_Altas_Scientific_i2c</a><br  />
 </p>
@@ -125,14 +138,14 @@ Dependencies:</h4>
 <div class="line">    ph_i2c = AtlasI2c(address=AtlasI2c.AS_SENSORS_ADDS_TXT_TO_DECIMAL[&#39;PH&#39;], moduletype=&quot;PH&quot;, name=&quot;PH&quot;)</div>
 <div class="line">    print(get_device_info(ph_i2c))</div>
 <div class="line">    print(get_read(ph_i2c))</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md9"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md10"></a>
 todo list</h2>
 <ul>
 <li>add calibration workflow in examples</li>
 <li>package it on pypi</li>
 <li>add compatibility with all circuits (OD / ORP / CO2 / PRESSURE / FLOW)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md10"></a>
+<h2><a class="anchor" id="autotoc_md11"></a>
 Credits</h2>
 <p>Write by Mickael Lehoux, from <a href="https://www.greenponik.com">GreenPonik</a>, 2020 </p>
 </div></div><!-- contents -->

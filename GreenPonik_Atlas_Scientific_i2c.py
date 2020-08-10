@@ -24,6 +24,7 @@ import copy
 
 class AtlasI2c:
     """@brief
+    Array value of each EZO sensors decimal addresses
     """
     AS_SENSORS_ADDS_DECIMAL = {
         97,
@@ -34,6 +35,7 @@ class AtlasI2c:
         103,
     }
     """@brief
+    Array key=>value for each sensors name i2c decimal addresses
     """
     AS_SENSORS_ADDS_TXT_TO_DECIMAL = {
         'DO': 97,
@@ -44,6 +46,7 @@ class AtlasI2c:
         'PMP': 103,
     }
     """@brief
+    Array key=>value for each sensors name i2c hexa addresses
     """
     AS_SENSORS_ADDS_TXT_TO_HEXA = {
         'DO': 0x61,
@@ -54,6 +57,7 @@ class AtlasI2c:
         'PMP': 0x67,
     }
     """@brief
+    Array key=>value for each i2c hexa to decimal addresses
     """
     AS_SENSORS_ADDS_HEXA_TO_DECIMAL = {
         0x61: 97,
@@ -64,6 +68,7 @@ class AtlasI2c:
         0x67: 103,
     }
     """@brief
+    Array key=>value for each sensors restart code
     """
     AS_RESTART_CODES = {
         'P': 'powered off',
@@ -73,6 +78,7 @@ class AtlasI2c:
         'U': 'unknown',
     }
     """@brief
+    Array key=>value for each response code
     """
     AS_RESPONSE_CODE_TXT = {
         1: 'successful request',

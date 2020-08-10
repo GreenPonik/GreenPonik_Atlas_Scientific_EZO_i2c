@@ -1,0 +1,220 @@
+\hypertarget{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c}{}\doxysection{Green\+Ponik\+\_\+\+Atlas\+\_\+\+Scientific\+\_\+i2c.\+Commons\+I2c Class Reference}
+\label{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c}\index{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a208101bb16590315067fa0e82d8c2b8d}{get\+\_\+device\+\_\+info}} (self, device)
+\item 
+def \mbox{\hyperlink{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a63fafdbaff036218126d9f2982afbd63}{get\+\_\+read}} (self, device)
+\item 
+def \mbox{\hyperlink{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a4648b0522b71be4692892c6b4305681d}{get\+\_\+temperature}} (self, device)
+\item 
+def \mbox{\hyperlink{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a12d3a5f42b318bc489ccda4f16cfd7ae}{get\+\_\+calibration}} (self, device)
+\item 
+def \mbox{\hyperlink{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a6178340bd7aab9a62af7262d8272fa79}{get\+\_\+find}} (self, device)
+\item 
+def \mbox{\hyperlink{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_abea9baea95c6ab8e305e7ec95b209003}{get\+\_\+status}} (self, device)
+\item 
+def \mbox{\hyperlink{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a7c0cf01bd8a4c2ffdfdf0de80e9609e6}{get\+\_\+led}} (self, device)
+\item 
+def \mbox{\hyperlink{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a063944eeacb07ff2bd13df66f3211cc5}{get\+\_\+plock}} (self, device)
+\item 
+def \mbox{\hyperlink{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_aac662a7be676f24edadc7509b2adb9f2}{set\+\_\+temperature}} (self, device, t=25.\+0)
+\item 
+def \mbox{\hyperlink{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_aff0a3fdc451d76c01f44e1438026e54f}{set\+\_\+calibration\+\_\+low}} (self, device, solution=0.\+0)
+\item 
+def \mbox{\hyperlink{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_af26797624e1bad3aa417f1223eac092c}{set\+\_\+calibration\+\_\+high}} (self, device, solution=0.\+0)
+\item 
+def \mbox{\hyperlink{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a1983aec2520dcd1f556e704a6b8b4370}{set\+\_\+calibration\+\_\+clear}} (self, device)
+\item 
+def \mbox{\hyperlink{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a969d40f2614f9fbe9d5b60b56514acd5}{set\+\_\+i2c\+\_\+addr}} (self, device, add)
+\item 
+def \mbox{\hyperlink{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a75c39771559da59860409eb40c5aba5a}{set\+\_\+led}} (self, device, state=1)
+\item 
+def \mbox{\hyperlink{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a8caf9e83a01f5fd410281c49174dbf86}{set\+\_\+sleep\+\_\+mode}} (self, device)
+\item 
+def \mbox{\hyperlink{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a420429706d196e2cc2497b59a39fc9a0}{set\+\_\+facory}} (self, device)
+\item 
+def \mbox{\hyperlink{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a6ca8b666dcafe1c8c51ab54856f9632f}{set\+\_\+plock}} (self, device, state)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Getters commons methods
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a12d3a5f42b318bc489ccda4f16cfd7ae}\label{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a12d3a5f42b318bc489ccda4f16cfd7ae}} 
+\index{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}!get\_calibration@{get\_calibration}}
+\index{get\_calibration@{get\_calibration}!GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}}
+\doxysubsubsection{\texorpdfstring{get\_calibration()}{get\_calibration()}}
+{\footnotesize\ttfamily def Green\+Ponik\+\_\+\+Atlas\+\_\+\+Scientific\+\_\+i2c.\+Commons\+I2c.\+get\+\_\+calibration (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{device }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Get current calibrations data
+@param device = AltasI2c instance
+@return ?CAL,<current calibration>
+\end{DoxyVerb}
+ \mbox{\Hypertarget{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a208101bb16590315067fa0e82d8c2b8d}\label{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a208101bb16590315067fa0e82d8c2b8d}} 
+\index{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}!get\_device\_info@{get\_device\_info}}
+\index{get\_device\_info@{get\_device\_info}!GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}}
+\doxysubsubsection{\texorpdfstring{get\_device\_info()}{get\_device\_info()}}
+{\footnotesize\ttfamily def Green\+Ponik\+\_\+\+Atlas\+\_\+\+Scientific\+\_\+i2c.\+Commons\+I2c.\+get\+\_\+device\+\_\+info (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{device }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Get device information
+@param device = AltasI2c instance
+@return device name, firmware version
+\end{DoxyVerb}
+ \mbox{\Hypertarget{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a6178340bd7aab9a62af7262d8272fa79}\label{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a6178340bd7aab9a62af7262d8272fa79}} 
+\index{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}!get\_find@{get\_find}}
+\index{get\_find@{get\_find}!GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}}
+\doxysubsubsection{\texorpdfstring{get\_find()}{get\_find()}}
+{\footnotesize\ttfamily def Green\+Ponik\+\_\+\+Atlas\+\_\+\+Scientific\+\_\+i2c.\+Commons\+I2c.\+get\+\_\+find (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{device }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Fin devices
+@param device = AltasI2c instance
+@return OK
+\end{DoxyVerb}
+ \mbox{\Hypertarget{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a7c0cf01bd8a4c2ffdfdf0de80e9609e6}\label{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a7c0cf01bd8a4c2ffdfdf0de80e9609e6}} 
+\index{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}!get\_led@{get\_led}}
+\index{get\_led@{get\_led}!GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}}
+\doxysubsubsection{\texorpdfstring{get\_led()}{get\_led()}}
+{\footnotesize\ttfamily def Green\+Ponik\+\_\+\+Atlas\+\_\+\+Scientific\+\_\+i2c.\+Commons\+I2c.\+get\+\_\+led (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{device }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Get led state
+@param device = AltasI2c instance
+@return string ?L,1 for On / ?L,0 for Off
+\end{DoxyVerb}
+ \mbox{\Hypertarget{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a063944eeacb07ff2bd13df66f3211cc5}\label{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a063944eeacb07ff2bd13df66f3211cc5}} 
+\index{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}!get\_plock@{get\_plock}}
+\index{get\_plock@{get\_plock}!GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}}
+\doxysubsubsection{\texorpdfstring{get\_plock()}{get\_plock()}}
+{\footnotesize\ttfamily def Green\+Ponik\+\_\+\+Atlas\+\_\+\+Scientific\+\_\+i2c.\+Commons\+I2c.\+get\+\_\+plock (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{device }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Get Plock status
+@param device = AltasI2c instance
+@return string ?Plock,1 for Locked / ?L,0 for Unlocked
+\end{DoxyVerb}
+ \mbox{\Hypertarget{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a63fafdbaff036218126d9f2982afbd63}\label{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a63fafdbaff036218126d9f2982afbd63}} 
+\index{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}!get\_read@{get\_read}}
+\index{get\_read@{get\_read}!GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}}
+\doxysubsubsection{\texorpdfstring{get\_read()}{get\_read()}}
+{\footnotesize\ttfamily def Green\+Ponik\+\_\+\+Atlas\+\_\+\+Scientific\+\_\+i2c.\+Commons\+I2c.\+get\+\_\+read (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{device }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Read sensor value
+@param device = AltasI2c instance
+@return string (depending of O parameter)
+\end{DoxyVerb}
+ \mbox{\Hypertarget{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_abea9baea95c6ab8e305e7ec95b209003}\label{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_abea9baea95c6ab8e305e7ec95b209003}} 
+\index{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}!get\_status@{get\_status}}
+\index{get\_status@{get\_status}!GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}}
+\doxysubsubsection{\texorpdfstring{get\_status()}{get\_status()}}
+{\footnotesize\ttfamily def Green\+Ponik\+\_\+\+Atlas\+\_\+\+Scientific\+\_\+i2c.\+Commons\+I2c.\+get\+\_\+status (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{device }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Get status
+@param device = AltasI2c instance
+@return status of device decode them by using AtlasI2c.AS_RESTART_CODES
+\end{DoxyVerb}
+ \mbox{\Hypertarget{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a4648b0522b71be4692892c6b4305681d}\label{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a4648b0522b71be4692892c6b4305681d}} 
+\index{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}!get\_temperature@{get\_temperature}}
+\index{get\_temperature@{get\_temperature}!GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}}
+\doxysubsubsection{\texorpdfstring{get\_temperature()}{get\_temperature()}}
+{\footnotesize\ttfamily def Green\+Ponik\+\_\+\+Atlas\+\_\+\+Scientific\+\_\+i2c.\+Commons\+I2c.\+get\+\_\+temperature (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{device }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Get current compensation temperature
+@param device = AltasI2c instance
+@return string ?T,<temperature value>
+\end{DoxyVerb}
+ \mbox{\Hypertarget{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a1983aec2520dcd1f556e704a6b8b4370}\label{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a1983aec2520dcd1f556e704a6b8b4370}} 
+\index{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}!set\_calibration\_clear@{set\_calibration\_clear}}
+\index{set\_calibration\_clear@{set\_calibration\_clear}!GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}}
+\doxysubsubsection{\texorpdfstring{set\_calibration\_clear()}{set\_calibration\_clear()}}
+{\footnotesize\ttfamily def Green\+Ponik\+\_\+\+Atlas\+\_\+\+Scientific\+\_\+i2c.\+Commons\+I2c.\+set\+\_\+calibration\+\_\+clear (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{device }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Clear calibration data
+@param device = AltasI2c instance
+\end{DoxyVerb}
+ \mbox{\Hypertarget{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_af26797624e1bad3aa417f1223eac092c}\label{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_af26797624e1bad3aa417f1223eac092c}} 
+\index{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}!set\_calibration\_high@{set\_calibration\_high}}
+\index{set\_calibration\_high@{set\_calibration\_high}!GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}}
+\doxysubsubsection{\texorpdfstring{set\_calibration\_high()}{set\_calibration\_high()}}
+{\footnotesize\ttfamily def Green\+Ponik\+\_\+\+Atlas\+\_\+\+Scientific\+\_\+i2c.\+Commons\+I2c.\+set\+\_\+calibration\+\_\+high (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{device,  }\item[{}]{solution = {\ttfamily 0.0} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief calibration 2 points high point
+@param device = AltasI2c instance
+@param float = high solution calibration
+\end{DoxyVerb}
+ \mbox{\Hypertarget{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_aff0a3fdc451d76c01f44e1438026e54f}\label{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_aff0a3fdc451d76c01f44e1438026e54f}} 
+\index{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}!set\_calibration\_low@{set\_calibration\_low}}
+\index{set\_calibration\_low@{set\_calibration\_low}!GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}}
+\doxysubsubsection{\texorpdfstring{set\_calibration\_low()}{set\_calibration\_low()}}
+{\footnotesize\ttfamily def Green\+Ponik\+\_\+\+Atlas\+\_\+\+Scientific\+\_\+i2c.\+Commons\+I2c.\+set\+\_\+calibration\+\_\+low (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{device,  }\item[{}]{solution = {\ttfamily 0.0} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief calibration 2 points low point
+@param device = AltasI2c instance
+@param float = low solution calibration
+\end{DoxyVerb}
+ \mbox{\Hypertarget{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a420429706d196e2cc2497b59a39fc9a0}\label{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a420429706d196e2cc2497b59a39fc9a0}} 
+\index{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}!set\_facory@{set\_facory}}
+\index{set\_facory@{set\_facory}!GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}}
+\doxysubsubsection{\texorpdfstring{set\_facory()}{set\_facory()}}
+{\footnotesize\ttfamily def Green\+Ponik\+\_\+\+Atlas\+\_\+\+Scientific\+\_\+i2c.\+Commons\+I2c.\+set\+\_\+facory (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{device }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Factory reset, clears calibration, LED on,
+Response codes enabled
+@param device = AltasI2c instance
+\end{DoxyVerb}
+ \mbox{\Hypertarget{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a969d40f2614f9fbe9d5b60b56514acd5}\label{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a969d40f2614f9fbe9d5b60b56514acd5}} 
+\index{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}!set\_i2c\_addr@{set\_i2c\_addr}}
+\index{set\_i2c\_addr@{set\_i2c\_addr}!GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}}
+\doxysubsubsection{\texorpdfstring{set\_i2c\_addr()}{set\_i2c\_addr()}}
+{\footnotesize\ttfamily def Green\+Ponik\+\_\+\+Atlas\+\_\+\+Scientific\+\_\+i2c.\+Commons\+I2c.\+set\+\_\+i2c\+\_\+addr (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{device,  }\item[{}]{add }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Change the device i2c address
+@param device = AltasI2c instance
+@param int = new i2c add
+\end{DoxyVerb}
+ \mbox{\Hypertarget{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a75c39771559da59860409eb40c5aba5a}\label{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a75c39771559da59860409eb40c5aba5a}} 
+\index{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}!set\_led@{set\_led}}
+\index{set\_led@{set\_led}!GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}}
+\doxysubsubsection{\texorpdfstring{set\_led()}{set\_led()}}
+{\footnotesize\ttfamily def Green\+Ponik\+\_\+\+Atlas\+\_\+\+Scientific\+\_\+i2c.\+Commons\+I2c.\+set\+\_\+led (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{device,  }\item[{}]{state = {\ttfamily 1} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Change Led state
+@param device = AltasI2c instance
+@param int or bool state = 1 = On / state = 0 = Off
+\end{DoxyVerb}
+ \mbox{\Hypertarget{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a6ca8b666dcafe1c8c51ab54856f9632f}\label{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a6ca8b666dcafe1c8c51ab54856f9632f}} 
+\index{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}!set\_plock@{set\_plock}}
+\index{set\_plock@{set\_plock}!GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}}
+\doxysubsubsection{\texorpdfstring{set\_plock()}{set\_plock()}}
+{\footnotesize\ttfamily def Green\+Ponik\+\_\+\+Atlas\+\_\+\+Scientific\+\_\+i2c.\+Commons\+I2c.\+set\+\_\+plock (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{device,  }\item[{}]{state }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Plock is used to lock the changes between I2C and UART
+@param device = AltasI2c instance
+@param int or bool state = 1 = Locked / state = 0 = Unlocked
+\end{DoxyVerb}
+ \mbox{\Hypertarget{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a8caf9e83a01f5fd410281c49174dbf86}\label{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_a8caf9e83a01f5fd410281c49174dbf86}} 
+\index{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}!set\_sleep\_mode@{set\_sleep\_mode}}
+\index{set\_sleep\_mode@{set\_sleep\_mode}!GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}}
+\doxysubsubsection{\texorpdfstring{set\_sleep\_mode()}{set\_sleep\_mode()}}
+{\footnotesize\ttfamily def Green\+Ponik\+\_\+\+Atlas\+\_\+\+Scientific\+\_\+i2c.\+Commons\+I2c.\+set\+\_\+sleep\+\_\+mode (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{device }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Enter sleep mode / low power
+@param device = AltasI2c instance
+\end{DoxyVerb}
+ \mbox{\Hypertarget{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_aac662a7be676f24edadc7509b2adb9f2}\label{class_green_ponik___atlas___scientific__i2c_1_1_commons_i2c_aac662a7be676f24edadc7509b2adb9f2}} 
+\index{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}!set\_temperature@{set\_temperature}}
+\index{set\_temperature@{set\_temperature}!GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c@{GreenPonik\_Atlas\_Scientific\_i2c.CommonsI2c}}
+\doxysubsubsection{\texorpdfstring{set\_temperature()}{set\_temperature()}}
+{\footnotesize\ttfamily def Green\+Ponik\+\_\+\+Atlas\+\_\+\+Scientific\+\_\+i2c.\+Commons\+I2c.\+set\+\_\+temperature (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{device,  }\item[{}]{t = {\ttfamily 25.0} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Set the compensation temperature
+@param device = AltasI2c instance
+@param t = float temperature value
+\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Green\+Ponik\+\_\+\+Atlas\+\_\+\+Scientific\+\_\+i2c.\+py\end{DoxyCompactItemize}
