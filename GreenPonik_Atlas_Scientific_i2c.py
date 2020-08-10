@@ -1,6 +1,7 @@
 #! /usr/bin/python
 
 """
+@package
 ####################################################################
 ####################################################################
 ####################################################################
@@ -22,6 +23,8 @@ import copy
 
 
 class AtlasI2c:
+    """@brief
+    """
     AS_SENSORS_ADDS_DECIMAL = {
         97,
         98,
@@ -30,6 +33,8 @@ class AtlasI2c:
         102,
         103,
     }
+    """@brief
+    """
     AS_SENSORS_ADDS_TXT_TO_DECIMAL = {
         'DO': 97,
         'ORP': 98,
@@ -38,6 +43,8 @@ class AtlasI2c:
         'RTD': 102,
         'PMP': 103,
     }
+    """@brief
+    """
     AS_SENSORS_ADDS_TXT_TO_HEXA = {
         'DO': 0x61,
         'ORP': 0x62,
@@ -46,6 +53,8 @@ class AtlasI2c:
         'RTD': 0x66,
         'PMP': 0x67,
     }
+    """@brief
+    """
     AS_SENSORS_ADDS_HEXA_TO_DECIMAL = {
         0x61: 97,
         0x62: 98,
@@ -54,7 +63,8 @@ class AtlasI2c:
         0x66: 102,
         0x67: 103,
     }
-
+    """@brief
+    """
     AS_RESTART_CODES = {
         'P': 'powered off',
         'S': 'software reset',
@@ -62,7 +72,8 @@ class AtlasI2c:
         'W': 'watchdog',
         'U': 'unknown',
     }
-
+    """@brief
+    """
     AS_RESPONSE_CODE_TXT = {
         1: 'successful request',
         2: 'syntax error',
@@ -125,7 +136,7 @@ class AtlasI2c:
 
     def set_i2c_address(self, addr):
         """
-        set the I2C communications to the slave specified by the address
+        @brief set the I2C communications to the slave specified by the address
         the commands for I2C dev using the ioctl functions are specified in
         the i2c-dev.h file from i2c-tools
         """
@@ -136,14 +147,14 @@ class AtlasI2c:
 
     def write(self, cmd):
         """
-        appends the null character and sends the string over I2C
+        @brief appends the null character and sends the string over I2C
         """
         cmd += "\00"
         self.file_write.write(cmd.encode('latin-1'))
 
     def handle_raspi_glitch(self, response):
         """
-        Change MSB to 0 for all received characters except the first
+        @brief Change MSB to 0 for all received characters except the first
         and get a list of characters
         NOTE: having to change the MSB to 0 is a glitch in the raspberry pi,
         and you shouldn't have to do this!
@@ -180,6 +191,10 @@ class AtlasI2c:
         return valid, error_code
 
     def get_device_info(self):
+        """
+        @brief get the device info
+        @return string moduletype address name
+        """
         if(self._name == ""):
             return self._module + " " + str(self.address)
         else:
@@ -187,7 +202,7 @@ class AtlasI2c:
 
     def read(self, num_of_bytes=31):
         """
-        reads a specified number of bytes from I2C,
+        @brief reads a specified number of bytes from I2C,
         then parses and displays the result
         """
         raw_data = self.file_read.read(num_of_bytes)
@@ -197,10 +212,14 @@ class AtlasI2c:
 
         if is_valid:
             char_list = self.handle_raspi_glitch(response[1:])
-            result = "Success " + self.get_device_info()
-            + ": "
-            + str(''.join(char_list))
+            # result = "Success " + self.get_device_info()
+            # + ": "
+            # + str(''.join(char_list))
             # result = "Success: " +  str(''.join(char_list))
+            result = "Success %s: %s" % (
+                self.get_device_info(),
+                str(''.join(char_list))
+            )
         else:
             result = "Error " + self.get_device_info() + ": " + error_code
 
@@ -217,7 +236,7 @@ class AtlasI2c:
 
     def query(self, command):
         """
-        write a command to the board, wait the correct timeout,
+        @brief write a command to the board, wait the correct timeout,
         and read the response
         """
         self.write(command)
@@ -234,7 +253,7 @@ class AtlasI2c:
 
     def list_i2c_devices(self):
         """
-        save the current address so we can restore it after
+        @brief save the current address so we can restore it after
         """
         prev_addr = copy.deepcopy(self._address)
         i2c_devices = []
@@ -252,10 +271,11 @@ class AtlasI2c:
 
 
 class CommonsI2c:
-    # Getters commons methods
+    """ Getters commons methods
+    """
     def get_device_info(self, device):
         """
-        @biref Get device information
+        @brief Get device information
         @param device = AltasI2c instance
         @return device name, firmware version
         """
@@ -317,8 +337,8 @@ class CommonsI2c:
         """
         return device.query("Plock,?")
 
-    # Setters commons methods
-
+    """ Setters commons methods
+    """
     def set_temperature(self, device, t=25.0):
         """
         @brief Set the compensation temperature
@@ -399,7 +419,11 @@ class CommonsI2c:
 
 
 class ECI2c:
-    # Getters EC methods
+    """
+    @brief specific methods for EZO EC module
+    """
+    """ Getters EC methods
+    """
     def get_k_probe(self, device):
         """
         @brief Get current ec probe k
@@ -422,8 +446,8 @@ class ECI2c:
         """
         return device.query("O,?")
 
-    # Setters EC methods
-
+    """ Setters EC methods
+    """
     def set_k_probe(self, device, k):
         """
         @brief Set the ec probe k
@@ -457,8 +481,11 @@ class ECI2c:
 
 
 class PHI2c:
-    # Getters pH methods
-
+    """
+    @brief specific methods for EZO PH module
+    """
+    """ Getters pH methods
+    """
     def get_slope_probe(self, device):
         """
         @brief Get the pH probe slope
@@ -469,8 +496,8 @@ class PHI2c:
         """
         return device.query("Slope,?")
 
-    # Setters pH methods
-
+    """ Setters pH methods
+    """
     def set_calibration_mid(self, device, solution=7.00):
         """
         @brief Calibration the middle point
