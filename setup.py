@@ -36,7 +36,6 @@ if not VERSION:
 else:
     about["__version__"] = VERSION
 
-
 setup(
     name=NAME,
     version=about["__version__"],
