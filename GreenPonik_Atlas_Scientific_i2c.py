@@ -1,7 +1,7 @@
 #! /usr/bin/python
 
 """
-@package
+@package Class to communicate with Atlas Scientific sensors in I2C mode.
 ####################################################################
 ####################################################################
 ####################################################################
@@ -10,7 +10,6 @@
 ####################################################################
 ####################################################################
 ####################################################################
-Class to communicate with Atlas Scientific sensors in I2C mode.
 Source code is based on examples from Atlas Scientific:
 https://github.com/AtlasScientific/Raspberry-Pi-sample-code/blob/master/AtlasI2C.py
 """
