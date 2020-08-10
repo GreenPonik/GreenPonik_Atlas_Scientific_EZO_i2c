@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#! /usr/bin/python3
 
 """
 @package Class to communicate with Atlas Scientific sensors in I2C mode.
