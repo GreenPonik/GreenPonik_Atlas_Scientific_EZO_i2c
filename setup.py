@@ -38,10 +38,10 @@ else:
 
 
 setup(
-    name="greenponik-atlas-scientific-i2c",
+    name=NAME,
     version=about["__version__"],
-    author="GreenPonik SAS",
-    author_email="contact@greenponik.com",
+    author=AUTHOR,
+    author_email=EMAIL,
     description=DESCRIPTION,
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -60,5 +60,4 @@ setup(
     },
     keywords="GreenPonik hydroponics SMBus/i2c EC Electro Conductivity and pH \
          reader Atlas Scientific python hardware diy iot raspberry pi",
-    # py_modules=["GreenPonik_Atlas_Scientific_i2c"],
 )
