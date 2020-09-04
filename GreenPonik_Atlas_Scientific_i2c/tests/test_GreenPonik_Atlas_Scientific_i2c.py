@@ -37,7 +37,8 @@ from GreenPonik_Atlas_Scientific_i2c.GreenPonik_Atlas_Scientific_i2c import (
 
 
 class Test_GreenPonik_Altals_Scientifics_i2c(unittest.TestCase):
-    @patch("GreenPonik_Atlas_Scientific_i2c.GreenPonik_Atlas_Scientific_i2c.CommonsI2c")
+    @patch("GreenPonik_Atlas_Scientific_i2c.\
+    GreenPonik_Atlas_Scientific_i2c.CommonsI2c")
     def test_get_device_info(self, Mock):
         device = AtlasI2c()
         common = Mock()
@@ -49,7 +50,8 @@ class Test_GreenPonik_Altals_Scientifics_i2c(unittest.TestCase):
         self.assertIsNotNone(addr)
         self.assertEqual(addr, expected)
 
-    @patch("GreenPonik_Atlas_Scientific_i2c.GreenPonik_Atlas_Scientific_i2c.CommonsI2c")
+    @patch("GreenPonik_Atlas_Scientific_i2c.\
+    GreenPonik_Atlas_Scientific_i2c.CommonsI2c")
     def test_get_read(self, Mock):
         device = AtlasI2c()
         common = Mock()
