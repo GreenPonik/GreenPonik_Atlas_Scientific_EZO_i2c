@@ -30,39 +30,34 @@ sys.modules["board"] = BoardMock()
 sys.modules["busio"] = BusioMock()
 
 
-from GreenPonik_Atlas_Scientific_i2c import (
+from GreenPonik_Atlas_Scientific_i2c.GreenPonik_Atlas_Scientific_i2c import (
     AtlasI2c,
     CommonsI2c
 )
 
 
-class TestGreenPonik_altals_Scientifics_I2C(unittest.TestCase):
-
-    @patch(
-        "GreenPonik_Atlas_Scientific_i2c.CommonsI2c"
-    )
-    def test_get_device_info(self, MockCommonsI2c):
+class Test_GreenPonik_Altals_Scientifics_i2c(unittest.TestCase):
+    @patch("GreenPonik_Atlas_Scientific_i2c.GreenPonik_Atlas_Scientific_i2c")
+    def test_get_device_info(self, Mock):
         device = AtlasI2c()
-        common = MockCommonsI2c()
+        m = Mock()
         expected = 0x64
-        common.get_device_info.return_value = expected
-        common.set_i2c_addr(
+        m.common.get_device_info.return_value = expected
+        m.common.set_i2c_addr(
             device, AtlasI2c.AS_SENSORS_ADDS_TXT_TO_DECIMAL['EC'])
-        addr = common.get_device_info(device)
+        addr = m.common.get_device_info(device)
         self.assertIsNotNone(addr)
         self.assertEqual(addr, expected)
 
-    @patch(
-        "GreenPonik_Atlas_Scientific_i2c.CommonsI2c"
-    )
-    def test_get_read(self, MockCommonsI2c):
+    @patch("GreenPonik_Atlas_Scientific_i2c.GreenPonik_Atlas_Scientific_i2c")
+    def test_get_read(self, Mock):
         device = AtlasI2c()
-        common = MockCommonsI2c()
+        m = Mock()
         expected = 24.56
-        common.get_read.return_value = expected
-        common.set_i2c_addr(
+        m.common.get_read.return_value = expected
+        m.common.set_i2c_addr(
             device, AtlasI2c.AS_SENSORS_ADDS_TXT_TO_DECIMAL['EC'])
-        value = common.get_read(device)
+        value = m.common.get_read(device)
         self.assertIsNotNone(value)
         self.assertTrue(type(value).__name__, "float")
         self.assertEqual(value, expected)

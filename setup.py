@@ -51,11 +51,13 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    packages=find_packages(exclude=("tests", "docs")),
+    packages=find_packages(exclude=("docs")),
     python_requires=REQUIRES_PYTHON,
     project_urls={  # Optional
-        'Source': 'https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_i2c/',
-        'Bug Reports': 'https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_i2c/issues',
+        'Source': 'https://github.com/GreenPonik/\
+        GreenPonik_Atlas_Scientific_i2c/',
+        'Bug Reports': 'https://github.com/GreenPonik/\
+        GreenPonik_Atlas_Scientific_i2c/issues',
     },
     keywords="GreenPonik hydroponics SMBus/i2c EC Electro Conductivity and pH \
          reader Atlas Scientific python hardware diy iot raspberry pi",
