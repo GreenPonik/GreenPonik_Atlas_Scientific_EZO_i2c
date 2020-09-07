@@ -8,7 +8,8 @@ if __name__ == "__main__":
             moduletype="PH",
             name="PH"
         )
-        print(CommonsI2c.get_device_info(ph_i2c))
-        print(CommonsI2c.get_read(ph_i2c))
+        c = CommonsI2c()
+        print(c.get_device_info(ph_i2c))
+        print(c.get_read(ph_i2c))
     except Exception as e:
         print("Exception occured", e)

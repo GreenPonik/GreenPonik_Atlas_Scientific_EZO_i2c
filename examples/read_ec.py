@@ -8,12 +8,13 @@ if __name__ == "__main__":
             moduletype="EC",
             name="EC"
         )
-        print(CommonsI2c.get_device_info(ec_i2c))
+        c = CommonsI2c()
+        print(c.get_device_info(ec_i2c))
         print("get current temperature compensated")
-        print(CommonsI2c.get_temperature(ec_i2c))
+        print(c.get_temperature(ec_i2c))
         # put here the current temperature
-        print(CommonsI2c.set_temperature(ec_i2c, 25.00))
-        ec = CommonsI2c.get_read(ec_i2c)
+        print(c.set_temperature(ec_i2c, 25.00))
+        ec = c.get_read(ec_i2c)
         print("current ec is %.2f" % ec)
     except Exception as e:
         print("Exception occured", e)
