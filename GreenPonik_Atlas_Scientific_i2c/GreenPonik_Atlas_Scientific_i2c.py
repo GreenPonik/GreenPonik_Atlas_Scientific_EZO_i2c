@@ -98,7 +98,7 @@ class AtlasI2c:
     LONG_TIMEOUT_COMMANDS = ("R", "CAL")
     SLEEP_COMMANDS = ("SLEEP", )
 
-    def ___init___(self, address=None, moduletype="", name="", bus=None):
+    def __init__(self, address=None, moduletype="", name="", bus=None):
         """
         open two file streams, one for reading and one for writing
         the specific I2C channel is selected with bus
