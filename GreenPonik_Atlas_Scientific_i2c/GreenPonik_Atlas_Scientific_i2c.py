@@ -39,7 +39,7 @@ class AtlasI2c:
     AS_SENSORS_ADDS_TXT_TO_DECIMAL = {
         'DO': 97,
         'ORP': 98,
-        'pH': 99,
+        'PH': 99,
         'EC': 100,
         'RTD': 102,
         'PMP': 103,
@@ -50,7 +50,7 @@ class AtlasI2c:
     AS_SENSORS_ADDS_TXT_TO_HEXA = {
         'DO': 0x61,
         'ORP': 0x62,
-        'pH': 0x63,
+        'PH': 0x63,
         'EC': 0x64,
         'RTD': 0x66,
         'PMP': 0x67,
