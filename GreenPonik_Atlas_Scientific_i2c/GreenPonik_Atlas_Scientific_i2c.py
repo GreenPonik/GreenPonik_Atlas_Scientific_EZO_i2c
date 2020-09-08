@@ -422,7 +422,7 @@ class AtlasI2c:
             time.sleep(current_timeout)
             return self._read()
 
-    def _read(self):
+    def read(self):
         """
         @brief reads a specified number of bytes from I2C,
         then parses and displays the result
@@ -430,10 +430,10 @@ class AtlasI2c:
         self._buffer[0] = 0
         self._buffer[1] = 0
         with self.i2c_device as i2c:
-            i2c.readinto(self._buffer,)
+            i2c.readinto(self._buffer)
         return self._buffer
 
-    def _write(self, cmd_byte):
+    def write(self, cmd_byte):
         self._buffer[0] = cmd_byte
         with self.i2c_device as i2c:
             i2c.write(self._buffer, end=1)
