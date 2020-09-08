@@ -16,6 +16,7 @@ REQUIRED = [
     # 'requests', 'maya', 'records',
     'adafruit-blinka',
     'adafruit-circuitpython-busdevice',
+    'adafruit-extended-bus',
 ]
 
 # What packages are optional?

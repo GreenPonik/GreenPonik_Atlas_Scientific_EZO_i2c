@@ -21,7 +21,7 @@ import time
 import copy
 
 import adafruit_bus_device.i2c_device as i2c_device
-# from adafruit_extended_bus import ExtendedI2C as I2C
+from adafruit_extended_bus import ExtendedI2C as I2C
 
 
 # class AtlasI2c:
@@ -374,7 +374,8 @@ class AtlasI2c:
         # self.file_write = io.open(file="/dev/i2c-{}".format(self.bus),
         #                           mode="wb",
         #                           buffering=0)
-        self.i2c_device = i2c_device.I2CDevice(self.bus, self._address, probe=False)
+        i2c = I2C(self.bus)
+        self.i2c_device = i2c_device.I2CDevice(i2c, self._address, probe=False)
         self._name = name
         self._module = moduletype
         self._buffer = bytearray(2)
