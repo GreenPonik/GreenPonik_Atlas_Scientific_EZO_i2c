@@ -1,4 +1,4 @@
-from GreenPonik_Atlas_Scientific_i2c.GreenPonik_Altas_Scientific_i2c import AtlasI2c, CommonsI2c, ECI2c
+from GreenPonik_Atlas_Scientific_i2c.GreenPonik_Atlas_Scientific_i2c import AtlasI2c, CommonsI2c, ECI2c
 
 if __name__ == "__main__":
     try:

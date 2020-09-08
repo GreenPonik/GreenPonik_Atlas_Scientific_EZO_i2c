@@ -380,6 +380,26 @@ class AtlasI2c:
         self._buffer = bytearray(2)
         self._settings_byte = 0
 
+    @property
+    def address(self):
+        return self._address
+
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, n):
+        self._name = n
+
+    @property
+    def module(self):
+        return self._module
+
+    @module.setter
+    def module(self, m):
+        self._module = m
+
     def get_command_timeout(self, command):
         timeout = None
         if command.upper().startswith(self.LONG_TIMEOUT_COMMANDS):
