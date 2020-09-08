@@ -343,11 +343,11 @@ class AtlasI2c:
         255: 'no data to send',
     }
 
+    # the default address for the sensor
+    DEFAULT_ADDR = 98
     # the default bus for I2C on the newer Raspberry Pis,
     # certain older boards use bus 0
     DEFAULT_BUS = 1
-    # the default address for the sensor
-    DEFAULT_ADDR = 98
 
     # the timeout needed to query readings and calibrations
     LONG_TIMEOUT = 1.5
