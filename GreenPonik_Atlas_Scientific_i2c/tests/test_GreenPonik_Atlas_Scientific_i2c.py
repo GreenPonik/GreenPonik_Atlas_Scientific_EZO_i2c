@@ -40,7 +40,7 @@ class Test_GreenPonik_Altals_Scientifics_i2c(unittest.TestCase):
     @patch("GreenPonik_Atlas_Scientific_i2c.GreenPonik_Atlas_Scientific_i2c.CommonsI2c")
     def test_get_device_info(self, Mock):
         device = AtlasI2c(
-            address=AtlasI2c.AS_SENSORS_ADDS_TXT_TO_DECIMAL['EC'],
+            addr=AtlasI2c.AS_SENSORS_ADDS_TXT_TO_DECIMAL['EC'],
             moduletype='EC',
             name='EC'
         )
@@ -54,7 +54,7 @@ class Test_GreenPonik_Altals_Scientifics_i2c(unittest.TestCase):
     @patch("GreenPonik_Atlas_Scientific_i2c.GreenPonik_Atlas_Scientific_i2c.CommonsI2c")
     def test_get_read(self, Mock):
         device = AtlasI2c(
-            address=AtlasI2c.AS_SENSORS_ADDS_TXT_TO_DECIMAL['EC'],
+            addr=AtlasI2c.AS_SENSORS_ADDS_TXT_TO_DECIMAL['EC'],
             moduletype='EC',
             name='EC'
         )
