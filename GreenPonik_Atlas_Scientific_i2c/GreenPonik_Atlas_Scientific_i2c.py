@@ -167,10 +167,10 @@ class AtlasI2c:
         "device_temperature_confirm_high": 0x13,  # 0x12 - 0x15 4 registers
         "device_temperature_confirm_low": 0x14,  # 0x12 - 0x15 4 registers
         "device_temperature_confirm_lsb": 0x15,  # 0x12 - 0x15 4 registers
-        "device_ph_read_msb": 0x16,  # 0x16 - 0x19 4 registers
-        "device_ph_read_high": 0x16,  # 0x16 - 0x19 4 registers
-        "device_ph_read_low": 0x16,  # 0x16 - 0x19 4 registers
-        "device_ph_read_lsb": 0x16,  # 0x16 - 0x19 4 registers
+        "device_ph_msb": 0x16,  # 0x16 - 0x19 4 registers
+        "device_ph_high": 0x16,  # 0x16 - 0x19 4 registers
+        "device_ph_low": 0x16,  # 0x16 - 0x19 4 registers
+        "device_ph_lsb": 0x16,  # 0x16 - 0x19 4 registers
     }
 
     # TODO don't give a default address and provide an error when nothing is provided
@@ -420,7 +420,7 @@ class _CommonsI2c:
                 return self._convert_raw_hex_ec(rawhex)
             elif "PH" == self._device.moduletype:
                 rawhex = self._device.read(
-                    self._device.OEM_PH_REGISTERS["device_ec_msb"],
+                    self._device.OEM_PH_REGISTERS["device_ph_msb"],
                     self._device.FOUR_BYTE_READ,
                 )
                 return self._convert_raw_hex_ph(rawhex)
