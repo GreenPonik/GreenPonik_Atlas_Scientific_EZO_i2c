@@ -223,15 +223,6 @@ class AtlasI2c:
         100,  # EC
     }
     """@brief
-    Array key=>value for each EZO sensors name i2c decimal addresses
-    """
-    ADDR_EZO_TXT_TO_DECIMAL = {
-        'DO': 97,
-        'ORP': 98,
-        'PH': 99,
-        'EC': 100,
-    }
-    """@brief
     Array key=>value for each EZO sensors name i2c hexa addresses
     """
     ADDR_EZO_TXT_TO_HEXA = {
@@ -302,16 +293,30 @@ class AtlasI2c:
     SLEEP_COMMANDS = ("SLEEP", )
 
     @property
-    def long_timeout(self):
-        return self._long_timeout
+    def bus(self):
+        return self._bus
+
+    @bus.setter
+    def bus(self, bus_number):
+        self._bus = bus_number
 
     @property
     def short_timeout(self):
         return self._short_timeout
 
+    @short_timeout.setter
+    def long_timeout(self, timeout):
+        self._short_timeout = timeout
+
     @property
-    def address(self):
-        return self._address
+    def long_timeout(self):
+        return self._long_timeout
+
+    @long_timeout.setter
+    def long_timeout(self, timeout):
+        self._long_timeout = timeout
+
+
 
     @property
     def name(self):
@@ -329,27 +334,25 @@ class AtlasI2c:
     def module(self, m):
         self._module = m
 
-    def __init__(self, addr=DEFAULT_ADDR, bus=DEFAULT_BUS, moduletype="", name=""):
+    def __init__(self, bus=DEFAULT_BUS, addr=DEFAULT_ADDR, moduletype="", name=""):
         """
         open two file streams, one for reading and one for writing
         the specific I2C channel is selected with bus
         it is usually 1, except for older revisions where its 0
         wb and rb indicate binary read and write
         """
-        self._long_timeout = self.LONG_TIMEOUT
-        self._short_timeout = self.SHORT_TIMEOUT
-        self.bus = bus
-        self.file_read = io.open(file="/dev/i2c-{}".format(self.bus),
-                                 mode="rb",
-                                 buffering=0)
-        self.file_write = io.open(file="/dev/i2c-{}".format(self.bus),
-                                  mode="wb",
-                                  buffering=0)
-        self._set_i2c_address(addr)
+        # private properties
+        self._bus = bus
         self._name = name
         self._module = moduletype
 
-    def _set_i2c_address(self, addr):
+        # public properties
+        self.file_read = io.open(file="/dev/i2c-{}".format(self._bus),
+                                 mode="rb",
+                                 buffering=0)
+        self.file_write = io.open(file="/dev/i2c-{}".format(self._bus),
+                                  mode="wb",
+                                  buffering=0)
         """
         @brief set the I2C communications to the slave specified by the address
         the commands for I2C dev using the ioctl functions are specified in
@@ -358,7 +361,8 @@ class AtlasI2c:
         I2C_SLAVE = 0x703
         fcntl.ioctl(self.file_read, I2C_SLAVE, addr)
         fcntl.ioctl(self.file_write, I2C_SLAVE, addr)
-        self._address = addr
+        self.long_timeout(self.LONG_TIMEOUT)
+        self.short_timeout(self.SHORT_TIMEOUT)
 
     def get_command_timeout(self, command):
         timeout = None
@@ -398,9 +402,8 @@ class AtlasI2c:
     def write(self, cmd):
         # appends the null character and sends the string over I2C
         cmd += "\00"
-        cmd = cmd.encode()
         print(cmd)
-        self.file_write.write(cmd)
+        self.file_write.write(cmd.encode('latin-1'))
 
     def close(self):
         self.file_read.close()
@@ -425,7 +428,7 @@ class AtlasI2c:
         return i2c_devices
 
 
-class CommonsI2c:
+class _CommonsI2c:
 
     def __init__(self, device):
         self._device = device
@@ -580,7 +583,7 @@ class CommonsI2c:
         return self._device.query("Plock, %d" % state)
 
 
-class ECI2c:
+class ECI2c(_CommonsI2c):
     """
     @brief specific methods for EZO EC module
     """
@@ -643,7 +646,7 @@ class ECI2c:
         return self._device.query("O,%s,%d" % (param, state,))
 
 
-class PHI2c:
+class PHI2c(_CommonsI2c):
     """
     @brief specific methods for EZO PH module
     """

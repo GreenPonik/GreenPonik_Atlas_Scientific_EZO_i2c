@@ -13,7 +13,7 @@
 
 
 # GreenPonik_Atlas_Scientific_i2c.py Library for Raspberry pi
-## A python3 class to use Atlas Scientific EZO circuits on i2c bus.<br>
+## A python3 class to use Atlas Scientific EZO and OEM circuits on i2c bus.<br>
 
 ## ! Only tested on Raspberry Pi 3 A+ !<br>
 
@@ -40,8 +40,11 @@ or
 ```
 ```python
 
-from GreenPonik_Altas_Scientific_i2c import AtlasI2c
-
+from GreenPonik_Altas_Scientific_i2c.GreenPonik_Altas_Scientific_i2c import (
+    AtlasI2c,
+    ECI2c,
+    PHI2c,
+)
 ```
 
 # Examples
@@ -50,22 +53,23 @@ from GreenPonik_Altas_Scientific_i2c import AtlasI2c
 works with EC circuit https://www.atlas-scientific.com/circuits/conductivity-oem-circuit/<br>
 
 ```python
-from GreenPonik_Atlas_Scientific_i2c import AtlasI2c, CommonsI2c, ECI2c
+from GreenPonik_Atlas_Scientific_i2c.GreenPonik_Altas_Scientific_i2c import AtlasI2c, ECI2c
 
 if __name__ == "__main__":
     try:
         print("get device infos")
-        ec_i2c = AtlasI2c(
-            address=AtlasI2c.AS_SENSORS_ADDS_TXT_TO_DECIMAL['EC'],
+        i2c_device = AtlasI2c(
+            address=AtlasI2c.ADDR_EZO_TXT_TO_HEXA['EC'],
             moduletype="EC",
             name="EC"
         )
-        print(CommonsI2c.get_device_info(ec_i2c))
+        ec_i2c = ECI2c(i2c_device)
+        print(ec_i2c.get_device_info())
         print("get current temperature compensated")
-        print(CommonsI2c.get_temperature(ec_i2c))
+        print(ec_i2c.get_temperature())
         # put here the current temperature
-        print(CommonsI2c.set_temperature(ec_i2c, 25.00))
-        ec = CommonsI2c.get_read(ec_i2c)
+        print(ec_i2c.set_temperature(25.00))
+        ec = ec_i2c.get_read()
         print("current ec is %.2f" % ec)
     except Exception as e:
         print("Exception occured", e)
@@ -77,18 +81,19 @@ go to [ec example](examples/read_ec.py)
 works with pH circuit https://www.atlas-scientific.com/circuits/ph-oem-circuit/<br>
 
 ```python
-from GreenPonik_Altas_Scientific_i2c import AtlasI2c, CommonsI2c, PHI2c
+from GreenPonik_Altas_Scientific_i2c.GreenPonik_Altas_Scientific_i2c import AtlasI2c, PHI2c
 
 if __name__ == "__main__":
     try:
         print("get device infos")
-        ph_i2c = AtlasI2c(
-            address=AtlasI2c.AS_SENSORS_ADDS_TXT_TO_DECIMAL['PH'],
+        i2c_device = AtlasI2c(
+            address=AtlasI2c.ADDR_EZO_TXT_TO_HEXA['PH'],
             moduletype="PH",
             name="PH"
         )
-        print(CommonsI2c.get_device_info(ph_i2c))
-        print(CommonsI2c.get_read(ph_i2c))
+        ph_i2c = PHI2c(i2c_device)
+        print(ph_i2c.get_device_info())
+        print(ph_i2c.get_read())
     except Exception as e:
         print("Exception occured", e)
 

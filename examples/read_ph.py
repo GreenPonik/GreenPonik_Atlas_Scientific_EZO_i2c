@@ -1,15 +1,15 @@
-from GreenPonik_Altas_Scientific_i2c.GreenPonik_Atlas_Scientific_i2c import AtlasI2c, CommonsI2c, PHI2c
+from GreenPonik_Altas_Scientific_i2c.GreenPonik_Altas_Scientific_i2c import AtlasI2c, PHI2c
 
 if __name__ == "__main__":
     try:
         print("get device infos")
-        ph_i2c = AtlasI2c(
-            address=AtlasI2c.AS_SENSORS_ADDS_TXT_TO_DECIMAL['PH'],
+        i2c_device = AtlasI2c(
+            address=AtlasI2c.ADDR_EZO_TXT_TO_HEXA['PH'],
             moduletype="PH",
             name="PH"
         )
-        c = CommonsI2c()
-        print(c.get_device_info(ph_i2c))
-        print(c.get_read(ph_i2c))
+        ph_i2c = PHI2c(i2c_device)
+        print(ph_i2c.get_device_info())
+        print(ph_i2c.get_read())
     except Exception as e:
         print("Exception occured", e)
