@@ -249,6 +249,7 @@ class AtlasI2c:
         self._module = moduletype.upper()
         self._short_timeout = self.SHORT_TIMEOUT
         self._long_timeout = self.LONG_TIMEOUT
+        self._smbus = smbus.SMBus(self._bus_number)
 
         # public properties
         # self.file_read = io.open(file="/dev/i2c-{}".format(self._bus),
@@ -265,7 +266,6 @@ class AtlasI2c:
         # I2C_SLAVE = 0x703
         # fcntl.ioctl(self.file_read, I2C_SLAVE, self._address)
         # fcntl.ioctl(self.file_write, I2C_SLAVE, self._address)
-        self.smbus = smbus.SMBus(self._bus_number)
 
     def get_command_timeout(self, command):
         timeout = None
@@ -303,9 +303,9 @@ class AtlasI2c:
         # else:
         #     return "Error " + str(response[0])
         if num_of_bytes > 1:
-            return self.smbus.read_i2c_block_data(self.address, register, num_of_bytes)
+            return self._smbus.read_i2c_block_data(self._address, register, num_of_bytes)
         else:
-            return self.smbus.read_byte_data(self.address, register, num_of_bytes)
+            return self._smbus.read_byte_data(self._address, register, num_of_bytes)
 
     def write(self, cmd):
         # appends the null character and sends the string over I2C
@@ -356,13 +356,11 @@ class _CommonsI2c:
             return "sorry i can just read device info for EC or PH moduletype"
         elif "EC" == self._device.moduletype:
             return self._device.read(
-                self._device.address,
                 self._device.OEM_EC_REGISTERS['device_type'],
                 self._device.TWO_BYTE_READ
             )
         elif "PH" == self._device.moduletype:
             return self._device.read(
-                self._device.address,
                 self._device.OEM_PH_REGISTERS['device_type'],
                 self._device.TWO_BYTE_READ
             )
