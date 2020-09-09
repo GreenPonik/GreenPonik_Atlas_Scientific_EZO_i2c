@@ -21,8 +21,8 @@ import time
 import copy
 
 # import adafruit_bus_device.i2c_device as i2c_device
-# from adafruit_extended_bus import ExtendedI2C as I2C
-# from Adafruit_PureIO import smbus
+from adafruit_extended_bus import ExtendedI2C as I2C
+from Adafruit_PureIO import smbus
 
 # class AtlasI2c:
 #
@@ -277,6 +277,79 @@ class AtlasI2c:
         0x67: 103,  # EC
     }
 
+    ONE_BYTE_READ = 0x01
+    TWO_BYTE_READ = 0x02
+    THREE_BYTE_READ = 0x03
+    FOUR_BYTE_READ = 0x04
+
+    OEM_EC_REGISTERS = {
+        'device_type': 0x00,
+        'device_firmware': 0x01,
+        'device_addr_lock': 0x02,
+        'device_addr': 0x03,
+        'device_intr': 0x04,
+        'device_led': 0x05,
+        'device_sleep': 0x06,
+        'device_new_reading': 0x07,
+        'device_probe_type_msb': 0x08,  # 0x08 - 0x09 2 registers
+        'device_probe_type_lsb': 0x09,  # 0x08 - 0x09 2 registers
+        'device_calibration_value_msb': 0x0A,  # 0x0A - 0x0D 4 registers
+        'device_calibration_value_high': 0x0B,  # 0x0A - 0x0D 4 registers
+        'device_calibration_value_low': 0x0C,  # 0x0A - 0x0D 4 registers
+        'device_calibration_value_lsb': 0x0D,  # 0x0A - 0x0D 4 registers
+        'device_calibration_request': 0x0E,
+        'device_calibration_confirm': 0x0F,
+        'device_temperature_comp_msb': 0x10,   # 0x10 - 0x13 4 registers
+        'device_temperature_comp_high': 0x11,   # 0x10 - 0x13 4 registers
+        'device_temperature_comp_low': 0x12,   # 0x10 - 0x13 4 registers
+        'device_temperature_comp_lsb': 0x13,   # 0x10 - 0x13 4 registers
+        'device_temperature_confirm_msb': 0x14,   # 0x14 - 0x17 4 registers
+        'device_temperature_confirm_high': 0x15,   # 0x14 - 0x17 4 registers
+        'device_temperature_confirm_low': 0x16,   # 0x14 - 0x17 4 registers
+        'device_temperature_confirm_lsb': 0x17,   # 0x14 - 0x17 4 registers
+        'device_ec_msb': 0x18,   # 0x18 - 0x1B 4 registers
+        'device_ec_high': 0x19,   # 0x18 - 0x1B 4 registers
+        'device_ec_low': 0x20,   # 0x18 - 0x1B 4 registers
+        'device_ec_lsb': 0x21,   # 0x18 - 0x1B 4 registers
+        'device_tds_msb': 0x1C,   # 0x1C - 0x1F 3 registers
+        'device_tds_high': 0x1D,   # 0x1C - 0x1F 3 registers
+        'device_tds_low': 0x1E,   # 0x1C - 0x1F 3 registers
+        'device_tds_lsb': 0x1F,   # 0x1C - 0x1F 3 registers
+        'device_salinity_msb': 0x20,   # 0x20 - 0x23 4 registers
+        'device_salinity_high': 0x21,   # 0x20 - 0x23 4 registers
+        'device_salinity_low': 0x22,   # 0x20 - 0x23 4 registers
+        'device_salinity_lsb': 0x23,   # 0x20 - 0x23 4 registers
+    }
+
+    OEM_PH_REGISTERS = {
+        'device_type': 0x00,
+        'device_firmware': 0x01,
+        'device_addr_lock': 0x02,
+        'device_addr': 0x03,
+        'device_intr': 0x04,
+        'device_led': 0x05,
+        'device_sleep': 0x06,
+        'device_new_reading': 0x07,
+        'device_calibration_msb': 0x08,  # 0x08 - 0x0B 4 registers
+        'device_calibration_high': 0x09,  # 0x08 - 0x0B 4 registers
+        'device_calibration_low': 0x0A,  # 0x08 - 0x0B 4 registers
+        'device_calibration_lsb': 0x0B,  # 0x08 - 0x0B 4 registers
+        'device_calibration_request': 0x0C,
+        'device_calibration_confirm': 0x0D,
+        'device_temperature_comp_msb': 0x0E,   # 0x0E - 0x11 4 registers
+        'device_temperature_comp_high': 0x0F,   # 0x0E - 0x11 4 registers
+        'device_temperature_comp_low': 0x10,   # 0x0E - 0x11 4 registers
+        'device_temperature_comp_lsb': 0x11,   # 0x0E - 0x11 4 registers
+        'device_temperature_confirm_msb': 0x12,   # 0x12 - 0x15 4 registers
+        'device_temperature_confirm_high': 0x13,   # 0x12 - 0x15 4 registers
+        'device_temperature_confirm_low': 0x14,   # 0x12 - 0x15 4 registers
+        'device_temperature_confirm_lsb': 0x15,   # 0x12 - 0x15 4 registers
+        'device_ph_read_msb': 0x16,   # 0x16 - 0x19 4 registers
+        'device_ph_read_high': 0x16,   # 0x16 - 0x19 4 registers
+        'device_ph_read_low': 0x16,   # 0x16 - 0x19 4 registers
+        'device_ph_read_lsb': 0x16,   # 0x16 - 0x19 4 registers
+    }
+
     # TODO don't give a default address and provide an error when nothing is provided
     # the default address for the sensor
     DEFAULT_ADDR = 100
@@ -293,12 +366,12 @@ class AtlasI2c:
     SLEEP_COMMANDS = ("SLEEP", )
 
     @property
-    def bus(self):
-        return self._bus
+    def bus_number(self):
+        return self._bus_number
 
-    @bus.setter
-    def bus(self, bus_number):
-        self._bus = bus_number
+    @bus_number.setter
+    def bus_number(self, bus_number):
+        self._bus_number = bus_number
 
     @property
     def address(self):
@@ -333,12 +406,12 @@ class AtlasI2c:
         self._name = name
 
     @property
-    def module(self):
+    def moduletype(self):
         return self._module
 
-    @module.setter
-    def module(self, m):
-        self._module = m
+    @moduletype.setter
+    def moduletype(self, m):
+        self._module = m.upper()
 
     def __init__(self, bus=DEFAULT_BUS, addr=DEFAULT_ADDR, moduletype="", name=""):
         """
@@ -348,28 +421,29 @@ class AtlasI2c:
         wb and rb indicate binary read and write
         """
         # private properties
-        self._bus = bus
+        self._bus_number = bus
         self._address = addr
-        self._name = name
-        self._module = moduletype
+        self._name = name.upper()
+        self._module = moduletype.upper()
         self._short_timeout = self.SHORT_TIMEOUT
         self._long_timeout = self.LONG_TIMEOUT
 
         # public properties
-        self.file_read = io.open(file="/dev/i2c-{}".format(self._bus),
-                                 mode="rb",
-                                 buffering=0)
-        self.file_write = io.open(file="/dev/i2c-{}".format(self._bus),
-                                  mode="wb",
-                                  buffering=0)
-        """
-        @brief set the I2C communications to the slave specified by the address
-        the commands for I2C dev using the ioctl functions are specified in
-        the i2c-dev.h file from i2c-tools
-        """
-        I2C_SLAVE = 0x703
-        fcntl.ioctl(self.file_read, I2C_SLAVE, self._address)
-        fcntl.ioctl(self.file_write, I2C_SLAVE, self._address)
+        # self.file_read = io.open(file="/dev/i2c-{}".format(self._bus),
+        #                          mode="rb",
+        #                          buffering=0)
+        # self.file_write = io.open(file="/dev/i2c-{}".format(self._bus),
+        #                           mode="wb",
+        #                           buffering=0)
+        # """
+        # @brief set the I2C communications to the slave specified by the address
+        # the commands for I2C dev using the ioctl functions are specified in
+        # the i2c-dev.h file from i2c-tools
+        # """
+        # I2C_SLAVE = 0x703
+        # fcntl.ioctl(self.file_read, I2C_SLAVE, self._address)
+        # fcntl.ioctl(self.file_write, I2C_SLAVE, self._address)
+        self.smbus = smbus.SMBus(self._bus_number)
 
     def get_command_timeout(self, command):
         timeout = None
@@ -385,26 +459,31 @@ class AtlasI2c:
         @brief write a command to the board, wait the correct timeout,
         and read the response
         """
-        self.write(command)
-        current_timeout = self.get_command_timeout(command=command)
-        if not current_timeout:
-            return "sleep mode"
-        else:
-            time.sleep(current_timeout)
-            return self.read()
+        # self.write(command)
+        # current_timeout = self.get_command_timeout(command=command)
+        # if not current_timeout:
+        #     return "sleep mode"
+        # else:
+        #     time.sleep(current_timeout)
+        #     return self.read()
+        pass
 
-    def read(self, num_of_bytes=31):
+    def read(self, register, num_of_bytes=31):
         # reads a specified number of bytes from I2C, then parses and displays the result
-        res = self.file_read.read(num_of_bytes)         # read from the board
-        response = list(filter(lambda x: x != '\x00', res))     # remove the null characters to get the response
-        print(response)
-        if response[0] == 1:             # if the response isn't an error
-            # change MSB to 0 for all received characters except the first and get a list of characters
-            char_list = map(lambda x: chr(x & ~0x80), list(response[1:]))
-            # NOTE: having to change the MSB to 0 is a glitch in the raspberry pi, and you shouldn't have to do this!
-            return "Command succeeded " + ''.join(char_list)     # convert the char list to a string and returns it
+        # res = self.file_read.read(num_of_bytes)         # read from the board
+        # response = list(filter(lambda x: x != '\x00', res))     # remove the null characters to get the response
+        # # print(response)
+        # if response[0] == 1:             # if the response isn't an error
+        #     # change MSB to 0 for all received characters except the first and get a list of characters
+        #     char_list = map(lambda x: chr(x & ~0x80), list(response[1:]))
+        #     # NOTE: having to change the MSB to 0 is a glitch in the raspberry pi, and you shouldn't have to do this!
+        #     return "Command succeeded " + ''.join(char_list)     # convert the char list to a string and returns it
+        # else:
+        #     return "Error " + str(response[0])
+        if num_of_bytes > 1:
+            return self.smbus.read_i2c_block_data(self.address, register, num_of_bytes)
         else:
-            return "Error " + str(response[0])
+            return self.smbus.read_byte_data(self.address, register, num_of_bytes)
 
     def write(self, cmd):
         # appends the null character and sends the string over I2C
@@ -412,27 +491,29 @@ class AtlasI2c:
         print(cmd)
         self.file_write.write(cmd.encode('latin-1'))
 
-    def close(self):
-        self.file_read.close()
-        self.file_write.close()
+    # def close(self):
+    #     self.file_read.close()
+    #     self.file_write.close()
 
     def list_i2c_devices(self):
         """
         @brief save the current address so we can restore it after
         """
-        prev_addr = copy.deepcopy(self._address)
-        i2c_devices = []
-        for i in range(0, 128):
-            try:
-                self.address = i
-                self.read(1)
-                i2c_devices.append(i)
-            except IOError:
-                pass
-        # restore the address we were using
-        self.address = prev_addr
+        with I2C(self._bus_number) as i2c:
+            return i2c.scan()
+        # prev_addr = copy.deepcopy(self._address)
+        # i2c_devices = []
+        # for i in range(0, 128):
+        #     try:
+        #         self.address = i
+        #         self.read(1)
+        #         i2c_devices.append(i)
+        #     except IOError:
+        #         pass
+        # # restore the address we were using
+        # self.address = prev_addr
 
-        return i2c_devices
+        # return i2c_devices
 
 
 class _CommonsI2c:
@@ -449,7 +530,21 @@ class _CommonsI2c:
         @param device = AltasI2c instance
         @return device name, firmware version
         """
-        return self._device.query("i")
+        if self._device._module not in ["EC", "PH"]:
+            return "sorry i can just read device info for EC or PH moduletype"
+        elif "EC" == self._device._module:
+            return self._device.read(
+                self._device._address,
+                self.OEM_EC_REGISTERS['device_type'],
+                self.TWO_BYTE_READ
+            )
+        elif "PH" == self._device._module:
+            return self._device.read(
+                self._device._address,
+                self.OEM_PH_REGISTERS['device_type'],
+                self.TWO_BYTE_READ
+            )
+        # return self._device.query("i")
 
     def get_read(self):
         """

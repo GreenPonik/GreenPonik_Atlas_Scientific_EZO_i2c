@@ -13,7 +13,7 @@
 
 
 # GreenPonik_Atlas_Scientific_i2c.py Library for Raspberry pi
-## A python3 class to use Atlas Scientific EZO and OEM circuits on i2c bus.<br>
+## A python3 class to use Atlas Scientific OEM circuits on i2c bus.<br>
 
 ## ! Only tested on Raspberry Pi 3 A+ !<br>
 

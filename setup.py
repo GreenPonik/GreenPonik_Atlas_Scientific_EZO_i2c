@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 # Package meta-data.
 NAME = "greenponik-atlas-scientific-i2c"
-DESCRIPTION = "GreenPonik wrapper to use Atlas Scientific on SMBus/I2C"
+DESCRIPTION = "GreenPonik wrapper to use Atlas Scientific OEM on SMBus/I2C"
 URL = "https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_i2c"
 EMAIL = "contact@greenponik.com"
 AUTHOR = "GreenPonik SAS"
@@ -62,5 +62,5 @@ setup(
         GreenPonik_Atlas_Scientific_i2c/issues',
     },
     keywords="GreenPonik hydroponics SMBus/i2c EC Electro Conductivity and pH \
-         reader Atlas Scientific python hardware diy iot raspberry pi",
+         reader Atlas Scientific OEM python hardware diy iot raspberry pi",
 )
