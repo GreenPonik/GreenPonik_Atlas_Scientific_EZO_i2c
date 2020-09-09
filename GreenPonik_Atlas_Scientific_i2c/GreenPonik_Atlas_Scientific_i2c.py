@@ -345,20 +345,20 @@ class _CommonsI2c:
     def __init__(self, device):
         self._device = device
 
-    def _check_module_type(moduletype):
+    def _check_module_type(self, moduletype):
         if moduletype not in ["EC", "PH"]:
             raise Exception("sorry i can just read device info for EC or PH moduletype")
         else:
             return True
 
-    def _convert_raw_hex_ec(byte_array):
+    def _convert_raw_hex_ec(self, byte_array):
         """
         @brief convert ec bytearray response to float result
         return float EC in µs
         """
         return float.fromhex(byte_array.hex()) / 100
 
-    def _convert_raw_hex_ph(byte_array):
+    def _convert_raw_hex_ph(self, byte_array):
         """
         @brief convert ph bytearray response to float result
         return float pH
