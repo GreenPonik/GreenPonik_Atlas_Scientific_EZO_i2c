@@ -352,17 +352,17 @@ class _CommonsI2c:
         @param device = AltasI2c instance
         @return device name, firmware version
         """
-        if self._device._module not in ["EC", "PH"]:
+        if self._device.moduletype not in ["EC", "PH"]:
             return "sorry i can just read device info for EC or PH moduletype"
-        elif "EC" == self._device._module:
+        elif "EC" == self._device.moduletype:
             return self._device.read(
-                self._device._address,
+                self._device.address,
                 self._device.OEM_EC_REGISTERS['device_type'],
                 self._device.TWO_BYTE_READ
             )
-        elif "PH" == self._device._module:
+        elif "PH" == self._device.moduletype:
             return self._device.read(
-                self._device._address,
+                self._device.address,
                 self._device.OEM_PH_REGISTERS['device_type'],
                 self._device.TWO_BYTE_READ
             )
