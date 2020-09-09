@@ -343,8 +343,8 @@ class AtlasI2c:
         self._bus = bus
         self._name = name
         self._module = moduletype
-        self._short_timeout
-        self._long_timeout
+        self._short_timeout = self.SHORT_TIMEOUT
+        self._long_timeout = self.LONG_TIMEOUT
 
         # public properties
         self.file_read = io.open(file="/dev/i2c-{}".format(self._bus),
@@ -361,8 +361,6 @@ class AtlasI2c:
         I2C_SLAVE = 0x703
         fcntl.ioctl(self.file_read, I2C_SLAVE, addr)
         fcntl.ioctl(self.file_write, I2C_SLAVE, addr)
-        self.long_timeout(self.LONG_TIMEOUT)
-        self.short_timeout(self.SHORT_TIMEOUT)
 
     def get_command_timeout(self, command):
         timeout = None
