@@ -426,15 +426,19 @@ class AtlasI2c:
 
 
 class CommonsI2c:
+
+    def __init__(self, device):
+        self._device = device
+
     """ Getters commons methods
     """
-    def get_device_info(self, device):
+    def get_device_info(self):
         """
         @brief Get device information
         @param device = AltasI2c instance
         @return device name, firmware version
         """
-        return device.query("i")
+        return self._device.query("i")
 
     def get_read(self, device):
         """
