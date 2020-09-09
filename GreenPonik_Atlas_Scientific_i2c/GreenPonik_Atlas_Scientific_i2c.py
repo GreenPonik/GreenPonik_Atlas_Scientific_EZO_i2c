@@ -301,6 +301,14 @@ class AtlasI2c:
         self._bus = bus_number
 
     @property
+    def address(self):
+        return self._address
+
+    @address.setter
+    def address(self, address):
+        self._address = address
+
+    @property
     def short_timeout(self):
         return self._short_timeout
 
@@ -341,6 +349,7 @@ class AtlasI2c:
         """
         # private properties
         self._bus = bus
+        self._address = addr
         self._name = name
         self._module = moduletype
         self._short_timeout = self.SHORT_TIMEOUT
@@ -359,8 +368,8 @@ class AtlasI2c:
         the i2c-dev.h file from i2c-tools
         """
         I2C_SLAVE = 0x703
-        fcntl.ioctl(self.file_read, I2C_SLAVE, addr)
-        fcntl.ioctl(self.file_write, I2C_SLAVE, addr)
+        fcntl.ioctl(self.file_read, I2C_SLAVE, self._address)
+        fcntl.ioctl(self.file_write, I2C_SLAVE, self._address)
 
     def get_command_timeout(self, command):
         timeout = None
@@ -547,6 +556,7 @@ class _CommonsI2c:
                 return "cannot use this i2c address %d check \
                     AtlasI2c.ADDR_OEM_DECIMAL or AtlasI2c.ADDR_EZO_DECIMAL" % add
             else:
+                self._device.address(add)
                 return self._device.query("I2C,%d" % add)
 
     def set_led(self, state=1):
