@@ -329,8 +329,8 @@ class AtlasI2c:
         return self._name
 
     @name.setter
-    def name(self, n):
-        self._name = n
+    def name(self, name):
+        self._name = name
 
     @property
     def module(self):
@@ -424,13 +424,13 @@ class AtlasI2c:
         i2c_devices = []
         for i in range(0, 128):
             try:
-                self.address(i)
+                self.address = i
                 self.read(1)
                 i2c_devices.append(i)
             except IOError:
                 pass
         # restore the address we were using
-        self.address(prev_addr)
+        self.address = prev_addr
 
         return i2c_devices
 
