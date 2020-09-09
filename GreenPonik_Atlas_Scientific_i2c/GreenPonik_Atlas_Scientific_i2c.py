@@ -371,13 +371,13 @@ class AtlasI2c:
         @brief write a command to the board, wait the correct timeout,
         and read the response
         """
-        self._write(command)
+        self.write(command)
         current_timeout = self.get_command_timeout(command=command)
         if not current_timeout:
             return "sleep mode"
         else:
             time.sleep(current_timeout)
-            return self._read()
+            return self.read()
 
     # def read(self):
     #     """
