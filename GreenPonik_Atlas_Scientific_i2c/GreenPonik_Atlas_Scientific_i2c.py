@@ -402,6 +402,7 @@ class AtlasI2c:
         # reads a specified number of bytes from I2C, then parses and displays the result
         res = self.file_read.read(num_of_bytes)         # read from the board
         response = list(filter(lambda x: x != '\x00', res))     # remove the null characters to get the response
+        print(response)
         if response[0] == 1:             # if the response isn't an error
             # change MSB to 0 for all received characters except the first and get a list of characters
             char_list = map(lambda x: chr(x & ~0x80), list(response[1:]))
@@ -418,6 +419,7 @@ class AtlasI2c:
         # appends the null character and sends the string over I2C
         cmd += "\00"
         cmd = cmd.encode()
+        print(cmd)
         self.file_write.write(cmd)
 
     def close(self):
