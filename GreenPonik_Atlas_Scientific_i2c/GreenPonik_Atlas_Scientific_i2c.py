@@ -20,9 +20,9 @@ import fcntl
 import time
 import copy
 
-import adafruit_bus_device.i2c_device as i2c_device
-from adafruit_extended_bus import ExtendedI2C as I2C
-from Adafruit_PureIO import smbus
+# import adafruit_bus_device.i2c_device as i2c_device
+# from adafruit_extended_bus import ExtendedI2C as I2C
+# from Adafruit_PureIO import smbus
 
 # class AtlasI2c:
 #
@@ -308,9 +308,9 @@ class AtlasI2c:
         it is usually 1, except for older revisions where its 0
         wb and rb indicate binary read and write
         """
-        self.bus = bus
         self._long_timeout = self.LONG_TIMEOUT
         self._short_timeout = self.SHORT_TIMEOUT
+        self.bus = bus
         self.file_read = io.open(file="/dev/i2c-{}".format(self.bus),
                                  mode="rb",
                                  buffering=0)
@@ -318,13 +318,8 @@ class AtlasI2c:
                                   mode="wb",
                                   buffering=0)
         self.set_i2c_address(addr)
-        # self._i2c_bus = I2C(self.bus)
-        # self.i2c_device = i2c_device.I2CDevice(self._i2c_bus, self._address, probe=False)
-        # self._bus = smbus.SMBus(self.bus)
         self._name = name
         self._module = moduletype
-        # self._buffer = bytearray(2)
-        # self._settings_byte = 0
 
     @property
     def long_timeout(self):
@@ -387,17 +382,6 @@ class AtlasI2c:
             time.sleep(current_timeout)
             return self.read()
 
-    # def read(self):
-    #     """
-    #     @brief reads a specified number of bytes from I2C,
-    #     then parses and displays the result
-    #     """
-    #     self._buffer[0] = 0
-    #     self._buffer[1] = 0
-    #     with self.i2c_device as i2c:
-    #         i2c.readinto(self._buffer)
-    #     return self._buffer
-
     def read(self, num_of_bytes=31):
         # reads a specified number of bytes from I2C, then parses and displays the result
         res = self.file_read.read(num_of_bytes)         # read from the board
@@ -411,10 +395,6 @@ class AtlasI2c:
         else:
             return "Error " + str(response[0])
 
-    # def write(self, cmd_byte):
-    #     self._buffer[0] = cmd_byte
-    #     with self.i2c_device as i2c:
-    #         i2c.write(self._buffer, end=1)
     def write(self, cmd):
         # appends the null character and sends the string over I2C
         cmd += "\00"
@@ -425,6 +405,24 @@ class AtlasI2c:
     def close(self):
         self.file_read.close()
         self.file_write.close()
+
+    def list_i2c_devices(self):
+        """
+        @brief save the current address so we can restore it after
+        """
+        prev_addr = copy.deepcopy(self._address)
+        i2c_devices = []
+        for i in range(0, 128):
+            try:
+                self.set_i2c_address(i)
+                self.read(1)
+                i2c_devices.append(i)
+            except IOError:
+                pass
+        # restore the address we were using
+        self.set_i2c_address(prev_addr)
+
+        return i2c_devices
 
 
 class CommonsI2c:
