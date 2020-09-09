@@ -327,6 +327,14 @@ class AtlasI2c:
         # self._settings_byte = 0
 
     @property
+    def long_timeout(self):
+        return self._long_timeout
+
+    @property
+    def short_timeout(self):
+        return self._short_timeout
+
+    @property
     def address(self):
         return self._address
 
@@ -525,11 +533,13 @@ class CommonsI2c:
         """
         if not isinstance(add, int):
             return "only decimal address expected, convert hexa by using \
-                AtlasI2c.AS_SENSORS_ADDS_HEXA_TO_DECIMAL"
+                AtlasI2c.ADDR_OEM_DECIMAL or AtlasI2c.ADDR_EZO_DECIMAL"
         else:
-            if add not in AtlasI2c.AS_SENSORS_ADDS_DECIMAL:
+            if(add not in AtlasI2c.ADDR_OEM_DECIMAL
+                and add not in AtlasI2c.ADDR_EZO_DECIMAL
+               ):
                 return "cannot use this i2c address %d check \
-                    AtlasI2c.AS_SENSORS_ADDS_DECIMAL" % add
+                    AtlasI2c.ADDR_OEM_DECIMAL or AtlasI2c.ADDR_EZO_DECIMAL" % add
             else:
                 return device.query("I2C,%d" % add)
 
