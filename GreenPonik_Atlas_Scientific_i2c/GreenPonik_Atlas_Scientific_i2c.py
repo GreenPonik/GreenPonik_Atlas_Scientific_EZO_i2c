@@ -305,7 +305,7 @@ class AtlasI2c:
         return self._short_timeout
 
     @short_timeout.setter
-    def long_timeout(self, timeout):
+    def short_timeout(self, timeout):
         self._short_timeout = timeout
 
     @property
@@ -315,8 +315,6 @@ class AtlasI2c:
     @long_timeout.setter
     def long_timeout(self, timeout):
         self._long_timeout = timeout
-
-
 
     @property
     def name(self):
@@ -345,6 +343,8 @@ class AtlasI2c:
         self._bus = bus
         self._name = name
         self._module = moduletype
+        self._short_timeout
+        self._long_timeout
 
         # public properties
         self.file_read = io.open(file="/dev/i2c-{}".format(self._bus),
