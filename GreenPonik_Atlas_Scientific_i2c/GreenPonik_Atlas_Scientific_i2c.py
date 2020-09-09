@@ -308,7 +308,7 @@ class AtlasI2c:
                 self._address, register, num_of_bytes
             )
         else:
-            return self._smbus.read_byte_data(self._address, register, num_of_bytes)
+            return self._smbus.read_byte_data(self._address, register)
 
     def write(self, cmd):
         # appends the null character and sends the string over I2C
