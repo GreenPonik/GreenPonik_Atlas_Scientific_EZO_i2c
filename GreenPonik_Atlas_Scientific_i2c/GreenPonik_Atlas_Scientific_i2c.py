@@ -168,9 +168,9 @@ class AtlasI2c:
         "device_temperature_confirm_low": 0x14,  # 0x12 - 0x15 4 registers
         "device_temperature_confirm_lsb": 0x15,  # 0x12 - 0x15 4 registers
         "device_ph_msb": 0x16,  # 0x16 - 0x19 4 registers
-        "device_ph_high": 0x16,  # 0x16 - 0x19 4 registers
-        "device_ph_low": 0x16,  # 0x16 - 0x19 4 registers
-        "device_ph_lsb": 0x16,  # 0x16 - 0x19 4 registers
+        "device_ph_high": 0x17,  # 0x16 - 0x19 4 registers
+        "device_ph_low": 0x18,  # 0x16 - 0x19 4 registers
+        "device_ph_lsb": 0x19,  # 0x16 - 0x19 4 registers
     }
 
     # TODO don't give a default address and provide an error when nothing is provided
@@ -187,6 +187,14 @@ class AtlasI2c:
 
     LONG_TIMEOUT_COMMANDS = ("R", "CAL")
     SLEEP_COMMANDS = ("SLEEP",)
+
+    @property
+    def debug(self):
+        return self._debug
+
+    @debug.setter
+    def debug(self, d):
+        self._debug = d
 
     @property
     def bus_number(self):
@@ -236,7 +244,7 @@ class AtlasI2c:
     def moduletype(self, m):
         self._module = m.upper()
 
-    def __init__(self, bus=DEFAULT_BUS, addr=DEFAULT_ADDR, moduletype="", name=""):
+    def __init__(self, bus=DEFAULT_BUS, addr=DEFAULT_ADDR, moduletype=""):
         """
         open two file streams, one for reading and one for writing
         the specific I2C channel is selected with bus
@@ -244,9 +252,10 @@ class AtlasI2c:
         wb and rb indicate binary read and write
         """
         # private properties
+        self._debug = False
         self._bus_number = bus
         self._address = addr
-        self._name = name.upper()
+        self._name = moduletype.upper()
         self._module = moduletype.upper()
         self._short_timeout = self.SHORT_TIMEOUT
         self._long_timeout = self.LONG_TIMEOUT
@@ -274,7 +283,8 @@ class AtlasI2c:
             timeout = self._long_timeout
         elif not command.upper().startswith(self.SLEEP_COMMANDS):
             timeout = self.short_timeout
-
+        if self._debug:
+            print(timeout)
         return timeout
 
     def query(self, command):
@@ -304,11 +314,15 @@ class AtlasI2c:
         # else:
         #     return "Error " + str(response[0])
         if num_of_bytes > 1:
-            return self._smbus.read_i2c_block_data(
+            r = self._smbus.read_i2c_block_data(
                 self._address, register, num_of_bytes
             )
         else:
-            return self._smbus.read_byte_data(self._address, register)
+            r = self._smbus.read_byte_data(self._address, register)
+
+        if self._debug:
+            print(r)
+        return r
 
     def write(self, cmd):
         # appends the null character and sends the string over I2C
@@ -325,7 +339,10 @@ class AtlasI2c:
         @brief save the current address so we can restore it after
         """
         with I2C(self._bus_number) as i2c:
-            return i2c.scan()
+            scan = i2c.scan()
+            if self._debug:
+                print(scan)
+            return scan
         # prev_addr = copy.deepcopy(self._address)
         # i2c_devices = []
         # for i in range(0, 128):
@@ -356,14 +373,30 @@ class _CommonsI2c:
         @brief convert ec bytearray response to float result
         return float EC in µs
         """
-        return float.fromhex(byte_array.hex()) / 100
+        hexstr = byte_array.hex()
+        float_from_hexa = float.fromhex(byte_array.hex())
+        micro_ec = float_from_hexa / 100
+        if self._device.debug:
+            print(byte_array)
+            print(hexstr)
+            print(micro_ec)
+
+        return micro_ec
 
     def _convert_raw_hex_ph(self, byte_array):
         """
         @brief convert ph bytearray response to float result
         return float pH
         """
-        return float.fromhex(byte_array.hex()) / 1.000
+        hexstr = byte_array.hex()
+        float_from_hexa = float.fromhex(byte_array.hex())
+        ph = float_from_hexa / 1000
+        if self._device.debug:
+            print(byte_array)
+            print(hexstr)
+            print(ph)
+
+        return ph
 
     """
     Getters commons methods
@@ -394,6 +427,8 @@ class _CommonsI2c:
                     self._device.OEM_EC_REGISTERS["device_type"],
                     self._device.ONE_BYTE_READ,
                 )
+            if self._device.debug:
+                print(device_type)
             return device_type
 
     def get_firmware(self):
@@ -403,6 +438,8 @@ class _CommonsI2c:
                     self._device.OEM_EC_REGISTERS["device_firmware"],
                     self._device.ONE_BYTE_READ,
                 )
+            if self._device.debug:
+                print(firmware)
             return firmware
 
     def get_read(self):
@@ -417,13 +454,19 @@ class _CommonsI2c:
                     self._device.OEM_EC_REGISTERS["device_ec_msb"],
                     self._device.FOUR_BYTE_READ,
                 )
-                return self._convert_raw_hex_ec(rawhex)
+                ec = self._convert_raw_hex_ec(rawhex)
+                if self._device.debug:
+                    print(ec)
+                return ec
             elif "PH" == self._device.moduletype:
                 rawhex = self._device.read(
                     self._device.OEM_PH_REGISTERS["device_ph_msb"],
                     self._device.FOUR_BYTE_READ,
                 )
-                return self._convert_raw_hex_ph(rawhex)
+                ph = self._convert_raw_hex_ph(rawhex)
+                if self._device.debug:
+                    print(ph)
+                return ph
 
     def get_temperature(self):
         """
