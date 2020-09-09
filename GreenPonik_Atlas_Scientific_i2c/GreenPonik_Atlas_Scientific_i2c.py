@@ -22,85 +22,10 @@ import copy
 
 import adafruit_bus_device.i2c_device as i2c_device
 from adafruit_extended_bus import ExtendedI2C as I2C
-
+from Adafruit_PureIO import smbus
 
 # class AtlasI2c:
-#     """@brief
-#     Array value of each EZO sensors decimal addresses
-#     """
-#     AS_SENSORS_ADDS_DECIMAL = {
-#         97,
-#         98,
-#         99,
-#         100,
-#         102,
-#         103,
-#     }
-#     """@brief
-#     Array key=>value for each sensors name i2c decimal addresses
-#     """
-#     AS_SENSORS_ADDS_TXT_TO_DECIMAL = {
-#         'DO': 97,
-#         'ORP': 98,
-#         'PH': 99,
-#         'EC': 100,
-#         'RTD': 102,
-#         'PMP': 103,
-#     }
-#     """@brief
-#     Array key=>value for each sensors name i2c hexa addresses
-#     """
-#     AS_SENSORS_ADDS_TXT_TO_HEXA = {
-#         'DO': 0x61,
-#         'ORP': 0x62,
-#         'PH': 0x63,
-#         'EC': 0x64,
-#         'RTD': 0x66,
-#         'PMP': 0x67,
-#     }
-#     """@brief
-#     Array key=>value for each i2c hexa to decimal addresses
-#     """
-#     AS_SENSORS_ADDS_HEXA_TO_DECIMAL = {
-#         0x61: 97,
-#         0x62: 98,
-#         0x63: 99,
-#         0x64: 100,
-#         0x66: 102,
-#         0x67: 103,
-#     }
-#     """@brief
-#     Array key=>value for each sensors restart code
-#     """
-#     AS_RESTART_CODES = {
-#         'P': 'powered off',
-#         'S': 'software reset',
-#         'B': 'brown out',
-#         'W': 'watchdog',
-#         'U': 'unknown',
-#     }
-#     """@brief
-#     Array key=>value for each response code
-#     """
-#     AS_RESPONSE_CODE_TXT = {
-#         1: 'successful request',
-#         2: 'syntax error',
-#         254: 'still processing, not ready',
-#         255: 'no data to send',
-#     }
-
-#     # the timeout needed to query readings and calibrations
-#     LONG_TIMEOUT = 1.5
-#     # timeout for regular commands
-#     SHORT_TIMEOUT = .3
-#     # the default bus for I2C on the newer Raspberry Pis,
-#     # certain older boards use bus 0
-#     DEFAULT_BUS = 1
-#     # the default address for the sensor
-#     DEFAULT_ADDR = 98
-#     LONG_TIMEOUT_COMMANDS = ("R", "CAL")
-#     SLEEP_COMMANDS = ("SLEEP", )
-
+#
 #     def __init__(self, address=None, moduletype="", name="", bus=None):
 #         """
 #         open two file streams, one for reading and one for writing
@@ -280,71 +205,90 @@ from adafruit_extended_bus import ExtendedI2C as I2C
 
 class AtlasI2c:
     """@brief
-    Array value of each EZO sensors decimal addresses
+    Array key=>value for each EZO sensors i2c hexa addresses
     """
-    AS_SENSORS_ADDS_DECIMAL = {
-        97,
-        98,
-        99,
-        100,
-        102,
-        103,
+    ADDR_EZO_HEXA = {
+        0x61,  # DO
+        0x62,  # ORP
+        0x63,  # PH
+        0x64,  # EC
     }
     """@brief
-    Array key=>value for each sensors name i2c decimal addresses
+    Array value of each EZO sensors i2c decimal addresses
     """
-    AS_SENSORS_ADDS_TXT_TO_DECIMAL = {
+    ADDR_EZO_DECIMAL = {
+        97,   # DO
+        98,   # ORP
+        99,   # PH
+        100,  # EC
+    }
+    """@brief
+    Array key=>value for each EZO sensors name i2c decimal addresses
+    """
+    ADDR_EZO_TXT_TO_DECIMAL = {
         'DO': 97,
         'ORP': 98,
         'PH': 99,
         'EC': 100,
-        'RTD': 102,
-        'PMP': 103,
     }
     """@brief
-    Array key=>value for each sensors name i2c hexa addresses
+    Array key=>value for each EZO sensors name i2c hexa addresses
     """
-    AS_SENSORS_ADDS_TXT_TO_HEXA = {
+    ADDR_EZO_TXT_TO_HEXA = {
         'DO': 0x61,
         'ORP': 0x62,
         'PH': 0x63,
         'EC': 0x64,
-        'RTD': 0x66,
-        'PMP': 0x67,
     }
     """@brief
-    Array key=>value for each i2c hexa to decimal addresses
+    Array key=>value for each EZO sensors i2c hexa to decimal addresses
     """
-    AS_SENSORS_ADDS_HEXA_TO_DECIMAL = {
-        0x61: 97,
-        0x62: 98,
-        0x63: 99,
-        0x64: 100,
-        0x66: 102,
-        0x67: 103,
+    ADDR_EZO_HEXA_TO_DECIMAL = {
+        0x61: 97,   # DO
+        0x62: 98,   # ORP
+        0x63: 99,   # PH
+        0x64: 100,  # EC
     }
     """@brief
-    Array key=>value for each sensors restart code
+    Array key=>value for each OEM sensors i2c hexa addresses
     """
-    AS_RESTART_CODES = {
-        'P': 'powered off',
-        'S': 'software reset',
-        'B': 'brown out',
-        'W': 'watchdog',
-        'U': 'unknown',
+    ADDR_OEM_HEXA = {
+        0x64,  # EC
+        0x65,  # PH
+        0x66,  # ORP
+        0x67,  # DO
     }
     """@brief
-    Array key=>value for each response code
+    Array value of each OEM sensors decimal addresses
     """
-    AS_RESPONSE_CODE_TXT = {
-        1: 'successful request',
-        2: 'syntax error',
-        254: 'still processing, not ready',
-        255: 'no data to send',
+    ADDR_OEM_DECIMAL = {
+        100,   # EC
+        101,   # PH
+        102,   # ORP
+        103,   # DO
+    }
+    """@brief
+    Array key=>value for each OEM sensors name i2c hexa addresses
+    """
+    ADDR_OEM_TXT_TO_HEXA = {
+        'EC': 0x64,
+        'PH': 0x65,
+        'ORP': 0x66,
+        'DO': 0x67,
+    }
+    """@brief
+    Array key=>value for each OEM sensors i2c hexa to decimal addresses
+    """
+    ADDR_OEM_HEXA_TO_DECIMAL = {
+        0x64: 100,   # DO
+        0x65: 101,   # ORP
+        0x66: 102,   # PH
+        0x67: 103,  # EC
     }
 
+    # TODO don't give a default address and provide an error when nothing is provided
     # the default address for the sensor
-    DEFAULT_ADDR = 98
+    DEFAULT_ADDR = 100
     # the default bus for I2C on the newer Raspberry Pis,
     # certain older boards use bus 0
     DEFAULT_BUS = 1
@@ -364,22 +308,23 @@ class AtlasI2c:
         it is usually 1, except for older revisions where its 0
         wb and rb indicate binary read and write
         """
-        self._address = addr
         self.bus = bus
         self._long_timeout = self.LONG_TIMEOUT
         self._short_timeout = self.SHORT_TIMEOUT
-        # self.file_read = io.open(file="/dev/i2c-{}".format(self.bus),
-        #                          mode="rb",
-        #                          buffering=0)
-        # self.file_write = io.open(file="/dev/i2c-{}".format(self.bus),
-        #                           mode="wb",
-        #                           buffering=0)
-        i2c = I2C(self.bus)
-        self.i2c_device = i2c_device.I2CDevice(i2c, self._address, probe=False)
+        self.file_read = io.open(file="/dev/i2c-{}".format(self.bus),
+                                 mode="rb",
+                                 buffering=0)
+        self.file_write = io.open(file="/dev/i2c-{}".format(self.bus),
+                                  mode="wb",
+                                  buffering=0)
+        self.set_i2c_address(addr)
+        # self._i2c_bus = I2C(self.bus)
+        # self.i2c_device = i2c_device.I2CDevice(self._i2c_bus, self._address, probe=False)
+        # self._bus = smbus.SMBus(self.bus)
         self._name = name
         self._module = moduletype
-        self._buffer = bytearray(2)
-        self._settings_byte = 0
+        # self._buffer = bytearray(2)
+        # self._settings_byte = 0
 
     @property
     def address(self):
@@ -400,6 +345,17 @@ class AtlasI2c:
     @module.setter
     def module(self, m):
         self._module = m
+
+    def set_i2c_address(self, addr):
+        """
+        @brief set the I2C communications to the slave specified by the address
+        the commands for I2C dev using the ioctl functions are specified in
+        the i2c-dev.h file from i2c-tools
+        """
+        I2C_SLAVE = 0x703
+        fcntl.ioctl(self.file_read, I2C_SLAVE, addr)
+        fcntl.ioctl(self.file_write, I2C_SLAVE, addr)
+        self._address = addr
 
     def get_command_timeout(self, command):
         timeout = None
@@ -423,21 +379,42 @@ class AtlasI2c:
             time.sleep(current_timeout)
             return self._read()
 
-    def read(self):
-        """
-        @brief reads a specified number of bytes from I2C,
-        then parses and displays the result
-        """
-        self._buffer[0] = 0
-        self._buffer[1] = 0
-        with self.i2c_device as i2c:
-            i2c.readinto(self._buffer)
-        return self._buffer
+    # def read(self):
+    #     """
+    #     @brief reads a specified number of bytes from I2C,
+    #     then parses and displays the result
+    #     """
+    #     self._buffer[0] = 0
+    #     self._buffer[1] = 0
+    #     with self.i2c_device as i2c:
+    #         i2c.readinto(self._buffer)
+    #     return self._buffer
 
-    def write(self, cmd_byte):
-        self._buffer[0] = cmd_byte
-        with self.i2c_device as i2c:
-            i2c.write(self._buffer, end=1)
+    def read(self, num_of_bytes=31):
+        # reads a specified number of bytes from I2C, then parses and displays the result
+        res = self.file_read.read(num_of_bytes)         # read from the board
+        response = list(filter(lambda x: x != '\x00', res))     # remove the null characters to get the response
+        if response[0] == 1:             # if the response isn't an error
+            # change MSB to 0 for all received characters except the first and get a list of characters
+            char_list = map(lambda x: chr(x & ~0x80), list(response[1:]))
+            # NOTE: having to change the MSB to 0 is a glitch in the raspberry pi, and you shouldn't have to do this!
+            return "Command succeeded " + ''.join(char_list)     # convert the char list to a string and returns it
+        else:
+            return "Error " + str(response[0])
+
+    # def write(self, cmd_byte):
+    #     self._buffer[0] = cmd_byte
+    #     with self.i2c_device as i2c:
+    #         i2c.write(self._buffer, end=1)
+    def write(self, cmd):
+        # appends the null character and sends the string over I2C
+        cmd += "\00"
+        cmd = cmd.encode()
+        self.file_write.write(cmd)
+
+    def close(self):
+        self.file_read.close()
+        self.file_write.close()
 
 
 class CommonsI2c:
