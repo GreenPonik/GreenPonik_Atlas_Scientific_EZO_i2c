@@ -354,17 +354,14 @@ class _CommonsI2c:
         """
         if self._device.moduletype not in ["EC", "PH"]:
             return "sorry i can just read device info for EC or PH moduletype"
-        elif "EC" == self._device.moduletype:
-            return self._device.read(
+        elif("EC" == self._device.moduletype
+             or "PH" == self._device.moduletype
+             ):
+            info = self._device.read(
                 self._device.OEM_EC_REGISTERS['device_type'],
                 self._device.TWO_BYTE_READ
             )
-        elif "PH" == self._device.moduletype:
-            return self._device.read(
-                self._device.OEM_PH_REGISTERS['device_type'],
-                self._device.TWO_BYTE_READ
-            )
-        # return self._device.query("i")
+        return "SUCCESS: module type: %s and firmware is: %s" % (info[0], info[1])
 
     def get_read(self):
         """
@@ -372,7 +369,21 @@ class _CommonsI2c:
         @param device = AltasI2c instance
         @return string (depending of O parameter)
         """
-        return self._device.query("R")
+        if self._device.moduletype not in ["EC", "PH"]:
+            return "sorry i can just read device info for EC or PH moduletype"
+        elif "EC" == self._device.moduletype:
+            rawhex = self._device.read(
+                self._device.OEM_EC_REGISTERS['device_ec_msb'],
+                self._device.FOUR_BYTE_READ
+            )
+            print(rawhex)
+
+        elif "PH" == self._device.moduletype:
+            rawhex = self._device.read(
+                self._device.OEM_PH_REGISTERS['device_ec_msb'],
+                self._device.FOUR_BYTE_READ
+            )
+            print(rawhex)
 
     def get_temperature(self):
         """
@@ -390,21 +401,21 @@ class _CommonsI2c:
         """
         return self._device.query("Cal,?")
 
-    def get_find(self):
-        """
-        @brief Fin devices
-        @param device = AltasI2c instance
-        @return OK
-        """
-        return self._device.query("Find")
+    # def get_find(self):
+    #     """
+    #     @brief Fin devices
+    #     @param device = AltasI2c instance
+    #     @return OK
+    #     """
+    #     return self._device.query("Find")
 
-    def get_status(self):
-        """
-        @brief Get status
-        @param device = AltasI2c instance
-        @return status of device decode them by using AtlasI2c.AS_RESTART_CODES
-        """
-        return self._device.query("Status")
+    # def get_status(self):
+    #     """
+    #     @brief Get status
+    #     @param device = AltasI2c instance
+    #     @return status of device decode them by using AtlasI2c.AS_RESTART_CODES
+    #     """
+    #     return self._device.query("Status")
 
     def get_led(self):
         """
@@ -414,13 +425,13 @@ class _CommonsI2c:
         """
         return self._device.query("L,?")
 
-    def get_plock(self):
-        """
-        @brief Get Plock status
-        @param device = AltasI2c instance
-        @return string ?Plock,1 for Locked / ?L,0 for Unlocked
-        """
-        return self._device.query("Plock,?")
+    # def get_plock(self):
+    #     """
+    #     @brief Get Plock status
+    #     @param device = AltasI2c instance
+    #     @return string ?Plock,1 for Locked / ?L,0 for Unlocked
+    #     """
+    #     return self._device.query("Plock,?")
 
     """ Setters commons methods
     """
@@ -471,6 +482,9 @@ class _CommonsI2c:
                 return "cannot use this i2c address %d check \
                     AtlasI2c.ADDR_OEM_DECIMAL or AtlasI2c.ADDR_EZO_DECIMAL" % add
             else:
+                """
+                write workflow to change physical i2c address
+                """
                 self._device.address(add)
                 return self._device.query("I2C,%d" % add)
 
