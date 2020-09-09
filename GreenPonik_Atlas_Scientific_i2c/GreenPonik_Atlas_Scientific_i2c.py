@@ -424,13 +424,13 @@ class AtlasI2c:
         i2c_devices = []
         for i in range(0, 128):
             try:
-                self._set_i2c_address(i)
+                self.address(i)
                 self.read(1)
                 i2c_devices.append(i)
             except IOError:
                 pass
         # restore the address we were using
-        self._set_i2c_address(prev_addr)
+        self.address(prev_addr)
 
         return i2c_devices
 
