@@ -669,4 +669,3 @@ class PHI2c(_CommonsI2c):
         return self._device.query("Slope,?")
 
     # ----- Setters pH methods ----- ######
-
