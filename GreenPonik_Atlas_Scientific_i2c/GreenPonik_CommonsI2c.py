@@ -200,10 +200,13 @@ class _CommonsI2c:
     def get_led(self):
         """
         @brief Get led state
-        @param device = AltasI2c instance
-        @return string ?L,1 for On / ?L,0 for Off
+        register is the same for EC and PH OEM circuit
         """
-        return self._device.query("L,?")
+        register = self._device.OEM_EC_REGISTERS["device_led"]
+        led_status = self._device.read(register)
+        if self._device.debug:
+            print("Led status is currently:  %s" % hex(led_status))
+        return led_status
 
     # ----- Setters ----- ########
 
@@ -224,7 +227,7 @@ class _CommonsI2c:
         byte_array = int(round(t * 100)).to_bytes(4, "big")
         # values = ["0x%02x" % b for b in byte_array]
         if self._device.debug:
-            print("Temperature to send: %.2f" % t)
+            print("Temperature to set: %.2f" % t)
             print(
                 "%s sent converted temp to bytes: " % (self._device.moduletype),
                 byte_array,
@@ -323,10 +326,12 @@ class _CommonsI2c:
             self._device.address(addr)
             raise NotImplementedError("write workflow to change physical i2c address")
 
-    def set_led(self, state=1):
+    def set_led(self, state=0x01):
         """
         @brief Change Led state
-        @param device = AltasI2c instance
-        @param int or bool state = 1 = On / state = 0 = Off
+        @param byte/int state => 0x01/1 = On / 0x00/0 = Off
         """
-        return self._device.query("L,%d" % state)
+        register = self._device.OEM_EC_REGISTERS["device_led"]
+        self._device.write(register, state)
+        if self._device.debug:
+            print("Led status change to:  %s" % hex(state))

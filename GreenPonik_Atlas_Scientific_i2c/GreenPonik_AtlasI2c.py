@@ -302,5 +302,13 @@ class AtlasI2c:
         with I2C(self._bus_number) as i2c:
             scan = i2c.scan()
             if self._debug:
-                print(scan)
+                print("I2c devices found: ", scan)
             return scan
+
+    def print_all_registers_values(self):
+        if "EC" == self._module:
+            registers = self.OEM_EC_REGISTERS
+        elif "PH" == self._module:
+            registers = self.OEM_PH_REGISTERS
+        for reg in range(0, len(registers)):
+            print("Register: %s, Value: %s" % (hex(reg), self.read(reg)))
