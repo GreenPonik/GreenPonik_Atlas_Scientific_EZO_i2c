@@ -135,12 +135,12 @@ class _CommonsI2c:
         self.set_wakeup_sleep_mode(0x01)  # wake device before read
         if "EC" == self._device.moduletype:
             rawhex = self._device.read(
-                self._device.OEM_EC_REGISTERS["device_temperature_confirm_msb"],
+                self._device.OEM_EC_REGISTERS["device_temperature_comp_msb"],
                 self._device.FOUR_BYTE_READ,
             )
         elif "PH" == self._device.moduletype:
             rawhex = self._device.read(
-                self._device.OEM_PH_REGISTERS["device_temperature_confirm_msb"],
+                self._device.OEM_PH_REGISTERS["device_temperature_comp_msb"],
                 self._device.FOUR_BYTE_READ,
             )
         value = self._convert_raw_hex_to_float(rawhex) / 100
@@ -155,7 +155,7 @@ class _CommonsI2c:
         @return string with current points calibrated
         """
         if "EC" == self._device.moduletype:
-            register = self._device.OEM_EC_REGISTERS["device_temperature_comp_msb"]
+            register = self._device.OEM_EC_REGISTERS["device_calibration_confirm"]
             """bits = {
                 "dry": 0,
                 "single": 1,
@@ -181,7 +181,7 @@ class _CommonsI2c:
                 15: "all",
             }
         elif "PH" == self._device.moduletype:
-            register = self._device.OEM_PH_REGISTERS["device_temperature_comp_msb"]
+            register = self._device.OEM_PH_REGISTERS["device_calibration_confirm"]
             """bits = {
                 "low": 1,
                 "mid": 2,
