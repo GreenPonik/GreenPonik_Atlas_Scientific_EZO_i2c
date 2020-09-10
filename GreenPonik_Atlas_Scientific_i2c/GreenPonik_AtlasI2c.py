@@ -281,14 +281,14 @@ class AtlasI2c:
         @brief
         """
         if num_of_bytes > 1:
-            r = self._smbus.read_i2c_block_data(self._address, register, num_of_bytes)
+            raw = self._smbus.read_i2c_block_data(self._address, register, num_of_bytes)
         else:
-            r = self._smbus.read_byte_data(self._address, register)
+            raw = self._smbus.read_byte_data(self._address, register)
 
         if self._debug:
-            print("Read %s data on register: %s" % (num_of_bytes, hex(register)))
-            print("Direct response from i2c read: ", r)
-        return r
+            print("Read: %s registers start from: %s" % (num_of_bytes, hex(register)))
+            print("Raw response from i2c: ", raw)
+        return raw
 
     def _prepare_values_to_write(self, v):
         """
@@ -298,7 +298,8 @@ class AtlasI2c:
             The amount of data to write should be the first byte inside the vals
             string/bytearray and that count of bytes of data to write should follow it.`
         """
-        b = bytearray(len(v) + 1)
+        # b = bytearray(len(v) + 1)
+        b = bytearray(len(v))
         b[0] = len(v)
         i = 1
         for elm in v:
@@ -311,10 +312,10 @@ class AtlasI2c:
         @brief
         """
         if "int" != type(v).__name__ and len(v) > 1:
-            vals = self._prepare_values_to_write(v)
-            self._smbus.write_block_data(self._address, register, vals)
+            # vals = self._prepare_values_to_write(v)
+            self._smbus.write_bytes(self._address, register, v)
         else:
-            vals = v
+            vals = hex(v)
             self._smbus.write_byte_data(self._address, register, vals)
         if self._debug:
             print("Write %s on register: %s" % (vals, hex(register)))
