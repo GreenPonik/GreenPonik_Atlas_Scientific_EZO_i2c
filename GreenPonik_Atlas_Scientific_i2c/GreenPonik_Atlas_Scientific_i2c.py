@@ -343,7 +343,7 @@ class _CommonsI2c:
             print("Decoded to hexa string: %s" % hexstr)
         return converted
 
-    # ----- Getters ----- ##
+    # ----- Getters ----- ########
 
     def get_device_info(self):
         """
@@ -459,7 +459,7 @@ class _CommonsI2c:
         """
         return self._device.query("L,?")
 
-    # ----- Setters ----- ##
+    # ----- Setters ----- ########
 
     def set_temperature(self, t=25.0):
         """
@@ -475,7 +475,6 @@ class _CommonsI2c:
                 start_register = self._device.OEM_PH_REGISTERS["device_temperature_comp_msb"]
             self._device.write(
                 start_register,
-                self._device.FOUR_BYTE_READ,
                 values
             )
             if self._device.debug:
