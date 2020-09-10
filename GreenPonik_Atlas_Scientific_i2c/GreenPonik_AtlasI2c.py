@@ -192,7 +192,7 @@ class AtlasI2c:
         self._debug = d
 
     @property
-    def smbus(self):
+    def mysmbus(self):
         return self._smbus
 
     @property
@@ -278,7 +278,9 @@ class AtlasI2c:
         self._module = moduletype.upper()
         self._short_timeout = self.SHORT_TIMEOUT
         self._long_timeout = self.LONG_TIMEOUT
-        self._smbus = smbus.SMBus(self._bus_number)
+
+        with smbus.SMBus(self._bus_number) as smbus:
+            self._smbus = smbus
 
     def read(self, register, num_of_bytes=1):
         """
@@ -317,8 +319,9 @@ class AtlasI2c:
         if "int" != type(v).__name__ and "bytearray" == type(v).__name__ and len(v) > 1:
             # v = self._prepare_values_to_write_block(v)
             # self._smbus.write_block_data(self._address, register, v)
-            self._smbus.__enter__
-            self._smbus.write_i2c_block_data(self._address, register, v)
+
+            with smbus.SMBus(self._bus_number) as smbus:
+                smbus.write_i2c_block_data(self._address, register, v)
         elif "int" == type(v).__name__:
             self._smbus.write_byte_data(self._address, register, v)
         elif "str" == type(v).__name__:
