@@ -316,8 +316,10 @@ class AtlasI2c:
             # self._smbus.write_bytes(self._address, register, v)
             for elm in v:
                 self._smbus.write_byte_data(self._address, register, elm)
-        elif "int" == type(v).__name__ or "str" == type(v).__name__:
+        elif "int" == type(v).__name__:
             self._smbus.write_byte_data(self._address, register, v)
+        elif "str" == type(v).__name__:
+            raise Exception("cannot write string in i2c/smbus")
         if self._debug:
             print("Write %s on register: %s" % (v, hex(register)))
 
