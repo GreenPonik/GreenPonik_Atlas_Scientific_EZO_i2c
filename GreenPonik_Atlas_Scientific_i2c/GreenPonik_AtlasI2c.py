@@ -313,13 +313,13 @@ class AtlasI2c:
         """
         if "int" != type(v).__name__ and len(v) > 1:
             # vals = self._prepare_values_to_write(v)
-            self._smbus.write_bytes(self._address, register, v)
-            debug_msg = "Write %s on register: %s" % (v, hex(register))
+            # self._smbus.write_bytes(self._address, register, v)
+            for elm in v:
+                self._smbus.write_byte_data(self._address, register, elm)
         elif "int" == type(v).__name__ or "str" == type(v).__name__:
             self._smbus.write_byte_data(self._address, register, v)
-            debug_msg = "Write %s on register: %s" % (v, hex(register))
         if self._debug:
-            print(debug_msg)
+            print("Write %s on register: %s" % (v, hex(register)))
 
     def list_i2c_devices(self):
         """
