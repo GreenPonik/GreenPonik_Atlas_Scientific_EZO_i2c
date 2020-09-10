@@ -302,7 +302,7 @@ class AtlasI2c:
         b[0] = len(v)
         i = 1
         for elm in v:
-            b[i] = elm
+            b[i] = hex(elm)
             i += 1
         return b
 
