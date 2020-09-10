@@ -223,13 +223,13 @@ class _CommonsI2c:
             ]
         byte_array = int(round(t * 100)).to_bytes(4, "big")
         values = ["0x%02x" % b for b in byte_array]
-        self._device.write(start_register, values)
         if self._device.debug:
             print("Temperature to send: %.2f" % t)
             print(
                 "%s sent converted temp to bytes: " % (self._device.moduletype),
                 values,
             )
+        self._device.write(start_register, values)
 
     def _set_calibration_registers(self, value):
         """
