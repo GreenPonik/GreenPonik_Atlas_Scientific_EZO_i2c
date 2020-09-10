@@ -346,7 +346,7 @@ class _CommonsI2c:
         @param byte/int state => 0x01/1 = On / 0x00/0 = Off
         """
         register = self._device.OEM_EC_REGISTERS["device_led"]
-        self._device.write(register, state)
+        self._device.write(register, hex(state))
         if self._device.debug:
             print("Led status change to:  %s" % ("On" if hex(0x01) == hex(state) else "OFF"))
 
@@ -357,6 +357,6 @@ class _CommonsI2c:
         @param byte/int action => 0x01/1 = WakeUp / 0x00/0 = Hibernate
         """
         register = self._device.OEM_EC_REGISTERS["device_sleep"]
-        self._device.write(register, action)
+        self._device.write(register, hex(action))
         if self._device.debug:
             print("Device is now:  %s" % ("wakeup" if hex(0x01) == hex(action) else "sleep"))
