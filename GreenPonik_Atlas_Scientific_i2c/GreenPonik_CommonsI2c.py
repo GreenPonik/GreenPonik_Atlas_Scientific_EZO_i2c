@@ -15,6 +15,7 @@ https://github.com/AtlasScientific/Raspberry-Pi-sample-code/blob/master/AtlasI2C
 """
 
 import time
+from GreenPonik_Atlas_Scientific_i2c.GreenPonik_AtlasI2c import AtlasI2c
 
 
 class _CommonsI2c:
@@ -22,7 +23,7 @@ class _CommonsI2c:
     @brief commons methods for EC and PH OEM circuits
     """
 
-    def __init__(self, device):
+    def __init__(self, device: AtlasI2c):
         """
         @brief pass has argument an instance of AtlasI2C class
         """
