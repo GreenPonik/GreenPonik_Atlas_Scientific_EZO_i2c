@@ -26,6 +26,11 @@ from Adafruit_PureIO import smbus
 
 
 class AtlasI2c:
+
+    ALLOWED_MODULES_TYPES = {
+        "EC",
+        "PH",
+    }
     """@brief
     Array key=>value for each EZO sensors i2c hexa addresses
     """
@@ -261,22 +266,6 @@ class AtlasI2c:
         self._long_timeout = self.LONG_TIMEOUT
         self._smbus = smbus.SMBus(self._bus_number)
 
-        # public properties
-        # self.file_read = io.open(file="/dev/i2c-{}".format(self._bus),
-        #                          mode="rb",
-        #                          buffering=0)
-        # self.file_write = io.open(file="/dev/i2c-{}".format(self._bus),
-        #                           mode="wb",
-        #                           buffering=0)
-        # """
-        # @brief set the I2C communications to the slave specified by the address
-        # the commands for I2C dev using the ioctl functions are specified in
-        # the i2c-dev.h file from i2c-tools
-        # """
-        # I2C_SLAVE = 0x703
-        # fcntl.ioctl(self.file_read, I2C_SLAVE, self._address)
-        # fcntl.ioctl(self.file_write, I2C_SLAVE, self._address)
-
     def get_command_timeout(self, command):
         timeout = None
         if command.upper().startswith(self.LONG_TIMEOUT_COMMANDS):
@@ -292,27 +281,9 @@ class AtlasI2c:
         @brief write a command to the board, wait the correct timeout,
         and read the response
         """
-        # self.write(command)
-        # current_timeout = self.get_command_timeout(command=command)
-        # if not current_timeout:
-        #     return "sleep mode"
-        # else:
-        #     time.sleep(current_timeout)
-        #     return self.read()
         pass
 
     def read(self, register, num_of_bytes=31):
-        # reads a specified number of bytes from I2C, then parses and displays the result
-        # res = self.file_read.read(num_of_bytes)         # read from the board
-        # response = list(filter(lambda x: x != '\x00', res))     # remove the null characters to get the response
-        # # print(response)
-        # if response[0] == 1:             # if the response isn't an error
-        #     # change MSB to 0 for all received characters except the first and get a list of characters
-        #     char_list = map(lambda x: chr(x & ~0x80), list(response[1:]))
-        #     # NOTE: having to change the MSB to 0 is a glitch in the raspberry pi, and you shouldn't have to do this!
-        #     return "Command succeeded " + ''.join(char_list)     # convert the char list to a string and returns it
-        # else:
-        #     return "Error " + str(response[0])
         if num_of_bytes > 1:
             r = self._smbus.read_i2c_block_data(
                 self._address, register, num_of_bytes
@@ -330,10 +301,6 @@ class AtlasI2c:
         print(cmd)
         self.file_write.write(cmd.encode("latin-1"))
 
-    # def close(self):
-    #     self.file_read.close()
-    #     self.file_write.close()
-
     def list_i2c_devices(self):
         """
         @brief save the current address so we can restore it after
@@ -343,70 +310,43 @@ class AtlasI2c:
             if self._debug:
                 print(scan)
             return scan
-        # prev_addr = copy.deepcopy(self._address)
-        # i2c_devices = []
-        # for i in range(0, 128):
-        #     try:
-        #         self.address = i
-        #         self.read(1)
-        #         i2c_devices.append(i)
-        #     except IOError:
-        #         pass
-        # # restore the address we were using
-        # self.address = prev_addr
-
-        # return i2c_devices
 
 
 class _CommonsI2c:
+
     def __init__(self, device):
         self._device = device
 
     def _check_module_type(self, moduletype):
-        if moduletype not in ["EC", "PH"]:
+        """
+        @brief check if instance of AtlasI2C have allowed moduletype
+        """
+        if moduletype not in self._device.ALLOWED_MODULES_TYPES:
             raise Exception("sorry i can just read device info for EC or PH moduletype")
         else:
             return True
 
-    def _convert_raw_hex_ec(self, byte_array):
+    def _convert_raw_hex_to_float(self, byte_array):
         """
-        @brief convert ec bytearray response to float result
-        return float EC in µs
-        """
-        hexstr = byte_array.hex()
-        float_from_hexa = float.fromhex(byte_array.hex())
-        micro_ec = float_from_hexa / 100
-        if self._device.debug:
-            print(byte_array)
-            print(hexstr)
-            print(micro_ec)
-
-        return micro_ec
-
-    def _convert_raw_hex_ph(self, byte_array):
-        """
-        @brief convert ph bytearray response to float result
-        return float pH
+        @brief convert bytearray response to float result
+        return float converted value
         """
         hexstr = byte_array.hex()
         float_from_hexa = float.fromhex(byte_array.hex())
-        ph = float_from_hexa / 1000
+        converted = float_from_hexa
         if self._device.debug:
+            print("Byte Array to decode: ")
             print(byte_array)
-            print(hexstr)
-            print(ph)
-
-        return ph
+            print("Decoded to hexa string: %s" % hexstr)
+        return converted
 
     """
     Getters commons methods
     """
-
     def get_device_info(self):
         """
         @brief Get device information
-        @param device = AltasI2c instance
-        @return device name, firmware version
+        @return string module type, firmware version
         """
         if self._check_module_type(self._device.moduletype):
             if "EC" == self._device.moduletype or "PH" == self._device.moduletype:
@@ -421,6 +361,10 @@ class _CommonsI2c:
             )
 
     def get_type(self):
+        """
+        @brief Read sensor type
+        @return int the sensor type (1=EC, 4=PH)
+        """
         if self._check_module_type(self._device.moduletype):
             if "EC" == self._device.moduletype or "PH" == self._device.moduletype:
                 device_type = self._device.read(
@@ -428,10 +372,14 @@ class _CommonsI2c:
                     self._device.ONE_BYTE_READ,
                 )
             if self._device.debug:
-                print(device_type)
+                print("Device type is: %s" % device_type)
             return device_type
 
     def get_firmware(self):
+        """
+        @brief Read sensor firmware
+        @return int the firmware revision
+        """
         if self._check_module_type(self._device.moduletype):
             if "EC" == self._device.moduletype or "PH" == self._device.moduletype:
                 firmware = self._device.read(
@@ -439,14 +387,13 @@ class _CommonsI2c:
                     self._device.ONE_BYTE_READ,
                 )
             if self._device.debug:
-                print(firmware)
+                print("Firmware type is: %s" % firmware)
             return firmware
 
     def get_read(self):
         """
         @brief Read sensor value
-        @param device = AltasI2c instance
-        @return string (depending of O parameter)
+        @return float the sensor value
         """
         if self._check_module_type(self._device.moduletype):
             if "EC" == self._device.moduletype:
@@ -454,19 +401,20 @@ class _CommonsI2c:
                     self._device.OEM_EC_REGISTERS["device_ec_msb"],
                     self._device.FOUR_BYTE_READ,
                 )
-                ec = self._convert_raw_hex_ec(rawhex)
-                if self._device.debug:
-                    print(ec)
-                return ec
+                value = self._convert_raw_hex_to_float(rawhex) / 100
             elif "PH" == self._device.moduletype:
                 rawhex = self._device.read(
                     self._device.OEM_PH_REGISTERS["device_ph_msb"],
                     self._device.FOUR_BYTE_READ,
                 )
-                ph = self._convert_raw_hex_ph(rawhex)
-                if self._device.debug:
-                    print(ph)
-                return ph
+                value = self._convert_raw_hex_to_float(rawhex) / 1000
+            if self._device.debug:
+                print("%s: %s%s" % (
+                    self._device.moduletype,
+                    value,
+                    "µs" if "EC" == self._device.moduletype else "")
+                )
+            return value
 
     def get_temperature(self):
         """
@@ -474,7 +422,25 @@ class _CommonsI2c:
         @param device = AltasI2c instance
         @return string ?T,<temperature value>
         """
-        return self._device.query("T,?")
+        if self._check_module_type(self._device.moduletype):
+            if "EC" == self._device.moduletype:
+                rawhex = self._device.read(
+                    self._device.OEM_EC_REGISTERS["device_temperature_confirm_msb"],
+                    self._device.FOUR_BYTE_READ,
+                )
+            elif "PH" == self._device.moduletype:
+                rawhex = self._device.read(
+                    self._device.OEM_PH_REGISTERS["device_temperature_confirm_msb"],
+                    self._device.FOUR_BYTE_READ,
+                )
+
+            value = self._convert_raw_hex_to_float(rawhex) / 100
+            if self._device.debug:
+                print("%s Compensend Temperature: %s°c" % (
+                    self._device.moduletype,
+                    value)
+                )
+            return value
 
     def get_calibration(self):
         """
