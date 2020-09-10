@@ -290,7 +290,7 @@ class AtlasI2c:
         """
         @brief
         """
-        if "list" == type(v).__name__:
+        if "list" == type(v).__name__ or "bytearray" == type(v).__name__:
             self._smbus.write_block_data(self._address, register, v)
         else:
             self._smbus.write_byte_data(self._address, register, v)
