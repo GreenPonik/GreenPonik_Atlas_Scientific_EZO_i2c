@@ -311,11 +311,8 @@ class AtlasI2c:
         """
         @brief
         """
-        if "int" != type(v).__name__ and len(v) > 1:
-            # vals = self._prepare_values_to_write(v)
-            # self._smbus.write_bytes(self._address, register, v)
-            for elm in v:
-                self._smbus.write_byte_data(self._address, register, elm)
+        if "int" != type(v).__name__ and "bytearray" == type(v).__name__ and len(v) > 1:
+            self._smbus.write_block_data(self._address, register, v)
         elif "int" == type(v).__name__:
             self._smbus.write_byte_data(self._address, register, v)
         elif "str" == type(v).__name__:
