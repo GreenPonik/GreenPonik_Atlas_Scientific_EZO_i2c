@@ -270,7 +270,7 @@ class AtlasI2c:
                 and AtlasI2c.ADDR_OEM_DECIMAL"
             )
 
-        if moduletype not in self._device.ALLOWED_MODULES_TYPES:
+        if moduletype not in self.ALLOWED_MODULES_TYPES:
             raise Exception(
                 "sorry i can just interact \
                 with EC or PH moduletype"
