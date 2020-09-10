@@ -178,9 +178,6 @@ class AtlasI2c:
         "device_ph_lsb": 0x19,  # 0x16 - 0x19 4 registers
     }
 
-    # TODO don't give a default address and provide an error when nothing is provided
-    # the default address for the sensor
-    DEFAULT_ADDR = 100
     # the default bus for I2C on the newer Raspberry Pis,
     # certain older boards use bus 0
     DEFAULT_BUS = 1
@@ -285,23 +282,6 @@ class AtlasI2c:
         self._short_timeout = self.SHORT_TIMEOUT
         self._long_timeout = self.LONG_TIMEOUT
         self._smbus = smbus.SMBus(self._bus_number)
-
-    # def get_command_timeout(self, command):
-    #     timeout = None
-    #     if command.upper().startswith(self.LONG_TIMEOUT_COMMANDS):
-    #         timeout = self._long_timeout
-    #     elif not command.upper().startswith(self.SLEEP_COMMANDS):
-    #         timeout = self.short_timeout
-    #     if self._debug:
-    #         print(timeout)
-    #     return timeout
-
-    # def query(self, command):
-    #     """
-    #     @brief write a command to the board, wait the correct timeout,
-    #     and read the response
-    #     """
-    #     pass
 
     def read(self, register, num_of_bytes=1):
         if num_of_bytes > 1:
