@@ -132,6 +132,7 @@ class _CommonsI2c:
         @brief Get current compensation temperature
         @return float temperature value
         """
+        self.set_wakeup_sleep_mode(0x01)  # wake device before read
         if "EC" == self._device.moduletype:
             rawhex = self._device.read(
                 self._device.OEM_EC_REGISTERS["device_temperature_confirm_msb"],
@@ -145,6 +146,7 @@ class _CommonsI2c:
         value = self._convert_raw_hex_to_float(rawhex) / 100
         if self._device.debug:
             print("%s Compensend Temperature: %s°c" % (self._device.moduletype, value))
+        self.set_wakeup_sleep_mode(0x00)  # sleep device after read
         return value
 
     def get_calibration(self):
@@ -231,7 +233,7 @@ class _CommonsI2c:
         @brief Set the compensation temperature
         @param t = float temperature value
         """
-        # define start register address
+        self.set_wakeup_sleep_mode(0x01)  # wake device before read
         if "EC" == self._device.moduletype:
             start_register = self._device.OEM_EC_REGISTERS[
                 "device_temperature_comp_msb"
@@ -249,6 +251,7 @@ class _CommonsI2c:
                 byte_array,
             )
         self._device.write(start_register, byte_array)
+        self.set_wakeup_sleep_mode(0x00)  # sleep device after read
 
     def _set_calibration_registers(self, value):
         """
