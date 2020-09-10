@@ -39,7 +39,7 @@ class _CommonsI2c:
         if self._device.debug:
             print("Byte Array to decode: ")
             print(byte_array)
-            print("Decoded to hexa string: %s" % hexstr)
+            print("Byte Array decoded to hexa string: %s" % hexstr)
         return converted
 
     def _check_calibration_confirm(self, confirm):
@@ -222,12 +222,12 @@ class _CommonsI2c:
                 "device_temperature_comp_msb"
             ]
         byte_array = int(round(t * 100)).to_bytes(4, "big")
-        values = ["0x%02x" % b for b in byte_array]
+        # values = ["0x%02x" % b for b in byte_array]
         if self._device.debug:
             print("Temperature to send: %.2f" % t)
             print(
                 "%s sent converted temp to bytes: " % (self._device.moduletype),
-                values,
+                byte_array,
             )
         self._device.write(start_register, byte_array)
 
