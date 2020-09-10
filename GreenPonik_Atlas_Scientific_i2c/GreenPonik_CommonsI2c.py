@@ -37,8 +37,7 @@ class _CommonsI2c:
         float_from_hexa = float.fromhex(byte_array.hex())
         converted = float_from_hexa
         if self._device.debug:
-            print("Byte Array to decode: ")
-            print(byte_array)
+            print("Byte Array to decode: ", byte_array)
             print("Byte Array decoded to hexa string: %s" % hexstr)
         return converted
 
@@ -47,7 +46,7 @@ class _CommonsI2c:
         @brief check the response of calibration confirm register
         """
         if self._device.debug:
-            if 0x00 == confirm:
+            if hex(0x00) == hex(confirm):
                 print("Calibration applied")
             else:
                 raise Exception("Cannot confirm the operation was correctly executed")
@@ -368,4 +367,4 @@ class _CommonsI2c:
         register = self._device.OEM_EC_REGISTERS["device_sleep"]
         self._device.write(register, action)
         if self._device.debug:
-            print("Device is now:  %s" % ("wakeup" if 0x01 == hex(action) else "sleep"))
+            print("Device is now:  %s" % ("wakeup" if hex(0x01) == hex(action) else "sleep"))
