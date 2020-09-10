@@ -229,7 +229,7 @@ class _CommonsI2c:
                 "%s sent converted temp to bytes: " % (self._device.moduletype),
                 values,
             )
-        self._device.write(start_register, values)
+        self._device.write(start_register, byte_array)
 
     def _set_calibration_registers(self, value):
         """
