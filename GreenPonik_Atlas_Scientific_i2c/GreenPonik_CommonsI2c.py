@@ -259,9 +259,9 @@ class _CommonsI2c:
 
     def _set_calibration_registers(self, value):
         """
-        @brief calibration value
-        in micro µs for EC
-        nothing sepcific for pH
+        @brief calibration registers
+        do not use alone because calibration is apply by using set_calibration_apply
+        /!in micro µs for EC nothing sepcific for pH/!
         """
         if "EC" == self._device.moduletype:
             start_register = (self._device.OEM_EC_REGISTERS["device_calibration_msb"],)
@@ -282,7 +282,7 @@ class _CommonsI2c:
     def set_calibration_apply(self, value, point=""):
         """
         @brief apply the calibration
-        @param float value => solution calibration
+        @param float value => solution calibration value e.g. 4.02
         @param string point => "dry", "single", "low", "mid", "high" only
         """
         if point not in ("dry", "single", "low", "mid", "high"):
@@ -357,7 +357,7 @@ class _CommonsI2c:
         register = self._device.OEM_EC_REGISTERS["device_led"]
         self._device.write(register, self._hex_to_bytearray(state))
         if self._device.debug:
-            print("Led status change to:  %s" % hex(state))
+            print("Led status change to:  %s" % ("On" if hex(0x01) == hex(state) else "OFF"))
 
     def set_wakeup_sleep_mode(self, action=0x01):
         """
