@@ -53,7 +53,8 @@ from GreenPonik_Altas_Scientific_i2c.GreenPonik_Altas_Scientific_i2c import (
 works with EC circuit https://www.atlas-scientific.com/circuits/conductivity-oem-circuit/<br>
 
 ```python
-from GreenPonik_Atlas_Scientific_i2c.GreenPonik_Altas_Scientific_i2c import AtlasI2c, ECI2c
+from GreenPonik_Altas_Scientific_i2c.GreenPonik_AltasI2c import AtlasI2c
+from GreenPonik_Altas_Scientific_i2c.GreenPonik_ECI2c import ECI2c
 
 if __name__ == "__main__":
     try:
@@ -81,7 +82,8 @@ go to [ec example](examples/read_ec.py)
 works with pH circuit https://www.atlas-scientific.com/circuits/ph-oem-circuit/<br>
 
 ```python
-from GreenPonik_Altas_Scientific_i2c.GreenPonik_Altas_Scientific_i2c import AtlasI2c, PHI2c
+from GreenPonik_Altas_Scientific_i2c.GreenPonik_AltasI2c import AtlasI2c
+from GreenPonik_Altas_Scientific_i2c.GreenPonik_PHI2c import PHI2c
 
 if __name__ == "__main__":
     try:
