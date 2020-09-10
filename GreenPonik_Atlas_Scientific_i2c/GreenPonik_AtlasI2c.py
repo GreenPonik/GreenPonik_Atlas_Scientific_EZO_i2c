@@ -290,12 +290,29 @@ class AtlasI2c:
             print("Direct response from i2c read: ", r)
         return r
 
+    def _prepare_values_to_write(self, v):
+        """
+        @brief from AdafruitPureIO smbus class
+        the write_block_data(self, addr, cmd, vals) need specific data organisation to work
+        Write a block of data to the specified cmd register of the device.
+        The amount of data to write should be the first byte inside the vals
+        string/bytearray and that count of bytes of data to write should follow
+        it.
+        """
+        b = bytearray(len(v) + 1)
+        b[0] = len(v)
+        i = 1
+        for elm in v:
+            b[i] = elm
+            i += 1
+        return b
+
     def write(self, register, v):
         """
         @brief
         """
         if "int" != type(v).__name__ and len(v) > 1:
-            self._smbus.write_block_data(self._address, register, v)
+            self._smbus.write_block_data(self._address, register, self._prepare_values_to_write(v))
         else:
             self._smbus.write_byte_data(self._address, register, v)
         if self._debug:

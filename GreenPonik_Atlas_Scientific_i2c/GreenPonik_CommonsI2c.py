@@ -51,14 +51,6 @@ class _CommonsI2c:
             else:
                 raise Exception("Cannot confirm the operation was correctly executed")
 
-    def _hex_to_bytearray(self, h):
-        """
-        @brief convert single hexa order to bytearray
-        """
-        b = bytearray(1)
-        b[0] = h
-        return b
-
     # ----- Getters ----- ########
 
     def get_device_info(self):
