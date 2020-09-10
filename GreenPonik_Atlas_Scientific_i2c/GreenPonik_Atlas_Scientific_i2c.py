@@ -283,7 +283,7 @@ class AtlasI2c:
         """
         pass
 
-    def read(self, register, num_of_bytes=31):
+    def read(self, register, num_of_bytes=1):
         if num_of_bytes > 1:
             r = self._smbus.read_i2c_block_data(
                 self._address, register, num_of_bytes
@@ -295,11 +295,14 @@ class AtlasI2c:
             print(r)
         return r
 
-    def write(self, cmd):
-        # appends the null character and sends the string over I2C
-        cmd += "\00"
-        print(cmd)
-        self.file_write.write(cmd.encode("latin-1"))
+    def write(self, register, values):
+        """
+        @brief
+        """
+        if values > 1:
+            self._smbus.write_block_data(self._address, register, values)
+        else:
+            self._smbus.write_byte_data(self._address, register, values)
 
     def list_i2c_devices(self):
         """
@@ -340,9 +343,8 @@ class _CommonsI2c:
             print("Decoded to hexa string: %s" % hexstr)
         return converted
 
-    """
-    Getters commons methods
-    """
+    # ----- Getters ----- ##
+
     def get_device_info(self):
         """
         @brief Get device information
@@ -433,7 +435,6 @@ class _CommonsI2c:
                     self._device.OEM_PH_REGISTERS["device_temperature_confirm_msb"],
                     self._device.FOUR_BYTE_READ,
                 )
-
             value = self._convert_raw_hex_to_float(rawhex) / 100
             if self._device.debug:
                 print("%s Compensend Temperature: %s°c" % (
@@ -450,22 +451,6 @@ class _CommonsI2c:
         """
         return self._device.query("Cal,?")
 
-    # def get_find(self):
-    #     """
-    #     @brief Fin devices
-    #     @param device = AltasI2c instance
-    #     @return OK
-    #     """
-    #     return self._device.query("Find")
-
-    # def get_status(self):
-    #     """
-    #     @brief Get status
-    #     @param device = AltasI2c instance
-    #     @return status of device decode them by using AtlasI2c.AS_RESTART_CODES
-    #     """
-    #     return self._device.query("Status")
-
     def get_led(self):
         """
         @brief Get led state
@@ -474,24 +459,28 @@ class _CommonsI2c:
         """
         return self._device.query("L,?")
 
-    # def get_plock(self):
-    #     """
-    #     @brief Get Plock status
-    #     @param device = AltasI2c instance
-    #     @return string ?Plock,1 for Locked / ?L,0 for Unlocked
-    #     """
-    #     return self._device.query("Plock,?")
-
-    """ Setters commons methods
-    """
+    # ----- Setters ----- ##
 
     def set_temperature(self, t=25.0):
         """
         @brief Set the compensation temperature
-        @param device = AltasI2c instance
         @param t = float temperature value
         """
-        return self._device.query("T,%.2f" % t)
+        byte_array = int(round(t * 100)).to_bytes(4, "big")
+        values = ["0x%02x" % b for b in byte_array]
+        if self._check_module_type(self._device.moduletype):
+            if "EC" == self._device.moduletype:
+                start_register = self._device.OEM_EC_REGISTERS["device_temperature_comp_msb"],
+            elif "PH" == self._device.moduletype:
+                start_register = self._device.OEM_PH_REGISTERS["device_temperature_comp_msb"]
+            self._device.write(
+                start_register,
+                self._device.FOUR_BYTE_READ,
+                values
+            )
+            if self._device.debug:
+                print("Temperature to send: %.2f" % t)
+                print("%s sent converted temp to bytes: " % (self._device.moduletype), values)
 
     def set_calibration_low(self, solution=0.0):
         """
