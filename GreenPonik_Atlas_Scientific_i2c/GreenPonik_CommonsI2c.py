@@ -201,12 +201,24 @@ class _CommonsI2c:
         """
         @brief Get led state
         register is the same for EC and PH OEM circuit
+        @return byte/int 0x00/0 = OFF / 0x01/1 = ON
         """
         register = self._device.OEM_EC_REGISTERS["device_led"]
         led_status = self._device.read(register)
         if self._device.debug:
             print("Led status is currently:  %s" % hex(led_status))
         return led_status
+
+    def get_wakeup_sleep_mode(self):
+        """
+        @brief get Active or Hibernate device mode
+        register is the same for EC and PH OEM circuit
+        @return byte/int 0x01/1 = WakeUp / 0x00/0 = Hibernate
+        """
+        register = self._device.OEM_EC_REGISTERS["device_sleep"]
+        mode = self._device.read(register)
+        if self._device.debug:
+            print("Device is currently in mode:  %s" % ("wakeup" if 0x01 == hex(mode) else "sleep"))
 
     # ----- Setters ----- ########
 
@@ -335,3 +347,14 @@ class _CommonsI2c:
         self._device.write(register, state)
         if self._device.debug:
             print("Led status change to:  %s" % hex(state))
+
+    def set_wakeup_sleep_mode(self, action=0x01):
+        """
+        @brief change device mode to Active or Hibernate
+        register is the same for EC and PH OEM circuit
+        @param byte/int action => 0x01/1 = WakeUp / 0x00/0 = Hibernate
+        """
+        register = self._device.OEM_EC_REGISTERS["device_sleep"]
+        self._device.write(register, action)
+        if self._device.debug:
+            print("Device is now:  %s" % ("wakeup" if 0x01 == hex(action) else "sleep"))
