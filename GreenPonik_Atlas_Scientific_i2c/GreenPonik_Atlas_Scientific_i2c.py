@@ -299,7 +299,7 @@ class AtlasI2c:
         """
         @brief
         """
-        if values > 1:
+        if len(values) > 1:
             self._smbus.write_block_data(self._address, register, values)
         else:
             self._smbus.write_byte_data(self._address, register, values)
