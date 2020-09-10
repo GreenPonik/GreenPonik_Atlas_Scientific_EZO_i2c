@@ -286,14 +286,14 @@ class AtlasI2c:
             print(r)
         return r
 
-    def write(self, register, values):
+    def write(self, register, v):
         """
         @brief
         """
-        if "list" == type(values).__name__:
-            self._smbus.write_block_data(self._address, register, values)
+        if "list" == type(v).__name__:
+            self._smbus.write_block_data(self._address, register, v)
         else:
-            self._smbus.write_byte_data(self._address, register, values)
+            self._smbus.write_byte_data(self._address, register, v)
 
     def list_i2c_devices(self):
         """
