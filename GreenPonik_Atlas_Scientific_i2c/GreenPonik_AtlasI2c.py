@@ -277,12 +277,16 @@ class AtlasI2c:
         self._smbus = smbus.SMBus(self._bus_number)
 
     def read(self, register, num_of_bytes=1):
+        """
+        @brief
+        """
         if num_of_bytes > 1:
             r = self._smbus.read_i2c_block_data(self._address, register, num_of_bytes)
         else:
             r = self._smbus.read_byte_data(self._address, register)
 
         if self._debug:
+            print("Read %s data on register: %s" % (num_of_bytes, register))
             print("Direct response from i2c read: ", r)
         return r
 
@@ -294,6 +298,8 @@ class AtlasI2c:
             self._smbus.write_block_data(self._address, register, v)
         else:
             self._smbus.write_byte_data(self._address, register, v)
+        if self._debug:
+            print("Write value %s on register: %s" % (v, register))
 
     def list_i2c_devices(self):
         """
