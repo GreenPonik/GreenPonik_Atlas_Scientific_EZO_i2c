@@ -615,7 +615,6 @@ class _CommonsI2c:
             """
             self._device.address(addr)
             raise NotImplementedError("write workflow to change physical i2c address")
-            # return self._device.query("I2C,%d" % addr)
 
     def set_led(self, state=1):
         """
