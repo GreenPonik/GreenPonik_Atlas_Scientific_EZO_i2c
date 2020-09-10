@@ -102,7 +102,7 @@ class _CommonsI2c:
         @brief Read sensor value
         @return float the sensor value
         """
-        self._device.set_wakeup_sleep_mode(0X01)  # wake device before read
+        self.set_wakeup_sleep_mode(0X01)  # wake device before read
         if "EC" == self._device.moduletype:
             rawhex = self._device.read(
                 self._device.OEM_EC_REGISTERS["device_ec_msb"],
@@ -124,7 +124,7 @@ class _CommonsI2c:
                     "µs" if "EC" == self._device.moduletype else "",
                 )
             )
-        self._device.set_wakeup_sleep_mode(0X00)  # sleep device after read
+        self.set_wakeup_sleep_mode(0X00)  # sleep device after read
         return value
 
     def get_temperature(self):
