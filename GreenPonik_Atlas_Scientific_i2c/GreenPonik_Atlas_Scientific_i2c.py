@@ -249,13 +249,33 @@ class AtlasI2c:
     def moduletype(self, m):
         self._module = m.upper()
 
-    def __init__(self, bus=DEFAULT_BUS, addr=DEFAULT_ADDR, moduletype=""):
+    def __init__(self, bus=DEFAULT_BUS, addr=None, moduletype=""):
         """
-        open two file streams, one for reading and one for writing
-        the specific I2C channel is selected with bus
-        it is usually 1, except for older revisions where its 0
-        wb and rb indicate binary read and write
+        @brief create instance of AtlasI2c class
+        @param int => bus i2c bus number
+        @param int/hexa => device i2c address
+        @param string => device module type
         """
+        if None is addr or (
+            addr not in self.ADDR_EZO_HEXA
+            and addr not in self.ADDR_EZO_DECIMAL
+            and addr not in self.ADDR_OEM_HEXA
+            and addr not in self.ADDR_OEM_DECIMAL
+        ):
+            raise Exception(
+                "You have to give a value to addr argument \
+                take a look on AtlasI2c.ADDR_EZO_HEXA, \
+                AtlasI2c.ADDR_EZO_DECIMAL, \
+                AtlasI2c.ADDR_OEM_HEXA \
+                and AtlasI2c.ADDR_OEM_DECIMAL"
+            )
+
+        if moduletype not in self._device.ALLOWED_MODULES_TYPES:
+            raise Exception(
+                "sorry i can just interact \
+                with EC or PH moduletype"
+            )
+
         # private properties
         self._debug = False
         self._bus_number = bus
@@ -266,28 +286,26 @@ class AtlasI2c:
         self._long_timeout = self.LONG_TIMEOUT
         self._smbus = smbus.SMBus(self._bus_number)
 
-    def get_command_timeout(self, command):
-        timeout = None
-        if command.upper().startswith(self.LONG_TIMEOUT_COMMANDS):
-            timeout = self._long_timeout
-        elif not command.upper().startswith(self.SLEEP_COMMANDS):
-            timeout = self.short_timeout
-        if self._debug:
-            print(timeout)
-        return timeout
+    # def get_command_timeout(self, command):
+    #     timeout = None
+    #     if command.upper().startswith(self.LONG_TIMEOUT_COMMANDS):
+    #         timeout = self._long_timeout
+    #     elif not command.upper().startswith(self.SLEEP_COMMANDS):
+    #         timeout = self.short_timeout
+    #     if self._debug:
+    #         print(timeout)
+    #     return timeout
 
-    def query(self, command):
-        """
-        @brief write a command to the board, wait the correct timeout,
-        and read the response
-        """
-        pass
+    # def query(self, command):
+    #     """
+    #     @brief write a command to the board, wait the correct timeout,
+    #     and read the response
+    #     """
+    #     pass
 
     def read(self, register, num_of_bytes=1):
         if num_of_bytes > 1:
-            r = self._smbus.read_i2c_block_data(
-                self._address, register, num_of_bytes
-            )
+            r = self._smbus.read_i2c_block_data(self._address, register, num_of_bytes)
         else:
             r = self._smbus.read_byte_data(self._address, register)
 
@@ -316,18 +334,12 @@ class AtlasI2c:
 
 
 class _CommonsI2c:
+    """
+    @brief commons methods for EC and PH OEM circuits
+    """
 
     def __init__(self, device):
         self._device = device
-
-    def _check_module_type(self, moduletype):
-        """
-        @brief check if instance of AtlasI2C have allowed moduletype
-        """
-        if moduletype not in self._device.ALLOWED_MODULES_TYPES:
-            raise Exception("sorry i can just read device info for EC or PH moduletype")
-        else:
-            return True
 
     def _convert_raw_hex_to_float(self, byte_array):
         """
@@ -343,6 +355,13 @@ class _CommonsI2c:
             print("Decoded to hexa string: %s" % hexstr)
         return converted
 
+    def _check_calibration_confirm(self, confirm):
+        if self._device.debug:
+            if 0x00 == confirm:
+                print("Calibration applied")
+            else:
+                raise Exception("Cannot confirm the operation was correctly executed")
+
     # ----- Getters ----- ########
 
     def get_device_info(self):
@@ -350,106 +369,146 @@ class _CommonsI2c:
         @brief Get device information
         @return string module type, firmware version
         """
-        if self._check_module_type(self._device.moduletype):
-            if "EC" == self._device.moduletype or "PH" == self._device.moduletype:
-                info = self._device.read(
-                    self._device.OEM_EC_REGISTERS["device_type"],
-                    self._device.TWO_BYTE_READ,
-                )
-            return "SUCCESS: %s, module type: %s and firmware is: %s" % (
-                self._device.moduletype,
-                info[0],
-                info[1],
+        if "EC" == self._device.moduletype or "PH" == self._device.moduletype:
+            info = self._device.read(
+                self._device.OEM_EC_REGISTERS["device_type"],
+                self._device.TWO_BYTE_READ,
             )
+        return "SUCCESS: %s, module type: %s and firmware is: %s" % (
+            self._device.moduletype,
+            info[0],
+            info[1],
+        )
 
     def get_type(self):
         """
         @brief Read sensor type
         @return int the sensor type (1=EC, 4=PH)
         """
-        if self._check_module_type(self._device.moduletype):
-            if "EC" == self._device.moduletype or "PH" == self._device.moduletype:
-                device_type = self._device.read(
-                    self._device.OEM_EC_REGISTERS["device_type"],
-                    self._device.ONE_BYTE_READ,
-                )
-            if self._device.debug:
-                print("Device type is: %s" % device_type)
-            return device_type
+        if "EC" == self._device.moduletype or "PH" == self._device.moduletype:
+            device_type = self._device.read(
+                self._device.OEM_EC_REGISTERS["device_type"],
+                self._device.ONE_BYTE_READ,
+            )
+        if self._device.debug:
+            print("Device type is: %s" % device_type)
+        return device_type
 
     def get_firmware(self):
         """
         @brief Read sensor firmware
         @return int the firmware revision
         """
-        if self._check_module_type(self._device.moduletype):
-            if "EC" == self._device.moduletype or "PH" == self._device.moduletype:
-                firmware = self._device.read(
-                    self._device.OEM_EC_REGISTERS["device_firmware"],
-                    self._device.ONE_BYTE_READ,
-                )
-            if self._device.debug:
-                print("Firmware type is: %s" % firmware)
-            return firmware
+        if "EC" == self._device.moduletype or "PH" == self._device.moduletype:
+            firmware = self._device.read(
+                self._device.OEM_EC_REGISTERS["device_firmware"],
+                self._device.ONE_BYTE_READ,
+            )
+        if self._device.debug:
+            print("Firmware type is: %s" % firmware)
+        return firmware
 
     def get_read(self):
         """
         @brief Read sensor value
         @return float the sensor value
         """
-        if self._check_module_type(self._device.moduletype):
-            if "EC" == self._device.moduletype:
-                rawhex = self._device.read(
-                    self._device.OEM_EC_REGISTERS["device_ec_msb"],
-                    self._device.FOUR_BYTE_READ,
-                )
-                value = self._convert_raw_hex_to_float(rawhex) / 100
-            elif "PH" == self._device.moduletype:
-                rawhex = self._device.read(
-                    self._device.OEM_PH_REGISTERS["device_ph_msb"],
-                    self._device.FOUR_BYTE_READ,
-                )
-                value = self._convert_raw_hex_to_float(rawhex) / 1000
-            if self._device.debug:
-                print("%s: %s%s" % (
+        if "EC" == self._device.moduletype:
+            rawhex = self._device.read(
+                self._device.OEM_EC_REGISTERS["device_ec_msb"],
+                self._device.FOUR_BYTE_READ,
+            )
+            value = self._convert_raw_hex_to_float(rawhex) / 100
+        elif "PH" == self._device.moduletype:
+            rawhex = self._device.read(
+                self._device.OEM_PH_REGISTERS["device_ph_msb"],
+                self._device.FOUR_BYTE_READ,
+            )
+            value = self._convert_raw_hex_to_float(rawhex) / 1000
+        if self._device.debug:
+            print(
+                "%s: %s%s"
+                % (
                     self._device.moduletype,
                     value,
-                    "µs" if "EC" == self._device.moduletype else "")
+                    "µs" if "EC" == self._device.moduletype else "",
                 )
-            return value
+            )
+        return value
 
     def get_temperature(self):
         """
         @brief Get current compensation temperature
-        @param device = AltasI2c instance
-        @return string ?T,<temperature value>
+        @return float temperature value
         """
-        if self._check_module_type(self._device.moduletype):
-            if "EC" == self._device.moduletype:
-                rawhex = self._device.read(
-                    self._device.OEM_EC_REGISTERS["device_temperature_confirm_msb"],
-                    self._device.FOUR_BYTE_READ,
-                )
-            elif "PH" == self._device.moduletype:
-                rawhex = self._device.read(
-                    self._device.OEM_PH_REGISTERS["device_temperature_confirm_msb"],
-                    self._device.FOUR_BYTE_READ,
-                )
-            value = self._convert_raw_hex_to_float(rawhex) / 100
-            if self._device.debug:
-                print("%s Compensend Temperature: %s°c" % (
-                    self._device.moduletype,
-                    value)
-                )
-            return value
+        if "EC" == self._device.moduletype:
+            rawhex = self._device.read(
+                self._device.OEM_EC_REGISTERS["device_temperature_confirm_msb"],
+                self._device.FOUR_BYTE_READ,
+            )
+        elif "PH" == self._device.moduletype:
+            rawhex = self._device.read(
+                self._device.OEM_PH_REGISTERS["device_temperature_confirm_msb"],
+                self._device.FOUR_BYTE_READ,
+            )
+        value = self._convert_raw_hex_to_float(rawhex) / 100
+        if self._device.debug:
+            print("%s Compensend Temperature: %s°c" % (self._device.moduletype, value))
+        return value
 
     def get_calibration(self):
         """
         @brief Get current calibrations data
-        @param device = AltasI2c instance
-        @return ?CAL,<current calibration>
+        @return string with current points calibrated
         """
-        return self._device.query("Cal,?")
+        if "EC" == self._device.moduletype:
+            register = self._device.OEM_EC_REGISTERS["device_temperature_comp_msb"]
+            """bits = {
+                "dry": 0,
+                "single": 1,
+                "low": 2,
+                "high": 3,
+            }"""
+            binary_calib_status = {
+                0: "nothing",
+                1: "only dry",
+                2: "only single",
+                3: "dry and single",
+                4: "only low",
+                5: "dry and low",
+                6: "single and low",
+                7: "dry, single and low",
+                8: "only high",
+                9: "dry and high",
+                10: "single and high",
+                11: "dry, single and high",
+                12: "low and high",
+                13: "dry, low and high",
+                14: "single, low and high",
+                15: "all",
+            }
+        elif "PH" == self._device.moduletype:
+            register = self._device.OEM_PH_REGISTERS["device_temperature_comp_msb"]
+            """bits = {
+                "low": 1,
+                "mid": 2,
+                "high": 3,
+            }"""
+            binary_calib_status = {
+                0: "nothing",
+                1: "only low",
+                2: "only mid",
+                3: "low and mid",
+                4: "only high",
+                5: "low and high",
+                6: "mid and high",
+                7: "all",
+            }
+        r = self._device.read(register)
+        if self._device.debug:
+            print("Binary result from OEM", r)
+            print("Who is calibrated? >", binary_calib_status[r])
+        return binary_calib_status[r]
 
     def get_led(self):
         """
@@ -466,69 +525,117 @@ class _CommonsI2c:
         @brief Set the compensation temperature
         @param t = float temperature value
         """
+        # define start register address
+        if "EC" == self._device.moduletype:
+            start_register = self._device.OEM_EC_REGISTERS[
+                "device_temperature_comp_msb"
+            ]
+        elif "PH" == self._device.moduletype:
+            start_register = self._device.OEM_PH_REGISTERS[
+                "device_temperature_comp_msb"
+            ]
         byte_array = int(round(t * 100)).to_bytes(4, "big")
         values = ["0x%02x" % b for b in byte_array]
-        if self._check_module_type(self._device.moduletype):
-            if "EC" == self._device.moduletype:
-                start_register = self._device.OEM_EC_REGISTERS["device_temperature_comp_msb"],
-            elif "PH" == self._device.moduletype:
-                start_register = self._device.OEM_PH_REGISTERS["device_temperature_comp_msb"]
-            self._device.write(
-                start_register,
-                values
+        self._device.write(start_register, values)
+        if self._device.debug:
+            print("Temperature to send: %.2f" % t)
+            print(
+                "%s sent converted temp to bytes: " % (self._device.moduletype),
+                values,
             )
-            if self._device.debug:
-                print("Temperature to send: %.2f" % t)
-                print("%s sent converted temp to bytes: " % (self._device.moduletype), values)
 
-    def set_calibration_low(self, solution=0.0):
+    def _set_calibration_registers(self, value):
         """
-        @brief calibration 2 points low point
-        @param device = AltasI2c instance
-        @param float = low solution calibration
+        @brief calibration value
+        in micro µs for EC
+        nothing sepcific for pH
         """
-        return self._device.query("Cal,low,%.2f" % solution)
+        if "EC" == self._device.moduletype:
+            start_register = (self._device.OEM_EC_REGISTERS["device_calibration_msb"],)
+            byte_array = int(round(value * 100)).to_bytes(4, "big")
+            values = ["0x%02x" % b for b in byte_array]
+        elif "PH" == self._device.moduletype:
+            start_register = self._device.OEM_PH_REGISTERS["device_calibration_msb"]
+            byte_array = int(round(value * 1000)).to_bytes(4, "big")
+            values = ["0x%02x" % b for b in byte_array]
+        self._device.write(start_register, values)
+        if self._device.debug:
+            print("Value to send: %.2f" % value)
+            print(
+                "%s sent converted value to bytes: " % (self._device.moduletype),
+                values,
+            )
 
-    def set_calibration_high(self, solution=0.0):
+    def set_calibration_apply(self, value, point=""):
         """
-        @brief calibration 2 points high point
-        @param device = AltasI2c instance
-        @param float = high solution calibration
+        @brief apply the calibration
+        @param float value => solution calibration
+        @param string point => "dry", "single", "low", "mid", "high" only
         """
-        return self._device.query("Cal,high,%.2f" % solution)
+        if point not in ("dry", "single", "low", "mid", "high"):
+            raise Exception('missing string point argument, \
+                can only be "dry", "single", "low", "mid", "high"')
+        if "EC" == self._device.moduletype:
+            points = {"dry": 0x02, "single": 0x03, "low": 0x04, "high": 0x05}
+            register = self._device.OEM_EC_REGISTERS["device_calibration_request"]
+        elif "PH" == self._device.moduletype:
+            points = {"low": 0x02, "mid": 0x03, "high": 0x04}
+            register = self._device.OEM_PH_REGISTERS["device_calibration_request"]
+        self._set_calibration_registers(value)
+        time.sleep(self._device.long_timeout)
+        self._device.write(
+            register, points[point]
+        )  # apply point calibration data
+        time.sleep(
+            self._device.short_timeout
+        )  # wait before read register to get confirmation
+        conf = self._device.read(register)
+        self._check_calibration_confirm(conf)
+        return conf
 
     def set_calibration_clear(self):
         """
         @brief Clear calibration data
-        @param device = AltasI2c instance
         """
-        return self._device.query("Cal,clear")
+        if "EC" == self._device.moduletype:
+            start_register = (
+                self._device.OEM_EC_REGISTERS["device_calibration_request"],
+            )
+        elif "PH" == self._device.moduletype:
+            start_register = (
+                self._device.OEM_PH_REGISTERS["device_calibration_request"],
+            )
+        self._device.write(start_register, 0x01)  # send 0x01 to clear calibration data
+        time.sleep(
+            self._device.short_timeout
+        )  # wait before read register to get confirmation
+        conf = self._device.read(start_register)
+        self._check_calibration_confirm(conf)
+        return conf
 
-    def set_i2c_addr(self, add):
+    def set_i2c_addr(self, addr):
         """
         @brief Change the device i2c address
         @param device = AltasI2c instance
         @param int = new i2c add
         """
-        if not isinstance(add, int):
-            return "only decimal address expected, convert hexa by using \
-                AtlasI2c.ADDR_OEM_DECIMAL or AtlasI2c.ADDR_EZO_DECIMAL"
-        else:
-            if (
-                add not in AtlasI2c.ADDR_OEM_DECIMAL
-                and add not in AtlasI2c.ADDR_EZO_DECIMAL
-            ):
-                return (
-                    "cannot use this i2c address %d check \
+        if (
+            addr not in self.ADDR_EZO_HEXA
+            and addr not in self.ADDR_EZO_DECIMAL
+            and addr not in self.ADDR_OEM_HEXA
+            and addr not in self.ADDR_OEM_DECIMAL
+        ):
+            raise Exception(
+                "only decimal address expected, convert hexa by using \
                     AtlasI2c.ADDR_OEM_DECIMAL or AtlasI2c.ADDR_EZO_DECIMAL"
-                    % add
-                )
-            else:
-                """
-                write workflow to change physical i2c address
-                """
-                self._device.address(add)
-                return self._device.query("I2C,%d" % add)
+            )
+        else:
+            """
+            write workflow to change physical i2c address
+            """
+            self._device.address(addr)
+            raise NotImplementedError("write workflow to change physical i2c address")
+            # return self._device.query("I2C,%d" % addr)
 
     def set_led(self, state=1):
         """
@@ -538,37 +645,13 @@ class _CommonsI2c:
         """
         return self._device.query("L,%d" % state)
 
-    def set_sleep_mode(self):
-        """
-        @brief Enter sleep mode / low power
-        @param device = AltasI2c instance
-        """
-        return self._device.query("Sleep")
-
-    def set_facory(self):
-        """
-        @brief Factory reset, clears calibration, LED on,
-        Response codes enabled
-        @param device = AltasI2c instance
-        """
-        return self._device.query("Factory")
-
-    def set_plock(self, state):
-        """
-        @brief Plock is used to lock the changes between I2C and UART
-        @param device = AltasI2c instance
-        @param int or bool state = 1 = Locked / state = 0 = Unlocked
-        """
-        return self._device.query("Plock, %d" % state)
-
 
 class ECI2c(_CommonsI2c):
     """
-    @brief specific methods for EZO EC module
+    @brief specific methods for OEM EC module
     """
 
-    """ Getters EC methods
-    """
+    # ----- Getters EC methods ----- ######
 
     def get_k_probe(self):
         """
@@ -578,23 +661,7 @@ class ECI2c(_CommonsI2c):
         """
         return self._device.query("K,?")
 
-    def get_ouput_parameters(self):
-        """
-        @brief Get the current list of parameters has returned
-        when call read method
-        EC = electro conductivity µS/cm
-        TDS = total dissolved solids ppm
-        S = salinity PSU (ppt)
-        SG = specific gravity
-        @param AtlasI2c instance
-        @return string ?,O,EC,TDS,S,SG for all enabled
-        if "no output" is returned all parameters are disabled
-        """
-        return self._device.query("O,?")
-
-    """
-    Setters EC methods
-    """
+    # ----- Setters EC methods ----- ######
 
     def set_k_probe(self, k):
         """
@@ -604,43 +671,13 @@ class ECI2c(_CommonsI2c):
         """
         return self._device.query("K,%.2f" % k)
 
-    def set_calibration_dry(self):
-        """
-        @biref Set the calibration of probe in the air
-        @param AtlasI2c instance
-        """
-        return self._device.query("Cal,dry")
-
-    def set_calibration_one_point(self, point):
-        """
-        @brief One point calibration
-        @param AtlasI2c instance
-        @param float or int point to calibrate
-        """
-        return self._device.query("Cal,%d" % point)
-
-    def set_output_parameter(self, param, state):
-        """
-        @brief define the output string of read method
-        @param string EC/TDS/S/SG
-        @param state int or bool 1 = enable / 0 = disable
-        """
-        return self._device.query(
-            "O,%s,%d"
-            % (
-                param,
-                state,
-            )
-        )
-
 
 class PHI2c(_CommonsI2c):
     """
-    @brief specific methods for EZO PH module
+    @brief specific methods for OEM PH module
     """
 
-    """ Getters pH methods
-    """
+    # ----- Getters pH methods ----- ######
 
     def get_slope_probe(self):
         """
@@ -652,13 +689,5 @@ class PHI2c(_CommonsI2c):
         """
         return self._device.query("Slope,?")
 
-    """ Setters pH methods
-    """
+    # ----- Setters pH methods ----- ######
 
-    def set_calibration_mid(self, solution=7.00):
-        """
-        @brief Calibration the middle point
-        @param AtlasI2c instance
-        @param float solution value
-        """
-        return self._device.query("Cal,mid,%.2f" % solution)
