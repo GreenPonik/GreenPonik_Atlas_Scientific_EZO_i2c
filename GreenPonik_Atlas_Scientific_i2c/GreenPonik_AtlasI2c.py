@@ -286,7 +286,7 @@ class AtlasI2c:
             r = self._smbus.read_byte_data(self._address, register)
 
         if self._debug:
-            print("Read %s data on register: %s" % (num_of_bytes, register))
+            print("Read %s data on register: %s" % (num_of_bytes, hex(register)))
             print("Direct response from i2c read: ", r)
         return r
 
@@ -299,7 +299,7 @@ class AtlasI2c:
         else:
             self._smbus.write_byte_data(self._address, register, v)
         if self._debug:
-            print("Write value %s on register: %s" % (v, register))
+            print("Write value %s on register: %s" % (v, hex(register)))
 
     def list_i2c_devices(self):
         """
