@@ -43,11 +43,22 @@ class _CommonsI2c:
         return converted
 
     def _check_calibration_confirm(self, confirm):
+        """
+        @brief check the response of calibration confirm register
+        """
         if self._device.debug:
             if 0x00 == confirm:
                 print("Calibration applied")
             else:
                 raise Exception("Cannot confirm the operation was correctly executed")
+
+    def _hex_to_bytearray(self, h):
+        """
+        @brief convert single hexa order to bytearray
+        """
+        b = bytearray(1)
+        b[0] = h
+        return b
 
     # ----- Getters ----- ########
 
@@ -255,17 +266,17 @@ class _CommonsI2c:
         if "EC" == self._device.moduletype:
             start_register = (self._device.OEM_EC_REGISTERS["device_calibration_msb"],)
             byte_array = int(round(value * 100)).to_bytes(4, "big")
-            values = ["0x%02x" % b for b in byte_array]
+            # values = ["0x%02x" % b for b in byte_array]
         elif "PH" == self._device.moduletype:
             start_register = self._device.OEM_PH_REGISTERS["device_calibration_msb"]
             byte_array = int(round(value * 1000)).to_bytes(4, "big")
-            values = ["0x%02x" % b for b in byte_array]
-        self._device.write(start_register, values)
+            # values = ["0x%02x" % b for b in byte_array]
+        self._device.write(start_register, byte_array)
         if self._device.debug:
             print("Value to send: %.2f" % value)
             print(
                 "%s sent converted value to bytes: " % (self._device.moduletype),
-                values,
+                byte_array,
             )
 
     def set_calibration_apply(self, value, point=""):
@@ -286,7 +297,7 @@ class _CommonsI2c:
         self._set_calibration_registers(value)
         time.sleep(self._device.long_timeout)
         self._device.write(
-            register, points[point]
+            register, self._hex_to_bytearray(points[point])
         )  # apply point calibration data
         time.sleep(
             self._device.short_timeout
@@ -300,18 +311,18 @@ class _CommonsI2c:
         @brief Clear calibration data
         """
         if "EC" == self._device.moduletype:
-            start_register = (
+            register = (
                 self._device.OEM_EC_REGISTERS["device_calibration_request"],
             )
         elif "PH" == self._device.moduletype:
-            start_register = (
+            register = (
                 self._device.OEM_PH_REGISTERS["device_calibration_request"],
             )
-        self._device.write(start_register, 0x01)  # send 0x01 to clear calibration data
+        self._device.write(register, self._hex_to_bytearray(0x01))  # send 0x01 to clear calibration data
         time.sleep(
             self._device.short_timeout
         )  # wait before read register to get confirmation
-        conf = self._device.read(start_register)
+        conf = self._device.read(register)
         self._check_calibration_confirm(conf)
         return conf
 
@@ -344,7 +355,7 @@ class _CommonsI2c:
         @param byte/int state => 0x01/1 = On / 0x00/0 = Off
         """
         register = self._device.OEM_EC_REGISTERS["device_led"]
-        self._device.write(register, state)
+        self._device.write(register, self._hex_to_bytearray(state))
         if self._device.debug:
             print("Led status change to:  %s" % hex(state))
 
@@ -355,6 +366,6 @@ class _CommonsI2c:
         @param byte/int action => 0x01/1 = WakeUp / 0x00/0 = Hibernate
         """
         register = self._device.OEM_EC_REGISTERS["device_sleep"]
-        self._device.write(register, action)
+        self._device.write(register, self._hex_to_bytearray(action))
         if self._device.debug:
             print("Device is now:  %s" % ("wakeup" if 0x01 == hex(action) else "sleep"))
