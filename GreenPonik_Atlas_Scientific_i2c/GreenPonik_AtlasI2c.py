@@ -192,6 +192,10 @@ class AtlasI2c:
         self._debug = d
 
     @property
+    def smbus(self):
+        return self._smbus
+
+    @property
     def bus_number(self):
         return self._bus_number
 
@@ -313,6 +317,7 @@ class AtlasI2c:
         if "int" != type(v).__name__ and "bytearray" == type(v).__name__ and len(v) > 1:
             # v = self._prepare_values_to_write_block(v)
             # self._smbus.write_block_data(self._address, register, v)
+            self._smbus.__enter__
             self._smbus.write_i2c_block_data(self._address, register, v)
         elif "int" == type(v).__name__:
             self._smbus.write_byte_data(self._address, register, v)
