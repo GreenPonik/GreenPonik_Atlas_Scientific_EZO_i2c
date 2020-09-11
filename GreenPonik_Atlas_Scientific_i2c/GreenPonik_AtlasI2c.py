@@ -321,12 +321,11 @@ class AtlasI2c:
            ):
             # v = self._prepare_values_to_write_block(v)
             # self._smbus.write_block_data(self._address, register, v)
-            print(v)
             self.mysmbus.write_i2c_block_data(self._address, register, v)
         elif "int" == type(v).__name__:
             self.mysmbus.write_byte_data(self._address, register, v)
         else:  # "str" == type(v).__name__:
-            raise Exception("cannot write string in i2c/smbus")
+            raise Exception("cannot write this in smbus/i2c: ", v)
         if self._debug:
             print("Write %s on register: %s" % (v, hex(register)))
 
