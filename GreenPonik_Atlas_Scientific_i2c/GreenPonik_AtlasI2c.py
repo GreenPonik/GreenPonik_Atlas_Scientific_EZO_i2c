@@ -315,7 +315,10 @@ class AtlasI2c:
         @brief
         """
         print(type(v).__name__)
-        if "int" != type(v).__name__ and "bytearray" == type(v).__name__ and len(v) > 1:
+        if("int" != type(v).__name__
+           and len(v) > 1
+           and ("bytearray" == type(v).__name__ or "bytes" == type(v).__name__)
+           ):
             # v = self._prepare_values_to_write_block(v)
             # self._smbus.write_block_data(self._address, register, v)
             print(v)
