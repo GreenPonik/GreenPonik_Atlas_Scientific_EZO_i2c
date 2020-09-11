@@ -30,18 +30,17 @@
 
 # Installation
 ```shell
-> git clone https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_i2c.git
-cd GreenPonik_Atlas_Scientific_i2c
+> git clone https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_OEM_i2c.git
+cd GreenPonik_Atlas_Scientific_OEM_i2c
 pip3 install -r requirements.txt
 
 or
 
-> pip3 install greenponik-atlas-scientific-i2c
+> pip3 install greenponik-atlas-scientific-oem-i2c
 ```
 ```python
 
-from GreenPonik_Altas_Scientific_i2c.GreenPonik_Altas_Scientific_i2c import (
-    AtlasI2c,
+from GreenPonik_Altas_Scientific_i2c.GreenPonik_Altas_Scientific_OEM_i2c import (
     ECI2c,
     PHI2c,
 )
@@ -53,21 +52,17 @@ from GreenPonik_Altas_Scientific_i2c.GreenPonik_Altas_Scientific_i2c import (
 works with EC circuit https://www.atlas-scientific.com/circuits/conductivity-oem-circuit/<br>
 
 ```python
-from GreenPonik_Altas_Scientific_i2c.GreenPonik_AltasI2c import AtlasI2c
-from GreenPonik_Altas_Scientific_i2c.GreenPonik_ECI2c import ECI2c
+from GreenPonik_Altas_Scientific_OEM_i2c.GreenPonik_ECI2c import ECI2c
 
 if __name__ == "__main__":
     try:
         print("get device infos")
-        i2c_device = AtlasI2c(
-            address=AtlasI2c.ADDR_EZO_TXT_TO_HEXA['EC'],
+        ec_i2c = ECI2c(
+            bus=1,
+            addr=ECI2c.ADDR_OEM_TXT_TO_HEXA['EC'],
             moduletype="EC",
-            name="EC"
         )
-        ec_i2c = ECI2c(i2c_device)
         print(ec_i2c.get_device_info())
-        print("get current temperature compensated")
-        print(ec_i2c.get_temperature())
         # put here the current temperature
         print(ec_i2c.set_temperature(25.00))
         ec = ec_i2c.get_read()
@@ -82,18 +77,17 @@ go to [ec example](examples/read_ec.py)
 works with pH circuit https://www.atlas-scientific.com/circuits/ph-oem-circuit/<br>
 
 ```python
-from GreenPonik_Altas_Scientific_i2c.GreenPonik_AltasI2c import AtlasI2c
-from GreenPonik_Altas_Scientific_i2c.GreenPonik_PHI2c import PHI2c
+from GreenPonik_Altas_Scientific_OEM_i2c.GreenPonik_PHI2c import PHI2c
 
 if __name__ == "__main__":
     try:
         print("get device infos")
-        i2c_device = AtlasI2c(
-            address=AtlasI2c.ADDR_EZO_TXT_TO_HEXA['PH'],
+        ph_i2c = PHI2c(
+            bus=1,
+            address=PHI2c.ADDR_EZO_TXT_TO_HEXA['PH'],
             moduletype="PH",
             name="PH"
         )
-        ph_i2c = PHI2c(i2c_device)
         print(ph_i2c.get_device_info())
         print(ph_i2c.get_read())
     except Exception as e:

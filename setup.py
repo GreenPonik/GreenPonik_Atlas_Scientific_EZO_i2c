@@ -3,9 +3,9 @@ import pathlib
 from setuptools import setup, find_packages
 
 # Package meta-data.
-NAME = "greenponik-atlas-scientific-i2c"
-DESCRIPTION = "GreenPonik wrapper to use Atlas Scientific OEM on SMBus/I2C"
-URL = "https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_i2c"
+NAME = "greenponik-atlas-scientific-oem-i2c"
+DESCRIPTION = "GreenPonik library to use Atlas Scientific OEM EC and pH circuits on SMBus/I2C"
+URL = "https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_OEM_i2c"
 EMAIL = "contact@greenponik.com"
 AUTHOR = "GreenPonik SAS"
 REQUIRES_PYTHON = ">=3.6.0"
@@ -15,7 +15,6 @@ VERSION = "0.0.1"
 REQUIRED = [
     # 'requests', 'maya', 'records',
     'adafruit-blinka',
-    'adafruit-circuitpython-busdevice',
     'adafruit-extended-bus',
 ]
 
