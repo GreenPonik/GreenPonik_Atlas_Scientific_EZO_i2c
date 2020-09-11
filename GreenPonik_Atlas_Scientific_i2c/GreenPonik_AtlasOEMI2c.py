@@ -18,7 +18,7 @@ from adafruit_extended_bus import ExtendedI2C as I2C
 from Adafruit_PureIO.smbus import SMBus
 
 
-class AtlasI2c:
+class _AtlasOEMI2c:
 
     ALLOWED_MODULES_TYPES = {
         "EC",
