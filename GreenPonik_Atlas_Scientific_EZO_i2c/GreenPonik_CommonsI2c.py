@@ -15,12 +15,12 @@ https://github.com/AtlasScientific/Raspberry-Pi-sample-code/blob/master/AtlasI2C
 """
 
 import time
-from GreenPonik_Atlas_Scientific_i2c.GreenPonik_AtlasOEMI2c import _AtlasOEMI2c
+from GreenPonik_Atlas_Scientific_EZO_i2c.GreenPonik_AtlasEZOI2c import _AtlasEZOI2c
 
 
-class _CommonsI2c(_AtlasOEMI2c):
+class _CommonsI2c(_AtlasEZOI2c):
     """
-    @brief commons methods for EC and PH OEM circuits
+    @brief commons methods for EC and PH EZO circuits
     """
 
     # def __init__(self, device: AtlasI2c):
@@ -61,7 +61,7 @@ class _CommonsI2c(_AtlasOEMI2c):
         """
         if "EC" == self.moduletype or "PH" == self.moduletype:
             info = self.read(
-                self.OEM_EC_REGISTERS["device_type"],
+                self.EZO_EC_REGISTERS["device_type"],
                 self.TWO_BYTE_READ,
             )
         return "SUCCESS: %s, module type: %s and firmware is: %s" % (
@@ -77,7 +77,7 @@ class _CommonsI2c(_AtlasOEMI2c):
         """
         if "EC" == self.moduletype or "PH" == self.moduletype:
             device_type = self.read(
-                self.OEM_EC_REGISTERS["device_type"],
+                self.EZO_EC_REGISTERS["device_type"],
                 self.ONE_BYTE_READ,
             )
         if self.debug:
@@ -91,7 +91,7 @@ class _CommonsI2c(_AtlasOEMI2c):
         """
         if "EC" == self.moduletype or "PH" == self.moduletype:
             firmware = self.read(
-                self.OEM_EC_REGISTERS["device_firmware"],
+                self.EZO_EC_REGISTERS["device_firmware"],
                 self.ONE_BYTE_READ,
             )
         if self.debug:
@@ -106,13 +106,13 @@ class _CommonsI2c(_AtlasOEMI2c):
         self.set_wakeup_sleep_mode(0x01)  # wake device before read
         if "EC" == self.moduletype:
             rawhex = self.read(
-                self.OEM_EC_REGISTERS["device_ec_msb"],
+                self.EZO_EC_REGISTERS["device_ec_msb"],
                 self.FOUR_BYTE_READ,
             )
             value = self._convert_raw_hex_to_float(rawhex) / 100
         elif "PH" == self.moduletype:
             rawhex = self.read(
-                self.OEM_PH_REGISTERS["device_ph_msb"],
+                self.EZO_PH_REGISTERS["device_ph_msb"],
                 self.FOUR_BYTE_READ,
             )
             value = self._convert_raw_hex_to_float(rawhex) / 1000
@@ -135,12 +135,12 @@ class _CommonsI2c(_AtlasOEMI2c):
         """
         if "EC" == self.moduletype:
             rawhex = self.read(
-                self.OEM_EC_REGISTERS["device_temperature_comp_msb"],
+                self.EZO_EC_REGISTERS["device_temperature_comp_msb"],
                 self.FOUR_BYTE_READ,
             )
         elif "PH" == self.moduletype:
             rawhex = self.read(
-                self.OEM_PH_REGISTERS["device_temperature_comp_msb"],
+                self.EZO_PH_REGISTERS["device_temperature_comp_msb"],
                 self.FOUR_BYTE_READ,
             )
         value = self._convert_raw_hex_to_float(rawhex) / 100
@@ -154,7 +154,7 @@ class _CommonsI2c(_AtlasOEMI2c):
         @return string with current points calibrated
         """
         if "EC" == self.moduletype:
-            register = self.OEM_EC_REGISTERS["device_calibration_confirm"]
+            register = self.EZO_EC_REGISTERS["device_calibration_confirm"]
             """bits = {
                 "dry": 0,
                 "single": 1,
@@ -180,7 +180,7 @@ class _CommonsI2c(_AtlasOEMI2c):
                 15: "all",
             }
         elif "PH" == self.moduletype:
-            register = self.OEM_PH_REGISTERS["device_calibration_confirm"]
+            register = self.EZO_PH_REGISTERS["device_calibration_confirm"]
             """bits = {
                 "low": 1,
                 "mid": 2,
@@ -198,17 +198,17 @@ class _CommonsI2c(_AtlasOEMI2c):
             }
         r = self.read(register)
         if self.debug:
-            print("Binary result from OEM", r)
+            print("Binary result from EZO", r)
             print("Who is calibrated? >", binary_calib_status[r])
         return binary_calib_status[r]
 
     def get_led(self):
         """
         @brief Get led state
-        register is the same for EC and PH OEM circuit
+        register is the same for EC and PH EZO circuit
         @return byte/int 0x00/0 = OFF / 0x01/1 = ON
         """
-        register = self.OEM_EC_REGISTERS["device_led"]
+        register = self.EZO_EC_REGISTERS["device_led"]
         led_status = self.read(register)
         if self.debug:
             print("Led status is currently:  %s" % hex(led_status))
@@ -217,10 +217,10 @@ class _CommonsI2c(_AtlasOEMI2c):
     def get_wakeup_sleep_mode(self):
         """
         @brief get Active or Hibernate device mode
-        register is the same for EC and PH OEM circuit
+        register is the same for EC and PH EZO circuit
         @return byte/int 0x01/1 = WakeUp / 0x00/0 = Hibernate
         """
-        register = self.OEM_EC_REGISTERS["device_sleep"]
+        register = self.EZO_EC_REGISTERS["device_sleep"]
         mode = self.read(register)
         if self.debug:
             print("Device is currently in mode:  %s" % ("wakeup" if 0x01 == hex(mode) else "sleep"))
@@ -233,11 +233,11 @@ class _CommonsI2c(_AtlasOEMI2c):
         @param t = float temperature value
         """
         if "EC" == self.moduletype:
-            start_register = self.OEM_EC_REGISTERS[
+            start_register = self.EZO_EC_REGISTERS[
                 "device_temperature_comp_msb"
             ]
         elif "PH" == self.moduletype:
-            start_register = self.OEM_PH_REGISTERS[
+            start_register = self.EZO_PH_REGISTERS[
                 "device_temperature_comp_msb"
             ]
         byte_array = int(round(t * 100)).to_bytes(4, "big")
@@ -258,11 +258,11 @@ class _CommonsI2c(_AtlasOEMI2c):
         /!in micro µs for EC nothing sepcific for pH/!
         """
         if "EC" == self.moduletype:
-            start_register = (self.OEM_EC_REGISTERS["device_calibration_msb"],)
+            start_register = (self.EZO_EC_REGISTERS["device_calibration_msb"],)
             byte_array = int(round(value * 100)).to_bytes(4, "big")
             # values = ["0x%02x" % b for b in byte_array]
         elif "PH" == self.moduletype:
-            start_register = self.OEM_PH_REGISTERS["device_calibration_msb"]
+            start_register = self.EZO_PH_REGISTERS["device_calibration_msb"]
             byte_array = int(round(value * 1000)).to_bytes(4, "big")
             # values = ["0x%02x" % b for b in byte_array]
         self.write(start_register, byte_array)
@@ -284,10 +284,10 @@ class _CommonsI2c(_AtlasOEMI2c):
                 can only be "dry", "single", "low", "mid", "high"')
         if "EC" == self.moduletype:
             points = {"dry": 0x02, "single": 0x03, "low": 0x04, "high": 0x05}
-            register = self.OEM_EC_REGISTERS["device_calibration_request"]
+            register = self.EZO_EC_REGISTERS["device_calibration_request"]
         elif "PH" == self.moduletype:
             points = {"low": 0x02, "mid": 0x03, "high": 0x04}
-            register = self.OEM_PH_REGISTERS["device_calibration_request"]
+            register = self.EZO_PH_REGISTERS["device_calibration_request"]
         self._set_calibration_registers(value)
         time.sleep(self.long_timeout)
         self.write(
@@ -306,11 +306,11 @@ class _CommonsI2c(_AtlasOEMI2c):
         """
         if "EC" == self.moduletype:
             register = (
-                self.OEM_EC_REGISTERS["device_calibration_request"],
+                self.EZO_EC_REGISTERS["device_calibration_request"],
             )
         elif "PH" == self.moduletype:
             register = (
-                self.OEM_PH_REGISTERS["device_calibration_request"],
+                self.EZO_PH_REGISTERS["device_calibration_request"],
             )
         self.write(register, 0x01)  # send 0x01 to clear calibration data
         time.sleep(
@@ -329,12 +329,12 @@ class _CommonsI2c(_AtlasOEMI2c):
         if (
             addr not in self.ADDR_EZO_HEXA
             and addr not in self.ADDR_EZO_DECIMAL
-            and addr not in self.ADDR_OEM_HEXA
-            and addr not in self.ADDR_OEM_DECIMAL
+            and addr not in self.ADDR_EZO_HEXA
+            and addr not in self.ADDR_EZO_DECIMAL
         ):
             raise Exception(
                 "only decimal address expected, convert hexa by using \
-                    AtlasI2c.ADDR_OEM_DECIMAL or AtlasI2c.ADDR_EZO_DECIMAL"
+                    AtlasI2c.ADDR_EZO_DECIMAL or AtlasI2c.ADDR_EZO_DECIMAL"
             )
         else:
             """
@@ -348,7 +348,7 @@ class _CommonsI2c(_AtlasOEMI2c):
         @brief Change Led state
         @param byte/int state => 0x01/1 = On / 0x00/0 = Off
         """
-        register = self.OEM_EC_REGISTERS["device_led"]
+        register = self.EZO_EC_REGISTERS["device_led"]
         self.write(register, state)
         if self.debug:
             print("Led status change to:  %s" % ("On" if hex(0x01) == hex(state) else "OFF"))
@@ -356,10 +356,10 @@ class _CommonsI2c(_AtlasOEMI2c):
     def set_wakeup_sleep_mode(self, action=0x01):
         """
         @brief change device mode to Active or Hibernate
-        register is the same for EC and PH OEM circuit
+        register is the same for EC and PH EZO circuit
         @param byte/int action => 0x01/1 = WakeUp / 0x00/0 = Hibernate
         """
-        register = self.OEM_EC_REGISTERS["device_sleep"]
+        register = self.EZO_EC_REGISTERS["device_sleep"]
         self.write(register, action)
         if self.debug:
             print("Device is now:  %s" % ("wakeup" if hex(0x01) == hex(action) else "sleep"))

@@ -1,8 +1,8 @@
 # install from github
-# pip3 install -e git+https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_i2c.git#egg=greenponik-altas-scientific-i2c
+# pip3 install -e git+https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_EZO_i2c.git#egg=greenponik-altas-scientific-i2c
 
 # upgrade from github
-# pip3 install -e git+https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_i2c.git#egg=greenponik-altas-scientific-i2c --upgrade
+# pip3 install -e git+https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_EZO_i2c.git#egg=greenponik-altas-scientific-i2c --upgrade
 
 adafruit-blinka>=5.2.3
 adafruit-extended-bus==1.0.0

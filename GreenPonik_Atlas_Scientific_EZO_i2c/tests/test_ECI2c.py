@@ -4,7 +4,7 @@ import sys
 
 
 class Test_ECI2c(unittest.TestCase):
-    @patch("GreenPonik_Atlas_Scientific_i2c.GreenPonik_ECI2c.ECI2c")
+    @patch("GreenPonik_Atlas_Scientific_EZO_i2c.GreenPonik_ECI2c.ECI2c")
     def test_get_device_info(self, Mock):
         ec_i2c = Mock()
         expected = "SUCCESS: EC, module type: 4 and firmware is: 5"
@@ -13,7 +13,7 @@ class Test_ECI2c(unittest.TestCase):
         self.assertIsNotNone(info)
         self.assertEqual(info, expected)
 
-    @patch("GreenPonik_Atlas_Scientific_i2c.GreenPonik_ECI2c.ECI2c")
+    @patch("GreenPonik_Atlas_Scientific_EZO_i2c.GreenPonik_ECI2c.ECI2c")
     def test_get_type(self, Mock):
         ec_i2c = Mock()
         expected = 4
@@ -23,7 +23,7 @@ class Test_ECI2c(unittest.TestCase):
         self.assertTrue(type(value).__name__, "int")
         self.assertEqual(value, expected)
 
-    @patch("GreenPonik_Atlas_Scientific_i2c.GreenPonik_ECI2c.ECI2c")
+    @patch("GreenPonik_Atlas_Scientific_EZO_i2c.GreenPonik_ECI2c.ECI2c")
     def test_get_firmware(self, Mock):
         ec_i2c = Mock()
         expected = 5
@@ -33,7 +33,7 @@ class Test_ECI2c(unittest.TestCase):
         self.assertTrue(type(value).__name__, "int")
         self.assertEqual(value, expected)
 
-    @patch("GreenPonik_Atlas_Scientific_i2c.GreenPonik_ECI2c.ECI2c")
+    @patch("GreenPonik_Atlas_Scientific_EZO_i2c.GreenPonik_ECI2c.ECI2c")
     def test_get_read(self, Mock):
         ec_i2c = Mock()
         expected = 24.56

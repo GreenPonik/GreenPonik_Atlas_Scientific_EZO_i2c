@@ -11,15 +11,15 @@
 ####################################################################
 ####################################################################
 Source code is based on Atlas Scientific documentations:
-https://www.atlas-scientific.com/files/EC_oem_datasheet.pdf
-https://atlas-scientific.com/files/oem_pH_datasheet.pdf
+https://www.atlas-scientific.com/files/EC_EZO_datasheet.pdf
+https://atlas-scientific.com/files/EZO_pH_datasheet.pdf
 """
-from GreenPonik_Atlas_Scientific_i2c.GreenPonik_CommonsI2c import _CommonsI2c
+from GreenPonik_Atlas_Scientific_EZO_i2c.GreenPonik_CommonsI2c import _CommonsI2c
 
 
 class PHI2c(_CommonsI2c):
     """
-    @brief specific methods for OEM PH module
+    @brief specific methods for EZO PH module
     """
 
     # ----- Getters pH methods ----- ######

@@ -3,9 +3,9 @@ import pathlib
 from setuptools import setup, find_packages
 
 # Package meta-data.
-NAME = "greenponik-atlas-scientific-oem-i2c"
-DESCRIPTION = "GreenPonik library to use Atlas Scientific OEM EC and pH circuits on SMBus/I2C"
-URL = "https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_OEM_i2c"
+NAME = "greenponik-atlas-scientific-EZO-i2c"
+DESCRIPTION = "GreenPonik library to use Atlas Scientific EZO EC and pH circuits on SMBus/I2C"
+URL = "https://github.com/GreenPonik/GreenPonik_Atlas_Scientific_EZO_i2c"
 EMAIL = "contact@greenponik.com"
 AUTHOR = "GreenPonik SAS"
 REQUIRES_PYTHON = ">=3.6.0"
@@ -56,10 +56,10 @@ setup(
     python_requires=REQUIRES_PYTHON,
     project_urls={  # Optional
         'Source': 'https://github.com/GreenPonik/\
-        GreenPonik_Atlas_Scientific_i2c/',
+        GreenPonik_Atlas_Scientific_EZO_i2c/',
         'Bug Reports': 'https://github.com/GreenPonik/\
-        GreenPonik_Atlas_Scientific_i2c/issues',
+        GreenPonik_Atlas_Scientific_EZO_i2c/issues',
     },
     keywords="GreenPonik hydroponics SMBus/i2c EC Electro Conductivity and pH \
-         reader Atlas Scientific OEM python hardware diy iot raspberry pi",
+         reader Atlas Scientific EZO python hardware diy iot raspberry pi",
 )

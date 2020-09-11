@@ -1,11 +1,11 @@
-from GreenPonik_Altas_Scientific_OEM_i2c.GreenPonik_ECI2c import ECI2c
+from GreenPonik_Altas_Scientific_EZO_i2c.GreenPonik_ECI2c import ECI2c
 
 if __name__ == "__main__":
     try:
         print("get device infos")
         ec_i2c = ECI2c(
             bus=1,
-            addr=ECI2c.ADDR_OEM_TXT_TO_HEXA['EC'],
+            addr=ECI2c.ADDR_EZO_TXT_TO_HEXA['EC'],
             moduletype="EC",
         )
         print(ec_i2c.get_device_info())

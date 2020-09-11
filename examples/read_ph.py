@@ -1,4 +1,4 @@
-from GreenPonik_Altas_Scientific_OEM_i2c.GreenPonik_PHI2c import PHI2c
+from GreenPonik_Altas_Scientific_EZO_i2c.GreenPonik_PHI2c import PHI2c
 
 if __name__ == "__main__":
     try:
